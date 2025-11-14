@@ -1,0 +1,22 @@
+# Python / Flask files
+*.pyc
+__pycache__/
+venv/
+*.db
+instance/
+.env
+.flaskenv
+
+# Node / Angular files
+node_modules/
+dist/
+tmp/
+.npm
+npm-debug.log
+*.log
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+
