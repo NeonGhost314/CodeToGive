@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ApiService } from './services/api.service';
 import { Observable, catchError, of } from 'rxjs';
-import { DonationModalComponent } from './components/donation-modal/donation-modal.component';
 
 interface ApiResponse {
   message: string;
@@ -13,7 +12,7 @@ interface ApiResponse {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, DonationModalComponent],
+  imports: [RouterOutlet, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -23,7 +22,7 @@ export class AppComponent implements OnInit {
   // Message that will come from Flask (as an Observable)
   message$!: Observable<ApiResponse>;
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private router: Router) {}
 
   ngOnInit() {
     this.message$ = this.apiService.getTestData().pipe(
@@ -33,5 +32,9 @@ export class AppComponent implements OnInit {
         return of({ message: "Failed to connect to Flask backend. Did you run 'flask run'?", error: true });
       })
     );
+  }
+
+  navigateToDonation(): void {
+    this.router.navigate(['/donation']);
   }
 }

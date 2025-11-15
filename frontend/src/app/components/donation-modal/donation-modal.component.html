@@ -11,6 +11,7 @@
         <li>
           <strong>{{ fund.name }}</strong>
           <div class="desc">{{ fund.description }}</div>
+          <button (click)="selectFund(fund)">Select this fund</button>
         </li>
       }
     </ul>

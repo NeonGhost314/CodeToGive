@@ -26,4 +26,8 @@ export class DonationModalComponent implements OnInit {
       })
     );
   }
+
+  selectFund(fund: ImpactFund): void {
+    console.log('Selected fund:', fund);
+  }
 }
