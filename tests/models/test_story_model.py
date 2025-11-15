@@ -3,7 +3,7 @@ def test_story_model(client, app):
     from app.models.user import User
     from app.models.story import Story
 
-    user = User(mail="a@b.com", first_name="A", last_name="B")
+    user = User(mail="a@b.com", first_name="A", last_name="B", password_hash = "1234")
     db.session.add(user)
     db.session.commit()
 

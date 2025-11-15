@@ -9,7 +9,8 @@ def test_create_payment(client, app):
     user = UserService.create_user({
         "mail": "p@example.com",
         "first_name": "Peter",
-        "last_name": "Parker"
+        "last_name": "Parker",  
+        "password_hash": "1234"
     })
 
     # Crée une story valide pour story_id
@@ -50,7 +51,8 @@ def test_get_payment(client, app):
     user = UserService.create_user({
         "mail": "p2@example.com",
         "first_name": "Mary",
-        "last_name": "Jane"
+        "last_name": "Jane",
+        "password_hash": "1234"
     })
 
     story = StoryService.create_story({

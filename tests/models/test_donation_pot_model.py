@@ -5,7 +5,7 @@ def test_donation_pot_model(client, app):
     from app.models.donation_pot import DonationPot
 
     # Create required author
-    author = User(mail="test@test.com", first_name="A", last_name="B")
+    author = User(mail="test@test.com", first_name="A", last_name="B", password_hash = "1234")
     db.session.add(author)
     db.session.commit()
 

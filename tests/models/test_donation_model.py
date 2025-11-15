@@ -8,11 +8,11 @@ from app.models.donation import Donation
 def test_create_donation(session):
 
     # Author required for story
-    author = User(mail="author@test.com", first_name="Auth", last_name="Or")
+    author = User(mail="author@test.com", first_name="Auth", last_name="Or", password_hash = "1234")
     session.add(author)
     session.commit()
 
-    user = User(mail="x@x.com", first_name="John", last_name="Doe")
+    user = User(mail="x@x.com", first_name="John", last_name="Doe", password_hash = "1234")
     story = Story(title="Story", description="Desc")
     session.add_all([user, story])
     session.commit()
@@ -40,11 +40,11 @@ def test_create_donation(session):
 def test_get_donation(session):
 
     # Author required
-    author = User(mail="auth@a.com", first_name="Auth", last_name="Or")
+    author = User(mail="auth@a.com", first_name="Auth", last_name="Or", password_hash = "1234")
     session.add(author)
     session.commit()
 
-    user = User(mail="a@a.com", first_name="A", last_name="A")
+    user = User(mail="a@a.com", first_name="A", last_name="A", password_hash = "1234")
     story = Story(title="Test", description="D")
     session.add_all([user, story])
     session.commit()

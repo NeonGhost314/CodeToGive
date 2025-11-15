@@ -8,7 +8,7 @@ from datetime import date
 
 def test_payment_model(client, app):
 
-    user = User(mail="u@x.com", last_name="L", first_name="F")
+    user = User(mail="u@x.com", last_name="L", first_name="F", password_hash = "1234")
     db.session.add(user)
     db.session.commit()
 

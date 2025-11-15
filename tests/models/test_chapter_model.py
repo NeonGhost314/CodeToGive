@@ -5,7 +5,7 @@ def test_chapter_model(client, app):
     from app.models.user import User
 
     # Create required author
-    user = User(mail="u@u.com", first_name="A", last_name="B")
+    user = User(mail="u@u.com", first_name="A", last_name="B", password_hash = "1234")
     db.session.add(user)
     db.session.commit()
 

@@ -6,6 +6,7 @@ from .donation_routes import donation_bp
 from .donation_pot_routes import pot_bp
 from .subscription_routes import sub_bp
 from .donation_goal_routes import goal_bp
+from .auth_routes import auth_bp
 
 def register_routes(app):
     app.register_blueprint(user_bp)
@@ -15,3 +16,4 @@ def register_routes(app):
     app.register_blueprint(pot_bp)
     app.register_blueprint(sub_bp)
     app.register_blueprint(goal_bp)
+    app.register_blueprint(auth_bp)

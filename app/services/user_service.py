@@ -7,7 +7,8 @@ class UserService:
         user = User(
             mail=data.get("mail"),
             first_name=data.get("first_name"),
-            last_name=data.get("last_name")
+            last_name=data.get("last_name"),
+            password_hash=data.get("password_hash")
         )
         db.session.add(user)
         db.session.commit()

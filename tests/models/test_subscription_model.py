@@ -8,8 +8,8 @@ from datetime import date
 
 def test_subscription_model(client, app):
 
-    author = User(mail="auth@x.com", first_name="Auth", last_name="Or")
-    user = User(mail="u@x.com", last_name="L", first_name="F")
+    author = User(mail="auth@x.com", first_name="Auth", last_name="Or", password_hash = "1234")
+    user = User(mail="u@x.com", last_name="L", first_name="F", password_hash = "1234")
     db.session.add_all([author, user])
     db.session.commit()
 

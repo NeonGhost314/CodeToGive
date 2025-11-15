@@ -4,18 +4,19 @@ from .extensions import db
 def create_app(test_config=None):
     app = Flask(__name__)
 
-    app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://..."
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
-    if test_config is not None:
+    if test_config:
         app.config.update(test_config)
+    else:
+        app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://..."
+        app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+        app.config["SECRET_KEY"] = "dev-secret"
 
     db.init_app(app)
 
-    # IMPORTANT : importer tous les modèles ici
-    # Cela force SQLAlchemy à connaître toutes les tables
+    # charger les modèles
     from . import models
 
+    # charger les routes
     from .routes import register_routes
     register_routes(app)
 

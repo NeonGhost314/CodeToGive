@@ -4,7 +4,7 @@ def test_donation_goal_model(client, app):
     from app.models.donation_goal import DonationGoal
     from datetime import date
 
-    user = User(mail="u@x.com", last_name="L", first_name="F")
+    user = User(mail="u@x.com", last_name="L", first_name="F", password_hash = "1234")
     db.session.add(user)
     db.session.commit()
 

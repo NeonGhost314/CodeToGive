@@ -4,7 +4,8 @@ def test_create_user(client, app):
     user = UserService.create_user({
         "mail": "test@example.com",
         "first_name": "John",
-        "last_name": "Doe"
+        "last_name": "Doe",
+        "password_hash": "1234"
     })
 
     assert user.id is not None
@@ -16,7 +17,8 @@ def test_get_user(client, app):
     user = UserService.create_user({
         "mail": "john@example.com",
         "first_name": "John",
-        "last_name": "Doe"
+        "last_name": "Doe",
+        "password_hash": "1234"
     })
 
     fetched = UserService.get_user(user.id)

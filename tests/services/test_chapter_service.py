@@ -6,7 +6,8 @@ def test_create_chapter(client, app):
     user = UserService.create_user({
         "mail": "u@u.com",
         "first_name": "U",
-        "last_name": "L"
+        "last_name": "L",
+        "password_hash": "1234"
     })
 
     story = StoryService.create_story({
@@ -28,7 +29,8 @@ def test_get_chapter(client, app):
     user = UserService.create_user({
         "mail": "u2@u.com",
         "first_name": "U2",
-        "last_name": "L2"
+        "last_name": "L2",
+        "password_hash": "1234"
     })
 
     story = StoryService.create_story({

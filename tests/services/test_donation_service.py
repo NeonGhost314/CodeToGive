@@ -10,7 +10,8 @@ def test_create_donation(client, app):
         user = UserService.create_user({
             "mail": "d@d.com",
             "first_name": "D",
-            "last_name": "X"
+            "last_name": "X",        
+            "password_hash": "1234"
         })
 
         story = Story(title="S", description="D")
@@ -38,7 +39,8 @@ def test_get_donation(client, app):
         user = UserService.create_user({
             "mail": "x@x.com",
             "first_name": "X",
-            "last_name": "Y"
+            "last_name": "Y",
+            "password_hash": "1234"
         })
 
         story = Story(title="S2", description="D2")

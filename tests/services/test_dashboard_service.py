@@ -6,7 +6,8 @@ def test_dashboard_summary(client, app):
         user = UserService.create_user({
             "mail": "u@u.com",
             "first_name": "U",
-            "last_name": "L"
+            "last_name": "L",
+            "password_hash": "1234"
         })
 
         summary = DashboardService.get_user_dashboard(user.id)
