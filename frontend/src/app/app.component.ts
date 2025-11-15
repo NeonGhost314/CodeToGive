@@ -37,4 +37,8 @@ export class AppComponent implements OnInit {
   navigateToDonation(): void {
     this.router.navigate(['/donation']);
   }
+
+  navigateToVideo(): void {
+    this.router.navigate(['/video']);
+  }
 }
