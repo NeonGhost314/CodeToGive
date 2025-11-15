@@ -1,0 +1,107 @@
+<div class="video-page">
+
+  <!-- HERO TEXT -->
+  <section class="hero">
+    <p class="breadcrumb">Athena Center — Healing Stories</p>
+
+    <h1>Follow a Journey of Hope</h1>
+
+    <p class="subtitle">
+      Each chapter reveals a real transformation story. Your support helps create
+      safety, healing, and a new beginning for those rebuilding from trauma.
+    </p>
+  </section>
+
+  <!-- VIDEO PLAYER -->
+  <section class="video-container">
+    <div class="video-wrapper">
+      <div class="chapter-badge">Chapter 1</div>
+      <app-video-player [videoSrc]="'assets/videos/myvideo.webm'"></app-video-player>
+    </div>
+  </section>
+
+  <!-- PROGRESS TRACKER -->
+  <section class="progress-section">
+    <div class="progress-container">
+      <h3>Your Healing Journey</h3>
+      <div class="chapters-track">
+        <div class="chapter-node active">
+          <div class="node-circle">1</div>
+          <span>The Beginning</span>
+        </div>
+        <div class="connector"></div>
+        <div class="chapter-node locked">
+          <div class="node-circle">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </div>
+          <span>The Awakening</span>
+        </div>
+        <div class="connector"></div>
+        <div class="chapter-node locked">
+          <div class="node-circle">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </div>
+          <span>The Strength</span>
+        </div>
+        <div class="connector"></div>
+        <div class="chapter-node locked">
+          <div class="node-circle">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </div>
+          <span>The Hope</span>
+        </div>
+        <div class="connector"></div>
+        <div class="chapter-node locked">
+          <div class="node-circle">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </div>
+          <span>Rebirth</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEXT CHAPTER TEASER -->
+  <section class="teaser-section">
+    <div class="teaser-card">
+      <div class="teaser-blur"></div>
+      <div class="teaser-content">
+        <h3>Chapter 2: The Awakening</h3>
+        <p class="teaser-text">
+          "I didn't know that asking for help could be an act of courage..."
+        </p>
+        <div class="unlock-prompt">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <span>Unlock the next chapter by supporting this story</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BUTTON -->
+  <section class="cta-section">
+    <button class="cta-button">
+      <span>Choose My Impact</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </button>
+    <p class="cta-subtext">Support this story and unlock the next chapter</p>
+  </section>
+
+</div>
