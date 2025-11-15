@@ -111,9 +111,33 @@
   
   .option-content {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
+    flex-direction: column;
+    gap: 10px;
+
+    .option-main {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .option-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 0.85em;
+      opacity: 0.8;
+
+      .stat-donors,
+      .stat-total {
+        color: inherit;
+      }
+
+      .stat-popular {
+        font-weight: bold;
+        color: #ff6b35;
+      }
+    }
   }
   
   .option-description {

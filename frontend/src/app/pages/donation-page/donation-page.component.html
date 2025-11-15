@@ -39,6 +39,24 @@
                 @if (fund.description) {
                   <p>{{ fund.description }}</p>
                 }
+                @if (fund.statistics) {
+                  <div class="fund-statistics">
+                    <div class="stat-item">
+                      <span class="stat-value">{{ fund.statistics.total_donors }}</span>
+                      <span class="stat-label">donateurs</span>
+                    </div>
+                    <div class="stat-item">
+                      <span class="stat-value">{{ fund.statistics.total_amount_raised | currency:'CAD':'symbol':'1.0-0' }}</span>
+                      <span class="stat-label">collectés</span>
+                    </div>
+                    @if (fund.statistics.recent_donations_count > 0) {
+                      <div class="stat-item recent">
+                        <span class="stat-value">{{ fund.statistics.recent_donations_count }}</span>
+                        <span class="stat-label">récemment</span>
+                      </div>
+                    }
+                  </div>
+                }
               </div>
             }
           }

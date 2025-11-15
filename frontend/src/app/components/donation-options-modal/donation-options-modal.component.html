@@ -28,8 +28,19 @@
             [class.selected]="selectedOption?.id === option.id"
             (click)="selectOption(option)">
             <div class="option-content">
-              <strong class="option-description">{{ option.description }}</strong>
-              <span class="option-amount">{{ option.suggestedAmount }}$</span>
+              <div class="option-main">
+                <strong class="option-description">{{ option.description }}</strong>
+                <span class="option-amount">{{ option.suggestedAmount }}$</span>
+              </div>
+              @if (option.statistics) {
+                <div class="option-stats">
+                  <span class="stat-donors">{{ option.statistics.donors_count }} personnes ont choisi cette option aujourd'hui</span>
+                  <span class="stat-total">{{ option.statistics.total_raised_for_this_option | currency:'CAD':'symbol':'1.0-0' }} collectés</span>
+                  @if (option.statistics.popularity_rank === 1) {
+                    <span class="stat-popular">Plus populaire</span>
+                  }
+                </div>
+              }
             </div>
           </button>
         }

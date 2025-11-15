@@ -51,7 +51,13 @@ export class DonationPageComponent implements OnInit {
   }
 
   openFundDetail(fund: ImpactFund): void {
-    this.selectedFund = fund;
+    const fundIndex = this.funds.findIndex(f => f.id === fund.id);
+    
+    if (fundIndex === this.currentFundIndex) {
+      this.selectedFund = fund;
+    } else {
+      this.currentFundIndex = fundIndex;
+    }
   }
 
   closeFundDetail(): void {
