@@ -9,10 +9,6 @@ if ROOT not in sys.path:
 from app import create_app
 from app.extensions import db
 
-# import forcé de tous les modèles
-from app.models import user, story, chapter, donation, donation_pot, donation_goal, subscribe, payment
-
-
 @pytest.fixture
 def app():
     test_config = {
@@ -28,11 +24,9 @@ def app():
         yield app
         db.drop_all()
 
-
 @pytest.fixture
 def client(app):
     return app.test_client()
-
 
 @pytest.fixture
 def session(app):

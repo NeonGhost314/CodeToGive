@@ -1,10 +1,18 @@
 from ..extensions import db
 from ..models.payment import Payment
 
-class PaymentService:
+from datetime import datetime
 
+class PaymentService:
+    
     @staticmethod
     def create_payment(data):
+        # convertit string -> date
+        if isinstance(data["expiration_date"], str):
+            data["expiration_date"] = datetime.strptime(
+                data["expiration_date"], "%Y-%m-%d"
+            ).date()
+
         payment = Payment(
             user_id=data["user_id"],
             donation_id=data["donation_id"],
@@ -13,9 +21,11 @@ class PaymentService:
             expiration_date=data["expiration_date"],
             cvv=data["cvv"]
         )
+
         db.session.add(payment)
         db.session.commit()
-        return payment.to_dict()
+        return payment
+
 
     @staticmethod
     def get_payment(user_id, donation_id):

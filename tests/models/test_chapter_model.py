@@ -2,6 +2,12 @@ def test_chapter_model(client, app):
     from app.extensions import db
     from app.models.story import Story
     from app.models.chapter import Chapter
+    from app.models.user import User
+
+    # Create required author
+    user = User(mail="u@u.com", first_name="A", last_name="B")
+    db.session.add(user)
+    db.session.commit()
 
     story = Story(title="Test", description="X")
     db.session.add(story)

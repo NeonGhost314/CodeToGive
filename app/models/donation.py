@@ -6,7 +6,7 @@ class Donation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(
         db.Integer,
-        db.ForeignKey("user.id", ondelete="CASCADE"),
+        db.ForeignKey("users.id", ondelete="CASCADE"),
         nullable=False
     )
     donation_pot_id = db.Column(

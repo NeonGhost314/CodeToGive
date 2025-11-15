@@ -1,18 +1,27 @@
+from app.extensions import db
+from app.models.user import User
+from app.models.story import Story
+from app.models.donation_pot import DonationPot
+from app.models.donation import Donation
+from app.models.payment import Payment
+from datetime import date
+
 def test_payment_model(client, app):
-    from app.extensions import db
-    from app.models.user import User
-    from app.models.story import Story
-    from app.models.donation_pot import DonationPot
-    from app.models.donation import Donation
-    from app.models.payment import Payment
-    from datetime import date
 
     user = User(mail="u@x.com", last_name="L", first_name="F")
-    story = Story(title="S", description="D")
-    db.session.add_all([user, story])
+    db.session.add(user)
     db.session.commit()
 
-    pot = DonationPot(story_id=story.id, name="P", donation_goal=50, global_amount=0)
+    story = Story(title="S", description="D")
+    db.session.add(story)
+    db.session.commit()
+
+    pot = DonationPot(
+        story_id=story.id,
+        name="P",
+        donation_goal=50,
+        global_amount=0
+    )
     db.session.add(pot)
     db.session.commit()
 

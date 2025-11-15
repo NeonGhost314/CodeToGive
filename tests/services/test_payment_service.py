@@ -1,12 +1,39 @@
+from datetime import date
 from app.services.payment_service import PaymentService
 from app.services.user_service import UserService
 from app.services.donation_service import DonationService
+from app.services.donation_pot_service import DonationPotService
+from app.services.story_service import StoryService
 
-def test_create_payment(session):
-    user = UserService.create_user(session, {"username": "p", "email": "p@p.com"})
-    donation = DonationService.create_donation(session, {"user_id": user.id, "amount": 20})
+def test_create_payment(client, app):
+    user = UserService.create_user({
+        "mail": "p@example.com",
+        "first_name": "Peter",
+        "last_name": "Parker"
+    })
 
-    payment = PaymentService.create_payment(session, {
+    # Crée une story valide pour story_id
+    story = StoryService.create_story({
+        "title": "Story1",
+        "description": "Desc1",
+        "author_id": user.id
+    })
+
+    donation_pot = DonationPotService.create_donation_pot({
+        "story_id": story.id,
+        "name": "Pot1",
+        "donation_goal": 100   # ajouté
+    })
+
+    donation = DonationService.create_donation({
+        "user_id": user.id,
+        "donation_pot_id": donation_pot.id,
+        "amount": 20,
+        "donation_date": date.today(),
+        "state": "pending"
+    })
+
+    payment = PaymentService.create_payment({
         "user_id": user.id,
         "donation_id": donation.id,
         "card_type": "Visa",
@@ -18,11 +45,35 @@ def test_create_payment(session):
     assert payment.user_id == user.id
     assert payment.donation_id == donation.id
 
-def test_get_payment(session):
-    user = UserService.create_user(session, {"username": "p2", "email": "p2@p.com"})
-    donation = DonationService.create_donation(session, {"user_id": user.id, "amount": 33})
 
-    PaymentService.create_payment(session, {
+def test_get_payment(client, app):
+    user = UserService.create_user({
+        "mail": "p2@example.com",
+        "first_name": "Mary",
+        "last_name": "Jane"
+    })
+
+    story = StoryService.create_story({
+        "title": "Story2",
+        "description": "Desc2",
+        "author_id": user.id
+    })
+
+    donation_pot = DonationPotService.create_donation_pot({
+        "story_id": story.id,
+        "name": "Pot2",
+        "donation_goal": 200   # ajouté
+    })
+
+    donation = DonationService.create_donation({
+        "user_id": user.id,
+        "donation_pot_id": donation_pot.id,
+        "amount": 33,
+        "donation_date": date.today(),
+        "state": "pending"
+    })
+
+    PaymentService.create_payment({
         "user_id": user.id,
         "donation_id": donation.id,
         "card_type": "MC",
@@ -31,5 +82,5 @@ def test_get_payment(session):
         "cvv": "999"
     })
 
-    fetched = PaymentService.get_payment(session, user.id, donation.id)
+    fetched = PaymentService.get_payment(user.id, donation.id)
     assert fetched is not None

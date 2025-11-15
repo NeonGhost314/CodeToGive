@@ -13,7 +13,7 @@ class DashboardService:
     def get_user_dashboard(user_id):
         """Retourne toutes les infos du dashboard pour un utilisateur."""
 
-        user = User.query.get(user_id)
+        user = db.session.get(User, user_id)
         if not user:
             return None
 
@@ -58,7 +58,7 @@ class DashboardService:
         return (
             Donation.query
             .filter(Donation.user_id == user_id)
-            .order_by(Donation.created_at.desc())
+            .order_by(Donation.donation_date.desc())
             .limit(limit)
             .all()
         )

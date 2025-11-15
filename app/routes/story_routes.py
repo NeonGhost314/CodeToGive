@@ -3,7 +3,7 @@ from ..services.story_service import StoryService
 
 story_bp = Blueprint("story", __name__, url_prefix="/stories")
 
-@story_bp.get("/")
+@story_bp.get("")
 def list_stories():
     stories = StoryService.get_all()
     return jsonify([

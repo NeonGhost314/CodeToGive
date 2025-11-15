@@ -7,11 +7,11 @@ class DonationPot(db.Model):
     story_id = db.Column(
         db.Integer,
         db.ForeignKey("story.id", ondelete="CASCADE"),
-        unique=True,
-        nullable=False
+        nullable=False,
+        unique=True
     )
     name = db.Column(db.String(255), nullable=False)
     donation_goal = db.Column(db.Float, nullable=False)
-    global_amount = db.Column(db.Float, nullable=False, default=0)
+    global_amount = db.Column(db.Float, nullable=False, default=0.0)
 
-    donations = db.relationship("Donation", backref="donation_pot", cascade="all, delete")
+    story = db.relationship("Story", backref=db.backref("donation_pot", uselist=False))
