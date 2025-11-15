@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ApiService } from './services/api.service';
 import { Observable, catchError, of } from 'rxjs';
+import { DonationModalComponent } from './components/donation-modal/donation-modal.component';
 
 interface ApiResponse {
   message: string;
@@ -11,7 +12,8 @@ interface ApiResponse {
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule],
+  standalone: true,
+  imports: [RouterOutlet, CommonModule, DonationModalComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

@@ -1,0 +1,20 @@
+<div class="donation-modal">
+  <h2>Paniers d'Investissement</h2>
+
+  @if (error) {
+    <p class="error">{{ error }}</p>
+  }
+
+  @if (impactFunds$ | async; as funds) {
+    <ul>
+      @for (fund of funds; track fund.id) {
+        <li>
+          <strong>{{ fund.name }}</strong>
+          <div class="desc">{{ fund.description }}</div>
+        </li>
+      }
+    </ul>
+  } @else {
+    <p>Chargement des Paniers…</p>
+  }
+</div>

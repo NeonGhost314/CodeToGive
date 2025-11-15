@@ -26,7 +26,7 @@ Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd '$PWD\backend'
 # Wait a moment for backend to start
 Start-Sleep -Seconds 2
 
-# Start frontend in current window
+# Start frontend in current window (use npx to prefer local CLI if global 'ng' isn't installed)
 Set-Location frontend
-ng serve -o
+npx --yes ng serve -o
 
