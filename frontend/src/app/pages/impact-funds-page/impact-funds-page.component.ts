@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { DonationModalComponent } from '../../components/donation-modal/donation-modal.component';
 
 @Component({
-  selector: 'app-donation',
+  selector: 'app-impact-funds-page',
   standalone: true,
   imports: [CommonModule, DonationModalComponent],
-  templateUrl: './donation.component.html',
-  styleUrl: './donation.component.scss',
+  templateUrl: './impact-funds-page.component.html',
+  styleUrl: './impact-funds-page.component.scss',
 })
-export class DonationComponent {
+export class ImpactFundsPageComponent {
 }
 

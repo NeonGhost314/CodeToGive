@@ -1,0 +1,30 @@
+<div class="donation-options-page">
+  <button (click)="goBack()" class="back-button">← Retour</button>
+  
+  <h2>Options de Don pour le Fonds #{{ fundId }}</h2>
+
+  @if (error) {
+    <p class="error">{{ error }}</p>
+  }
+
+  @if (donationOptions$ | async; as options) {
+    @if (options.length === 0) {
+      <p>Aucune option de don disponible pour ce fonds.</p>
+    } @else {
+      <ul class="options-list">
+        @for (option of options; track option.id) {
+          <li class="option-item">
+            <strong>{{ option.description }}</strong>
+            <div class="option-details">
+              <span class="amount">Montant suggéré: {{ option.suggestedAmount }}€</span>
+              <span class="type">Type: {{ option.optionType }}</span>
+            </div>
+          </li>
+        }
+      </ul>
+    }
+  } @else {
+    <p>Chargement des options de don…</p>
+  }
+</div>
+

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DonationService, ImpactFund } from '../../services/donation_service';
+import { DonationService, ImpactFund , DonationOptions} from '../../services/donation_service';
 import { Observable, catchError, of } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-donation-modal',
@@ -11,9 +12,10 @@ import { Observable, catchError, of } from 'rxjs';
   styleUrl: './donation-modal.component.scss',
 })
 export class DonationModalComponent implements OnInit {
-  constructor(private donationService: DonationService) {}
+  constructor(private donationService: DonationService, private router: Router) {}
 
   impactFunds$!: Observable<ImpactFund[]>;
+  donationOptions$!: Observable<DonationOptions[]>;
   error?: string;
 
   ngOnInit(): void {
@@ -29,5 +31,7 @@ export class DonationModalComponent implements OnInit {
 
   selectFund(fund: ImpactFund): void {
     console.log('Selected fund:', fund);
+    this.router.navigateByUrl(`/donation-options/${fund.id}`);
+    
   }
 }

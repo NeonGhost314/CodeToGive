@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify
+from models.impact_funds import ImpactFunds
 
 # Blueprint for Impact Funds related routes
 impact_funds_bp = Blueprint('impact_funds', __name__, url_prefix='/api')
@@ -9,6 +10,7 @@ def get_impact_funds():
     """Return a list of available Impact Funds (stubbed for prototype)."""
     # NOTE: This is static data for the hackathon prototype. In a full build,
     # we'd fetch from the database using SQLAlchemy models.
+    # TODO: Replace with database query : fundsImpactFunds.query.all()
     funds = [
         {
             "id": 1,
