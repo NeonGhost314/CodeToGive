@@ -1,0 +1,80 @@
+.fund-detail-page {
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.page-layout {
+  display: flex;
+  gap: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.fund-display {
+  flex: 1;
+  max-width: 500px;
+  
+  .back-button {
+    background: transparent;
+    border: 1px solid black;
+    color: black;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    font-size: 16px;
+    
+    &:hover {
+      background: black;
+      color: white;
+    }
+  }
+  
+  .fund-card {
+    padding: 30px;
+    border: 2px solid black;
+    
+    h2 {
+      margin: 0 0 15px 0;
+      color: black;
+    }
+    
+    p {
+      margin: 0;
+      color: black;
+      line-height: 1.6;
+    }
+  }
+}
+
+.modal-panel-container {
+  flex: 1;
+  position: relative;
+}
+
+.error-state {
+  text-align: center;
+  padding: 40px;
+  
+  p {
+    color: black;
+    margin-bottom: 20px;
+  }
+  
+  button {
+    background: transparent;
+    border: 1px solid black;
+    color: black;
+    padding: 10px 20px;
+    cursor: pointer;
+    
+    &:hover {
+      background: black;
+      color: white;
+    }
+  }
+}
+
+.error {
+  color: black;
+}
+

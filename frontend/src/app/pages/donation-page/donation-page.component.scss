@@ -1,0 +1,84 @@
+.donation-page {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  position: relative;
+}
+
+.gallery-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  position: relative;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.funds-gallery {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  min-width: 300px;
+}
+
+.fund-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  border: 1px solid black;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+  
+  &.active {
+    border-width: 2px;
+    transform: scale(1.05);
+  }
+  
+  &.above,
+  &.below {
+    opacity: 0.7;
+    transform: scale(0.9);
+  }
+  
+  &:hover {
+    transform: scale(1.02);
+    
+    &.active {
+      transform: scale(1.08);
+    }
+  }
+  
+  h3 {
+    margin: 0 0 10px 0;
+    color: black;
+  }
+  
+  p {
+    margin: 0;
+    color: black;
+  }
+}
+
+.nav-arrow {
+  background: transparent;
+  border: 1px solid black;
+  color: black;
+  font-size: 24px;
+  padding: 10px 15px;
+  cursor: pointer;
+  min-width: 50px;
+  
+  &:hover {
+    background: black;
+    color: white;
+  }
+}
+
+.error {
+  color: black;
+}
+

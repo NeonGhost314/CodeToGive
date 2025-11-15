@@ -1,0 +1,57 @@
+<div class="donation-page">
+  @if (error) {
+    <p class="error">{{ error }}</p>
+  }
+
+  @if (selectedFund) {
+    <app-donation-options-modal 
+      [fund]="selectedFund"
+      (close)="closeFundDetail()">
+    </app-donation-options-modal>
+  }
+
+  @if (!selectedFund) {
+    @if (funds.length === 0 && !error) {
+      <p>Chargement des fonds…</p>
+    } @else if (funds.length === 0) {
+      <p>Aucun fonds disponible.</p>
+    } @else {
+      <div class="gallery-container">
+        <button 
+          class="nav-arrow nav-arrow-up" 
+          (click)="navigateUp()"
+          [attr.aria-label]="'Previous fund'">
+          ↑
+        </button>
+
+        <div class="funds-gallery">
+          @for (fund of funds; track fund.id; let i = $index) {
+            @if (i === currentFundIndex - 1 || i === currentFundIndex || i === currentFundIndex + 1 || 
+                 (currentFundIndex === 0 && i === funds.length - 1) ||
+                 (currentFundIndex === funds.length - 1 && i === 0)) {
+              <div 
+                class="fund-card"
+                [class.active]="i === currentFundIndex"
+                [class.above]="i === currentFundIndex - 1 || (currentFundIndex === 0 && i === funds.length - 1)"
+                [class.below]="i === currentFundIndex + 1 || (currentFundIndex === funds.length - 1 && i === 0)"
+                (click)="openFundDetail(fund)">
+                <h3>{{ fund.name }}</h3>
+                @if (fund.description) {
+                  <p>{{ fund.description }}</p>
+                }
+              </div>
+            }
+          }
+        </div>
+
+        <button 
+          class="nav-arrow nav-arrow-down" 
+          (click)="navigateDown()"
+          [attr.aria-label]="'Next fund'">
+          ↓
+        </button>
+      </div>
+    }
+  }
+</div>
+

@@ -5,13 +5,13 @@ import { Observable, catchError, of } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-donation-modal',
+  selector: 'app-donation-button',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './donation-modal.component.html',
-  styleUrl: './donation-modal.component.scss',
+  templateUrl: './donation-button.component.html',
+  styleUrl: './donation-button.component.scss',
 })
-export class DonationModalComponent implements OnInit {
+export class DonationButtonComponent implements OnInit {
   constructor(private donationService: DonationService, private router: Router) {}
 
   impactFunds$!: Observable<ImpactFund[]>;
@@ -31,7 +31,7 @@ export class DonationModalComponent implements OnInit {
 
   selectFund(fund: ImpactFund): void {
     console.log('Selected fund:', fund);
-    this.router.navigateByUrl(`/donation-options/${fund.id}`);
-    
+    this.router.navigateByUrl('/donation');
   }
 }
+

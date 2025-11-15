@@ -32,8 +32,8 @@ export class HomePageComponent implements OnInit {
     );
   }
 
-  navigateToImpactFunds(): void {
-    this.router.navigateByUrl('/impact-funds');
+  navigateToDonation(): void {
+    this.router.navigateByUrl('/donation');
   }
 }
 

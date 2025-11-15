@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { ImpactFundsPageComponent } from './pages/impact-funds-page/impact-funds-page.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
-import { DonationOptionsPageComponent } from './pages/donation-options-page/donation-options-page.component';
+import { DonationPageComponent } from './pages/donation-page/donation-page.component';
+import { FundDetailPageComponent } from './pages/fund-detail-page/fund-detail-page.component';
 
 export const routes: Routes = [
   {
@@ -9,11 +9,11 @@ export const routes: Routes = [
     component: HomePageComponent
   },
   {
-    path: 'impact-funds',
-    component: ImpactFundsPageComponent
+    path: 'donation',
+    component: DonationPageComponent
   },
   {
-    path: 'donation-options/:id',
-    component: DonationOptionsPageComponent
+    path: 'donation/:id',
+    component: FundDetailPageComponent
   }
 ];
