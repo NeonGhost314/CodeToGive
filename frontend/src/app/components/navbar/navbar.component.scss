@@ -1,0 +1,88 @@
+@import '../../../styles.scss';
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(20px);
+  background-color: rgba(255, 250, 247, 0.7);
+  border-bottom: 1px solid rgba(238, 201, 210, 0.3);
+}
+
+.navbar-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+
+  @media (max-width: 768px) {
+    padding: 0 1.5rem;
+  }
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.brand-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--brand-primary, #C8BEEA), #EEC9D2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(238, 201, 210, 0.5);
+}
+
+.brand-text {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--brand-dark, #644A73);
+  font-family: Georgia, serif;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-link {
+  color: var(--brand-dark, #644A73);
+  text-decoration: none;
+  font-size: 1rem;
+  transition: opacity 0.3s ease;
+  position: relative;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #C8BEEA, #EEC9D2);
+    transition: width 0.3s ease;
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+}

@@ -12,8 +12,8 @@ interface ApiResponse {
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, CommonModule],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  template: '<router-outlet></router-outlet>',
+  styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
   title = 'frontend';
@@ -25,10 +25,14 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.message$ = this.apiService.getTestData().pipe(
-      catchError(err => {
+      catchError((err) => {
         // Handle error if backend is not running
         console.error(err);
-        return of({ message: "Failed to connect to Flask backend. Did you run 'flask run'?", error: true });
+        return of({
+          message:
+            "Failed to connect to Flask backend. Did you run 'flask run'?",
+          error: true,
+        });
       })
     );
   }

@@ -1,0 +1,122 @@
+<div class="landing-page">
+
+    <app-navbar></app-navbar>
+
+    <section class="hero-section" (mousemove)="onParticleMouseMove($event)">
+        <div #particleCanvas class="particle-canvas"></div>
+
+        <div class="hero-content" @fadeInUp>
+            <div class="hero-badge">
+                <span class="badge-icon">✦</span>
+                <span>Athena Center — Impact Partnership</span>
+            </div>
+
+            <h1 class="hero-title">
+                Transform Giving Into<br>
+                Lasting Impact
+            </h1>
+
+            <p class="hero-description">
+                Follow real healing journeys chapter by chapter. Your support unlocks
+                stories of transformation and creates tangible change in lives rebuilding from trauma.
+            </p>
+
+            <div class="hero-actions">
+                <button class="btn-primary" (click)="scrollToStory()">
+                    <span>Discover This Month's Journey</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5v14M19 12l-7 7-7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Live indicator -->
+            <div class="live-indicator">
+                <div class="live-dot"></div>
+                <span><strong>12 people</strong> are supporting a journey right now</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="featured-story-section" id="featured-story" *ngIf="featuredStory" @fadeIn>
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">This Month's Featured Journey</h2>
+                <p class="section-subtitle">
+                    Support {{ featuredStory.name }}'s healing path and unlock chapters as her journey progresses
+                </p>
+            </div>
+
+            <app-story-card [story]="featuredStory"></app-story-card>
+        </div>
+    </section>
+
+    <section class="impact-stats-section" *ngIf="impactStats" @fadeIn>
+        <div class="section-container">
+            <div class="section-header-centered">
+                <h2 class="section-title">Our Collective Impact</h2>
+                <p class="section-subtitle">
+                    Together, we're creating lasting change one journey at a time
+                </p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card" *ngFor="let stat of [
+          { icon: '👥', number: animatedLivesTouched, suffix: '+', label: 'Lives Touched', color: '#C8BEEA' },
+          { icon: '📖', number: animatedStories, suffix: '', label: 'Stories of Hope', color: '#EEC9D2' },
+          { icon: '🌟', number: animatedRecoveryRate, suffix: '%', label: 'Recovery Rate', color: '#F4D292' },
+          { icon: '🛡️', number: '24/7', suffix: '', label: 'Support Available', color: '#A8C2D1' }
+        ]">
+                    <div class="stat-icon">{{ stat.icon }}</div>
+                    <div class="stat-number" [style.color]="stat.color">
+                        <ng-container *ngIf="stat.number !== '24/7'; else staticNumber">
+                            {{ stat.number }}{{ stat.suffix }}
+                        </ng-container>
+                        <ng-template #staticNumber>{{ stat.number }}</ng-template>
+                    </div>
+                    <div class="stat-label">{{ stat.label }}</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="impact-challenges-section" *ngIf="impactChallenges.length" @fadeIn>
+        <div class="section-container">
+            <div class="challenges-grid">
+                <div class="challenge-card" *ngFor="let challenge of impactChallenges">
+                    <div class="challenge-header">
+                        <div class="challenge-info">
+                            <h3 class="challenge-title">{{ challenge.title }}</h3>
+                            <p class="challenge-subtitle">
+                                {{ challenge.goal - challenge.current }} {{ challenge.unit }} needed to reach goal
+                            </p>
+                        </div>
+                        <div class="challenge-percentage" [style.backgroundColor]="challenge.color + '33'"
+                            [style.color]="challenge.color">
+                            {{ getPercentage(challenge.current, challenge.goal) }}%
+                        </div>
+                    </div>
+
+                    <div class="progress-bar-container" [style.backgroundColor]="challenge.color + '1A'">
+                        <div class="progress-bar-fill"
+                            [style.width.%]="getPercentage(challenge.current, challenge.goal)"
+                            [style.background]="'linear-gradient(90deg, ' + challenge.color + ', #F4D292)'">
+                        </div>
+                    </div>
+
+                    <div class="challenge-stats">
+                        <span><strong>{{ challenge.current }}</strong> {{ challenge.unit }} funded</span>
+                        <span>Goal: {{ challenge.goal }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="loading-container" *ngIf="isLoading">
+        <div class="loading-spinner"></div>
+        <p>Loading healing journeys...</p>
+    </div>
+
+</div>
