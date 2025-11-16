@@ -1,5 +1,5 @@
 <div class="custom-amount">
-  <label class="custom-amount-label">Montant personnalisé</label>
+  <label class="custom-amount-label">Custom Amount</label>
   <div class="custom-amount-input-group">
     <span class="currency-symbol">$</span>
     <input
@@ -13,7 +13,7 @@
   </div>
 
   <div class="quick-amounts">
-    <span class="quick-amounts-label">Suggestions rapides:</span>
+    <span class="quick-amounts-label">Quick suggestions:</span>
     <div class="quick-amounts-buttons">
       @for (amount of quickAmounts; track amount) {
         <button
@@ -29,7 +29,7 @@
 
   @if (customAmount > 0 && !isValid()) {
     <p class="error-message">
-      Le montant doit être entre ${{ minAmount }} et ${{ maxAmount }}
+      The amount must be between ${{ minAmount }} and ${{ maxAmount }}
     </p>
   }
 </div>

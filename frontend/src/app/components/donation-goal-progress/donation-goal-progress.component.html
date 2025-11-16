@@ -10,10 +10,17 @@
     <div class="progress-bar" [style.width.%]="progressPercentage">
       <div class="progress-fill"></div>
     </div>
+    <div 
+      class="potential-progress-bar" 
+      [style.width.%]="potentialAdditionPercentage"
+      [style.left.%]="progressPercentage"
+      *ngIf="potentialAmount > 0">
+      <div class="potential-progress-fill"></div>
+    </div>
   </div>
   
   <div class="goal-footer">
-    <span class="remaining-text">{{ formatNumber(remaining) }}$ restants pour atteindre l'objectif</span>
+    <span class="remaining-text">${{ formatNumber(remaining) }} remaining to reach the goal</span>
   </div>
 </div>
 

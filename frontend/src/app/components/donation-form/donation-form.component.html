@@ -1,8 +1,8 @@
 <div class="donation-form">
-  <h2 class="form-title">Complétez votre don</h2>
+  <h2 class="form-title">Confirm My Impact Commitment</h2>
 
   <!-- Type de don -->
-  <div class="donation-type-tabs" role="tablist" aria-label="Type de don">
+  <div class="donation-type-tabs" role="tablist" aria-label="Commitment Type">
     <button
       type="button"
       class="tab-button"
@@ -13,26 +13,26 @@
       (click)="onDonationTypeChange('one-time')"
       (keydown.enter)="onDonationTypeChange('one-time')"
       (keydown.space)="onDonationTypeChange('one-time'); $event.preventDefault()">
-      Faites un don maintenant
+      Single Act of Support
     </button>
     <button
       type="button"
       class="tab-button"
       role="tab"
-      [class.active]="donationType === 'monthly'"
-      [attr.aria-selected]="donationType === 'monthly'"
-      [attr.aria-controls]="'donation-tab-monthly'"
+      [class.active]="donationType !== 'one-time'"
+      [attr.aria-selected]="donationType !== 'one-time'"
+      [attr.aria-controls]="'donation-tab-recurring'"
       (click)="onDonationTypeChange('monthly')"
       (keydown.enter)="onDonationTypeChange('monthly')"
       (keydown.space)="onDonationTypeChange('monthly'); $event.preventDefault()">
-      Faites un don mensuel
+      Pillar of Ongoing Support
     </button>
   </div>
 
   <!-- Montant -->
   <div class="form-section">
-    <label class="form-label">Montant du don*</label>
-    @if (showCustomAmount) {
+    <label class="form-label">Commitment Amount*</label>
+    @if (showCustomAmount || donationType !== 'one-time') {
       <app-donation-custom-amount
         [currentAmount]="customAmount"
         [minAmount]="1"
@@ -46,20 +46,64 @@
     }
   </div>
 
+  <!-- Recurring donation options -->
+  @if (donationType !== 'one-time') {
+    <div class="recurring-options">
+      <!-- Period selection -->
+      <div class="form-section">
+        <label class="form-label" for="recurring-period">Frequency*</label>
+        <select
+          id="recurring-period"
+          class="form-select"
+          [(ngModel)]="recurringPeriod"
+          (change)="onRecurringPeriodChange(recurringPeriod)">
+          <option value="monthly">Monthly</option>
+          <option value="quarterly">Quarterly</option>
+          <option value="yearly">Yearly</option>
+        </select>
+      </div>
+
+      <!-- End date option -->
+      <div class="form-section">
+        <label class="form-label" for="end-date">End Date*</label>
+        <input
+          type="date"
+          id="end-date"
+          class="form-date-input"
+          [(ngModel)]="endDate"
+          [min]="minDate">
+      </div>
+
+      <!-- Summary -->
+      @if (amount > 0) {
+        <div class="recurring-summary">
+          <div class="summary-row">
+            <span class="summary-label">Your commitment:</span>
+            <span class="summary-value">{{ getRecurringSummary() }}</span>
+          </div>
+          <div class="summary-row total">
+            <span class="summary-label">Estimated total:</span>
+            <span class="summary-value">${{ getTotalCommitment().toLocaleString() }}</span>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
   <!-- Message optionnel -->
   <div class="form-section">
-    <label class="form-label" for="donationMessage">Envoyez un message à cet organisme (facultatif)</label>
+    <label class="form-label" for="donationMessage">Send a message of support (optional)</label>
     <textarea
       id="donationMessage"
       class="form-textarea"
       [(ngModel)]="message"
-      placeholder="Merci pour le bon travail que vous faites!"
+      placeholder="Thank you for the important work you do!"
       maxlength="500"
       rows="3"
-      aria-label="Message optionnel pour l'organisme"
+      aria-label="Optional message of support"
       aria-describedby="message-count"></textarea>
     <span class="character-count" id="message-count" [class.warning]="(500 - message.length) < 50">
-      {{ 500 - message.length }} caractères restants
+      {{ 500 - message.length }} characters remaining
     </span>
   </div>
 
@@ -71,15 +115,16 @@
     [disabled]="!canProceed()"
     (click)="onSubmit()"
     (keydown.enter)="onSubmit()"
-    aria-label="Continuer pour terminer le don"
+    aria-label="Confirm My Impact Commitment"
     [attr.aria-disabled]="!canProceed()">
-    Continuez pour terminer le don
+    Confirm My Impact Commitment
   </button>
 
   <!-- Progress bar vers objectif -->
   <app-donation-goal-progress
     [currentAmount]="currentGoalAmount"
-    [goalAmount]="goalAmount">
+    [goalAmount]="goalAmount"
+    [potentialAmount]="getPotentialDonationAmount()">
   </app-donation-goal-progress>
 </div>
 

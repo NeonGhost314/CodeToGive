@@ -34,9 +34,12 @@ export interface DonationOptions {
 export interface DonationFormData {
   fundId: number;
   amount: number;
-  type: 'one-time' | 'monthly';
+  type: 'one-time' | 'monthly' | 'quarterly' | 'yearly';
   message?: string;
   fundName?: string;
+  recurringPeriod?: 'monthly' | 'quarterly' | 'yearly';
+  endDate?: string; // ISO date string
+  hasEndDate?: boolean;
 }
 
 
@@ -113,47 +116,47 @@ export class DonationService {
   getDonationAmountOptions(): DonationAmountOption[] {
     return [
       {
-        amount: 50,
-        title: "Package d'urgence",
+        amount: 25,
+        title: "Emergency Package",
         impactItems: [
-          { icon: "food", text: "Repas chauds pour 2 jours complets" },
-          { icon: "hygiene", text: "Kits d'hygiène essentiels" },
-          { icon: "clothing", text: "Vêtements d'urgence" },
-          { icon: "phone", text: "Ligne d'écoute 24/7 pour crises" },
-          { icon: "medical", text: "Trousses de premiers soins" },
-          { icon: "legal", text: "2h de consultation juridique" },
-          { icon: "transport", text: "Transport vers refuge sécuritaire" },
-          { icon: "info", text: "Ressources d'information et droits" }
+          { icon: "food", text: "Hot meals for 2 full days" },
+          { icon: "hygiene", text: "Essential hygiene kits" },
+          { icon: "clothing", text: "Emergency clothing" },
+          { icon: "phone", text: "24/7 crisis hotline access" },
+          { icon: "medical", text: "First aid kits" },
+          { icon: "legal", text: "2 hours of legal consultation" },
+          { icon: "transport", text: "Transport to safe shelter" },
+          { icon: "info", text: "Information resources and rights" }
         ]
       },
       {
-        amount: 200,
-        title: "Package de soutien",
+        amount: 75,
+        title: "Support Package",
         impactItems: [
-          { icon: "psychology", text: "5h de soutien psychologique professionnel" },
-          { icon: "therapy", text: "3 sessions de thérapie individuelle" },
-          { icon: "group", text: "Groupes de soutien par les pairs (2 mois)" },
-          { icon: "legal", text: "Accompagnement démarches administratives" },
-          { icon: "social", text: "Suivi personnalisé (6 semaines)" },
-          { icon: "workshop", text: "Ateliers développement compétences" },
-          { icon: "education", text: "Formation professionnelle" },
-          { icon: "job", text: "Aide recherche d'emploi" }
+          { icon: "psychology", text: "5 hours of professional psychological support" },
+          { icon: "therapy", text: "3 individual therapy sessions" },
+          { icon: "group", text: "Peer support groups (2 months)" },
+          { icon: "legal", text: "Administrative process assistance" },
+          { icon: "social", text: "Personalized follow-up (6 weeks)" },
+          { icon: "workshop", text: "Skills development workshops" },
+          { icon: "education", text: "Professional training" },
+          { icon: "job", text: "Job search assistance" }
         ]
       },
       {
         amount: 350,
-        title: "Package d'hébergement",
+        title: "Accommodation Package",
         impactItems: [
-          { icon: "shelter", text: "Nuit complète refuge sécurisé (24h/24)" },
-          { icon: "food", text: "3 repas nutritifs par jour" },
-          { icon: "hygiene", text: "Produits hygiène et vêtements complets" },
-          { icon: "bed", text: "Espace privé repos et récupération" },
-          { icon: "security", text: "Planification de sécurité" },
-          { icon: "house", text: "Soutien recherche logement permanent" },
-          { icon: "specialist", text: "Consultations spécialistes (psychologue, avocat)" },
-          { icon: "workshop", text: "Ateliers préparation vie autonome" },
-          { icon: "children", text: "Ressources enfants (activités, école, garderie)" },
-          { icon: "follow", text: "Suivi post-hébergement (3 mois)" }
+          { icon: "shelter", text: "Full night in secure shelter (24/7)" },
+          { icon: "food", text: "3 nutritious meals per day" },
+          { icon: "hygiene", text: "Hygiene products and complete clothing" },
+          { icon: "bed", text: "Private space for rest and recovery" },
+          { icon: "security", text: "Safety planning" },
+          { icon: "house", text: "Support finding permanent housing" },
+          { icon: "specialist", text: "Specialist consultations (psychologist, lawyer)" },
+          { icon: "workshop", text: "Workshops preparing for independent living" },
+          { icon: "children", text: "Children's resources (activities, school, daycare)" },
+          { icon: "follow", text: "Post-shelter follow-up (3 months)" }
         ]
       }
     ];

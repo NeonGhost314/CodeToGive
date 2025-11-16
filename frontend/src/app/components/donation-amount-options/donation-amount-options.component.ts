@@ -19,7 +19,7 @@ export class DonationAmountOptionsComponent implements OnInit {
   options: DonationAmountOption[] = [];
   customOption: DonationAmountOption = {
     amount: 0,
-    title: 'Montant personnalisé',
+    title: 'Custom Amount',
     impactItems: [],
     isCustom: true
   };

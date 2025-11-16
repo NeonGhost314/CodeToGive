@@ -78,7 +78,7 @@ export class DonationPageComponent implements OnInit {
   onCustomAmountSelected(): void {
     this.selectedPackage = { 
       amount: 0, 
-      title: 'Montant personnalisé',
+      title: 'Custom Amount',
       impactItems: [],
       isCustom: true 
     };
@@ -123,7 +123,10 @@ export class DonationPageComponent implements OnInit {
         amount: donationData.amount,
         type: donationData.type,
         message: donationData.message,
-        fundName: this.selectedFund.name
+        fundName: this.selectedFund.name,
+        recurringPeriod: donationData.recurringPeriod,
+        endDate: donationData.endDate,
+        hasEndDate: donationData.hasEndDate
       });
       
       // Naviguer vers la page de paiement
