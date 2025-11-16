@@ -14,7 +14,7 @@ export class VideoPlayerComponent {
   
   constructor(private sanitizer: DomSanitizer) {}
   
-  getSafeUrl(): SafeUrl {
+  get safeVideoSrc(): SafeUrl {
     return this.sanitizer.bypassSecurityTrustUrl(this.videoSrc);
   }
 }

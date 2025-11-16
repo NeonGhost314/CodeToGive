@@ -1,8 +1,7 @@
 <video
   class="video-player"
   controls
-  preload="metadata"
-  crossorigin="anonymous">
-  <source [src]="videoSrc" type="video/mp4">
+  preload="metadata">>
+  <source [src]="safeVideoSrc" type="video/mp4">
   Your browser does not support the video tag.
 </video>
