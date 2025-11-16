@@ -18,10 +18,10 @@
     } @else {
       <div class="gallery-container">
         <button 
-          class="nav-arrow nav-arrow-up" 
+          class="nav-arrow nav-arrow-left" 
           (click)="navigateUp()"
           [attr.aria-label]="'Previous fund'">
-          ↑
+          ←
         </button>
 
         <div class="funds-gallery">
@@ -36,26 +36,74 @@
                 [class.below]="i === currentFundIndex + 1 || (currentFundIndex === funds.length - 1 && i === 0)"
                 (click)="openFundDetail(fund)">
                 <h3>{{ fund.name }}</h3>
-                @if (fund.description) {
-                  <p>{{ fund.description }}</p>
-                }
-                @if (fund.statistics) {
-                  <div class="fund-statistics">
-                    <div class="stat-item">
-                      <span class="stat-value">{{ fund.statistics.total_donors }}</span>
-                      <span class="stat-label">donateurs</span>
+                
+                @if (i === currentFundIndex) {
+                  <!-- Description détaillée pour la carte active -->
+                  <div class="detailed-description">
+                    <p class="main-description">{{ fund.description || 'Contribuez à un impact positif et durable dans notre communauté.' }}</p>
+                    
+                    <div class="impact-points">
+                      <h4>Points d'impact :</h4>
+                      <ul>
+                        <li>Amélioration directe de la qualité de vie des bénéficiaires</li>
+                        <li>Création d'emplois locaux et soutien économique</li>
+                        <li>Développement de programmes éducatifs innovants</li>
+                        <li>Impact environnemental positif et durable</li>
+                      </ul>
                     </div>
-                    <div class="stat-item">
-                      <span class="stat-value">{{ fund.statistics.total_amount_raised | currency:'CAD':'symbol':'1.0-0' }}</span>
-                      <span class="stat-label">collectés</span>
-                    </div>
-                    @if (fund.statistics.recent_donations_count > 0) {
-                      <div class="stat-item recent">
-                        <span class="stat-value">{{ fund.statistics.recent_donations_count }}</span>
-                        <span class="stat-label">récemment</span>
+
+                    @if (fund.statistics) {
+                      <div class="detailed-statistics">
+                        <div class="stat-row">
+                          <div class="stat-item primary">
+                            <span class="stat-value">{{ fund.statistics.total_amount_raised | currency:'CAD':'symbol':'1.0-0' }}</span>
+                            <span class="stat-label">collectés</span>
+                          </div>
+                          <div class="stat-item">
+                            <span class="stat-value">{{ fund.statistics.total_donors }}</span>
+                            <span class="stat-label">donateurs</span>
+                          </div>
+                        </div>
+                        <div class="stat-row">
+                          <div class="stat-item">
+                            <span class="stat-value">{{ fund.statistics.average_donation | currency:'CAD':'symbol':'1.0-0' }}</span>
+                            <span class="stat-label">don moyen</span>
+                          </div>
+                          <div class="stat-item highlight">
+                            <span class="stat-value">{{ getEfficiencyRate(fund) }}%</span>
+                            <span class="stat-label">efficacité</span>
+                          </div>
+                        </div>
+                        <div class="stat-row single">
+                          <div class="stat-item recent">
+                            <span class="stat-value">{{ fund.statistics.recent_donations_count }}</span>
+                            <span class="stat-label">donations cette semaine</span>
+                          </div>
+                        </div>
                       </div>
                     }
+
+                    <div class="basket-cost">
+                      <div class="cost-info">
+                        <span class="cost-label">Coût d'un panier complet :</span>
+                        <span class="cost-value">{{ getBasketCost(fund) | currency:'CAD':'symbol':'1.0-0' }}</span>
+                      </div>
+                      <p class="cost-description">Ce montant permet de financer un impact direct et mesurable</p>
+                    </div>
                   </div>
+                } @else {
+                  <!-- Description simple pour les autres cartes -->
+                  @if (fund.description) {
+                    <p>{{ fund.description }}</p>
+                  }
+                  @if (fund.statistics) {
+                    <div class="fund-statistics">
+                      <div class="stat-item">
+                        <span class="stat-value">{{ fund.statistics.total_amount_raised | currency:'CAD':'symbol':'1.0-0' }}</span>
+                        <span class="stat-label">collectés</span>
+                      </div>
+                    </div>
+                  }
                 }
               </div>
             }
@@ -63,10 +111,10 @@
         </div>
 
         <button 
-          class="nav-arrow nav-arrow-down" 
+          class="nav-arrow nav-arrow-right" 
           (click)="navigateDown()"
           [attr.aria-label]="'Next fund'">
-          ↓
+          →
         </button>
       </div>
     }

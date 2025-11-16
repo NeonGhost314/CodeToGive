@@ -63,5 +63,17 @@ export class DonationPageComponent implements OnInit {
   closeFundDetail(): void {
     this.selectedFund = null;
   }
+
+  getEfficiencyRate(fund: ImpactFund): number {
+    // Mock du taux d'efficacité basé sur l'ID du fonds
+    const rates = [92, 87, 95, 89, 91, 88, 93];
+    return rates[fund.id % rates.length] || 90;
+  }
+
+  getBasketCost(fund: ImpactFund): number {
+    // Mock du coût d'un panier basé sur l'ID et le type de fonds
+    const baseCosts = [75, 125, 200, 150, 100, 175, 250];
+    return baseCosts[fund.id % baseCosts.length] || 150;
+  }
 }
 
