@@ -1,8 +1,7 @@
 <div class="landing-page">
 
     <app-navbar></app-navbar>
-    <app-scroll-tracker></app-scroll-tracker>
-
+    <app-scroll-indicator></app-scroll-indicator>
     <section class="hero-section" id="hero" (mousemove)="onParticleMouseMove($event)">
         <div #particleCanvas class="particle-canvas"></div>
 
@@ -220,6 +219,13 @@
                         <strong>⚠️ In immediate danger?</strong> Call 911 first, then reach out to us.
                     </p>
                 </div>
+            </div>
+
+            <!-- Integrated Emergency Contacts -->
+            <div class="emergency-contacts-integrated">
+                <h3 class="contacts-title">Important Numbers</h3>
+
+                <app-emergency-contacts></app-emergency-contacts>
             </div>
         </div>
     </section>

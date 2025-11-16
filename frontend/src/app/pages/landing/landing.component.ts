@@ -9,9 +9,10 @@ import {
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
-import { ScrollTrackerComponent } from '../../components/scroll-tracker/scroll-tracker.component';
+import { ScrollIndicatorComponent } from '../../components/scroll-tracker/scroll-indicator.component';
 import { StoryCardComponent } from '../../components/story-card/story-card.component';
 import { VisualStatComponent } from '../../components/visual-stat/visual-stat.component';
+import { EmergencyContactsComponent } from '../../components/EmergencyContacts/EmergencyContacts.component';
 import {
   HealingStory,
   ImpactStats,
@@ -36,9 +37,10 @@ interface HelpService {
     CommonModule,
     RouterModule,
     NavbarComponent,
-    ScrollTrackerComponent,
+    ScrollIndicatorComponent,
     StoryCardComponent,
     VisualStatComponent,
+    EmergencyContactsComponent,
   ],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
@@ -74,7 +76,7 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
       color: '#EEC9D2',
     },
     {
-      icon: '🌟',
+      icon: '⭐',
       value: 98,
       suffix: '%',
       label: 'Success Rate',

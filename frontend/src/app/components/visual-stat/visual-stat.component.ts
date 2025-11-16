@@ -16,7 +16,6 @@ interface StatData {
   label: string;
   sublabel: string;
   color: string;
-  image?: string;
 }
 
 @Component({
@@ -57,7 +56,6 @@ export class VisualStatComponent implements OnInit, AfterViewInit, OnDestroy {
     const animate = (currentTime: number) => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
-
       const easeOutQuart = 1 - Math.pow(1 - progress, 4);
       this.animatedValue = Math.floor(targetValue * easeOutQuart);
 
@@ -80,29 +78,41 @@ export class VisualStatComponent implements OnInit, AfterViewInit, OnDestroy {
     const height = canvas.height;
     const centerX = width / 2;
     const centerY = height / 2;
-    const radius = Math.min(width, height) / 2 - 10;
+    const radius = Math.min(width, height) / 2 - 15;
 
     ctx.clearRect(0, 0, width, height);
 
+    // Background circle
     ctx.beginPath();
     ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
-    ctx.strokeStyle = `${this.stat.color}20`;
-    ctx.lineWidth = 10;
+    ctx.strokeStyle = `${this.stat.color}15`;
+    ctx.lineWidth = 12;
     ctx.stroke();
 
     // Progress arc
-    const progress =
-      typeof this.stat.value === 'number' && this.stat.suffix === '%'
-        ? this.stat.value / 100
-        : 0.85;
-
-    const endAngle = -Math.PI / 2 + 2 * Math.PI * progress;
+    const progress = this.stat.suffix === '%' ? this.stat.value / 100 : 0.75;
+    const startAngle = -Math.PI / 2;
+    const endAngle = startAngle + 2 * Math.PI * progress;
 
     ctx.beginPath();
-    ctx.arc(centerX, centerY, radius, -Math.PI / 2, endAngle);
+    ctx.arc(centerX, centerY, radius, startAngle, endAngle);
     ctx.strokeStyle = this.stat.color;
-    ctx.lineWidth = 10;
+    ctx.lineWidth = 12;
     ctx.lineCap = 'round';
     ctx.stroke();
+
+    // Inner glow
+    const gradient = ctx.createRadialGradient(
+      centerX,
+      centerY,
+      radius - 20,
+      centerX,
+      centerY,
+      radius
+    );
+    gradient.addColorStop(0, `${this.stat.color}00`);
+    gradient.addColorStop(1, `${this.stat.color}10`);
+    ctx.fillStyle = gradient;
+    ctx.fill();
   }
 }

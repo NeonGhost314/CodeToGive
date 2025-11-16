@@ -1,6 +1,6 @@
 <div class="visual-stat-card" [style.--stat-color]="stat.color">
     <div class="stat-visual">
-        <canvas #chartCanvas width="160" height="160" class="stat-chart"></canvas>
+        <canvas #chartCanvas width="140" height="140" class="stat-chart"></canvas>
         <div class="stat-icon-overlay">{{ stat.icon }}</div>
     </div>
 
@@ -10,9 +10,5 @@
         </div>
         <div class="stat-label">{{ stat.label }}</div>
         <div class="stat-sublabel">{{ stat.sublabel }}</div>
-    </div>
-
-    <div class="stat-decoration" *ngIf="stat.image">
-        <img [src]="stat.image" [alt]="stat.label" />
     </div>
 </div>

@@ -1,0 +1,25 @@
+<div class="scroll-roadmap">
+    <div class="roadmap-container">
+
+        <!-- Progress line -->
+        <div class="progress-line">
+            <div class="progress-fill" [style.height.%]="scrollProgress"></div>
+        </div>
+
+        <!-- Journey steps -->
+        <div class="journey-steps">
+            <div *ngFor="let step of journeySteps; let i = index" class="step-item"
+                [class.active]="isStepActive(step.id)" [class.completed]="isStepCompleted(i)"
+                (click)="scrollToSection(step.id)">
+
+                <div class="step-dot">
+                    <span class="step-icon">{{ step.icon }}</span>
+                    <div class="step-pulse" *ngIf="isStepActive(step.id)"></div>
+                </div>
+
+                <div class="step-label">{{ step.label }}</div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -4,7 +4,7 @@
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: linear-gradient(135deg, rgba(255, 250, 247, 0.95), rgba(247, 238, 229, 0.95));
+  background: linear-gradient(135deg, rgba(255, 250, 247, 0.98), rgba(247, 238, 229, 0.98));
   backdrop-filter: blur(20px);
   border-bottom: 2px solid rgba(244, 210, 146, 0.4);
   box-shadow: 0 4px 20px rgba(200, 190, 234, 0.15);
@@ -31,68 +31,26 @@
 .navbar-brand {
   display: flex;
   align-items: center;
-  gap: 14px;
   text-decoration: none;
   transition: all 0.3s ease;
 
   &:hover {
     transform: translateY(-2px);
-
-    .brand-icon {
-      box-shadow: 0 6px 24px rgba(238, 201, 210, 0.5);
-    }
+    filter: brightness(1.05);
   }
 }
 
-.brand-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #C8BEEA, #EEC9D2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 16px rgba(238, 201, 210, 0.4);
+.brand-logo {
+  height: 60px;
+  width: auto;
   transition: all 0.3s ease;
 
   @media (max-width: 768px) {
-    width: 44px;
-    height: 44px;
-
-    svg {
-      width: 24px;
-      height: 24px;
-    }
+    height: 48px;
   }
-}
 
-.brand-text-container {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.brand-text {
-  font-size: 1.375rem;
-  font-weight: 600;
-  color: var(--brand-dark, #644A73);
-  font-family: Georgia, serif;
-  line-height: 1;
-
-  @media (max-width: 768px) {
-    font-size: 1.125rem;
-  }
-}
-
-.brand-tagline {
-  font-size: 0.8125rem;
-  color: rgba(100, 74, 115, 0.7);
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-
-  @media (max-width: 600px) {
-    display: none;
+  @media (max-width: 480px) {
+    height: 40px;
   }
 }
 
@@ -102,7 +60,7 @@
   gap: 1.5rem;
 }
 
-.nav-link {
+.nav-link-phone {
   display: flex;
   align-items: center;
   gap: 8px;
