@@ -5,7 +5,6 @@ import { PaymentPageComponent } from './pages/payment-page/payment-page.componen
 import { PaymentConfirmationComponent } from './pages/payment-confirmation/payment-confirmation.component';
 import { LandingComponent } from './pages/landing/landing.component';
 import { VideoComponent } from './pages/video-page/video.component';
-import { HomeComponent } from './pages/home/home.component';
 import { AuthComponent } from './pages/auth/auth.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 
@@ -13,10 +12,6 @@ export const routes: Routes = [
   {
     path: '',
     component: LandingComponent,
-  },
-  {
-    path: 'home',
-    component: HomeComponent
   },
   {
     path: 'donation',
