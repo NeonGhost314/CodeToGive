@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from models.impact_funds import ImpactFunds
+from backend.models.impact_funds import ImpactFunds
 
 # Blueprint for Impact Funds related routes
 impact_funds_bp = Blueprint("impact_funds", __name__, url_prefix="/api")

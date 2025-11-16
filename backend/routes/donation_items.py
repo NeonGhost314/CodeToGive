@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from models.donation_items import DonationItems
+from backend.models.donation_items import DonationItems
 
 donation_items_bp = Blueprint('donation_items', __name__, url_prefix='/api')
 
