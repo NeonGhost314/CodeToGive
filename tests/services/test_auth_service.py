@@ -1,7 +1,7 @@
 from werkzeug.security import generate_password_hash
-from app.models import db
-from app.models.user import User
-from app.services.auth_service import AuthService
+from backend.extensions import db
+from backend.models.user import User
+from backend.services.auth_service import AuthService
 
 def test_authenticate_success(client, app):
     # User valide

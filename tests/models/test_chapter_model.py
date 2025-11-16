@@ -1,8 +1,8 @@
 def test_chapter_model(client, app):
-    from app.extensions import db
-    from app.models.story import Story
-    from app.models.chapter import Chapter
-    from app.models.user import User
+    from backend.extensions import db
+    from backend.models.story import Story
+    from backend.models.chapter import Chapter
+    from backend.models.user import User
 
     # Create required author
     user = User(mail="u@u.com", first_name="A", last_name="B", password_hash = "1234")

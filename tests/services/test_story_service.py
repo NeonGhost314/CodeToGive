@@ -1,4 +1,4 @@
-from app.services.story_service import StoryService
+from backend.services.story_service import StoryService
 
 def test_create_story(client, app):
     story = StoryService.create_story({

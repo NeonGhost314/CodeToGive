@@ -1,9 +1,9 @@
 from datetime import date
-from app.services.donation_service import DonationService
-from app.services.user_service import UserService
-from app.models.donation_pot import DonationPot
-from app.models.story import Story
-from app.extensions import db
+from backend.services.donation_service import DonationService
+from backend.services.user_service import UserService
+from backend.models.donation_pot import DonationPot
+from backend.models.story import Story
+from backend.extensions import db
 
 def test_create_donation(client, app):
     with app.app_context():

@@ -1,9 +1,9 @@
-from app.extensions import db
-from app.models.user import User
-from app.models.story import Story
-from app.models.donation_pot import DonationPot
-from app.models.donation import Donation
-from app.models.subscribe import Subscribe
+from backend.extensions import db
+from backend.models.user import User
+from backend.models.story import Story
+from backend.models.donation_pot import DonationPot
+from backend.models.donation import Donation
+from backend.models.subscribe import Subscribe
 from datetime import date
 
 def test_subscription_model(client, app):

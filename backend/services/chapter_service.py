@@ -1,7 +1,7 @@
 # app/services/chapter_service.py
 
-from app.extensions import db
-from app.models.chapter import Chapter
+from ..extensions import db
+from ..models.chapter import Chapter
 
 class ChapterService:
 
@@ -18,3 +18,7 @@ class ChapterService:
     @staticmethod
     def get_chapter_by_id(chapter_id):
         return db.session.get(Chapter, chapter_id)
+
+    @staticmethod
+    def get_chapters_for_story(story_id):
+        return Chapter.query.filter_by(story_id=story_id).all()

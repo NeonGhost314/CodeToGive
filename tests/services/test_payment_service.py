@@ -1,9 +1,9 @@
 from datetime import date
-from app.services.payment_service import PaymentService
-from app.services.user_service import UserService
-from app.services.donation_service import DonationService
-from app.services.donation_pot_service import DonationPotService
-from app.services.story_service import StoryService
+from backend.services.payment_service import PaymentService
+from backend.services.user_service import UserService
+from backend.services.donation_service import DonationService
+from backend.services.donation_pot_service import DonationPotService
+from backend.services.story_service import StoryService
 
 def test_create_payment(client, app):
     user = UserService.create_user({

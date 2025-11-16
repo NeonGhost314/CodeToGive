@@ -1,7 +1,7 @@
 def test_donation_goal_model(client, app):
-    from app.extensions import db
-    from app.models.user import User
-    from app.models.donation_goal import DonationGoal
+    from backend.extensions import db
+    from backend.models.user import User
+    from backend.models.donation_goal import DonationGoal
     from datetime import date
 
     user = User(mail="u@x.com", last_name="L", first_name="F", password_hash = "1234")
