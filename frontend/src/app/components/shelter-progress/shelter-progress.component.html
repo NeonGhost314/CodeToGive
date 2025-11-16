@@ -92,19 +92,19 @@
         <!-- Real Impact Stats -->
         <div class="impact-counter">
             <div class="impact-stat">
-                <span class="impact-number">{{ debugMode ? debugProgress : current }}</span>
+                <span class="impact-number">{{ debugMode ? debugProgress : current }} k$</span>
                 <span class="impact-label">Raised</span>
                 <span class="impact-sublabel">By amazing supporters like you</span>
             </div>
             <div class="stat-divider"></div>
             <div class="impact-stat">
-                <span class="impact-number">{{ goal }}</span>
+                <span class="impact-number">{{ goal }} k$</span>
                 <span class="impact-label">Goal</span>
                 <span class="impact-sublabel">To build a complete shelter</span>
             </div>
             <div class="stat-divider"></div>
             <div class="impact-stat highlight">
-                <span class="impact-number">{{ goal - (debugMode ? debugProgress : current) }}</span>
+                <span class="impact-number">{{ goal - (debugMode ? debugProgress : current) }} k$</span>
                 <span class="impact-label">Still Needed</span>
                 <span class="impact-sublabel">To open our doors</span>
             </div>
