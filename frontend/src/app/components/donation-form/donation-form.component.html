@@ -1,0 +1,67 @@
+<div class="donation-form">
+  <h2 class="form-title">Complétez votre don</h2>
+
+  <!-- Type de don -->
+  <div class="donation-type-tabs">
+    <button
+      type="button"
+      class="tab-button"
+      [class.active]="donationType === 'one-time'"
+      (click)="onDonationTypeChange('one-time')">
+      Faites un don maintenant
+    </button>
+    <button
+      type="button"
+      class="tab-button"
+      [class.active]="donationType === 'monthly'"
+      (click)="onDonationTypeChange('monthly')">
+      Faites un don mensuel
+    </button>
+  </div>
+
+  <!-- Montant -->
+  <div class="form-section">
+    <label class="form-label">Montant du don*</label>
+    @if (showCustomAmount) {
+      <app-donation-custom-amount
+        [currentAmount]="customAmount"
+        [minAmount]="1"
+        (amountChanged)="onCustomAmountChange($event)">
+      </app-donation-custom-amount>
+    } @else {
+      <div class="amount-display">
+        <span class="currency">$</span>
+        <span class="amount-value">{{ amount }}</span>
+      </div>
+    }
+  </div>
+
+  <!-- Message optionnel -->
+  <div class="form-section">
+    <label class="form-label">Envoyez un message à cet organisme (facultatif)</label>
+    <textarea
+      class="form-textarea"
+      [(ngModel)]="message"
+      placeholder="Merci pour le bon travail que vous faites!"
+      maxlength="500"
+      rows="3"></textarea>
+    <span class="character-count">{{ 500 - message.length }} caractères restants</span>
+  </div>
+
+  <!-- Bouton soumettre -->
+  <button
+    type="button"
+    class="submit-button"
+    [class.disabled]="!canProceed()"
+    [disabled]="!canProceed()"
+    (click)="onSubmit()">
+    Continuez pour terminer le don
+  </button>
+
+  <!-- Progress bar vers objectif -->
+  <app-donation-goal-progress
+    [currentAmount]="currentGoalAmount"
+    [goalAmount]="goalAmount">
+  </app-donation-goal-progress>
+</div>
+

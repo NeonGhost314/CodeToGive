@@ -1,0 +1,18 @@
+<div class="donation-summary">
+  <h3 class="summary-title">Récapitulatif</h3>
+  <div class="summary-content">
+    <div class="summary-row">
+      <span class="summary-label">Type:</span>
+      <span class="summary-value">{{ getTypeLabel() }}</span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label">Fond:</span>
+      <span class="summary-value">{{ summary.fundName }}</span>
+    </div>
+    <div class="summary-row total">
+      <span class="summary-label">Total:</span>
+      <span class="summary-value">${{ summary.amount }}</span>
+    </div>
+  </div>
+</div>
+

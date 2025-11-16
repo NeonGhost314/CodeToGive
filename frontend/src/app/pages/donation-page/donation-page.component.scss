@@ -1,84 +1,206 @@
 .donation-page {
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  position: relative;
-}
-
-.gallery-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  position: relative;
-  transition: opacity 0.3s ease-in-out;
-}
-
-.funds-gallery {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  min-width: 300px;
-}
-
-.fund-card {
   width: 100%;
-  max-width: 400px;
-  padding: 20px;
-  border: 1px solid black;
-  cursor: pointer;
-  transition: transform 0.2s, opacity 0.2s;
-  
-  &.active {
-    border-width: 2px;
-    transform: scale(1.05);
-  }
-  
-  &.above,
-  &.below {
-    opacity: 0.7;
-    transform: scale(0.9);
-  }
-  
-  &:hover {
-    transform: scale(1.02);
-    
-    &.active {
-      transform: scale(1.08);
-    }
-  }
-  
-  h3 {
-    margin: 0 0 10px 0;
-    color: black;
-  }
-  
-  p {
-    margin: 0;
-    color: black;
-  }
-}
-
-.nav-arrow {
-  background: transparent;
-  border: 1px solid black;
-  color: black;
-  font-size: 24px;
-  padding: 10px 15px;
-  cursor: pointer;
-  min-width: 50px;
-  
-  &:hover {
-    background: black;
-    color: white;
-  }
+  height: 100vh;
+  overflow: hidden;
+  background-color: #f5f5f5;
 }
 
 .error {
-  color: black;
+  padding: 24px;
+  color: #d32f2f;
+  background-color: #ffebee;
+  border: 1px solid #d32f2f;
+  border-radius: 4px;
+  margin: 24px;
 }
 
+.donation-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.donation-left {
+  flex: 0 0 60%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  background-color: #fff;
+  padding: 16px;
+  gap: 14px;
+  
+  @media (max-width: 1024px) {
+    flex: 0 0 100%;
+    padding: 12px;
+    gap: 12px;
+  }
+}
+
+.org-name-main {
+  margin: 0 0 4px 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  line-height: 1.2;
+  letter-spacing: -0.3px;
+}
+
+.org-subtitle {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #666;
+  font-weight: 400;
+}
+
+.impact-photo-section {
+  margin: 12px 0;
+}
+
+.impact-photo {
+  width: 100%;
+  max-width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 6px;
+  background-color: #f5f5f5;
+}
+
+.impact-photo-placeholder {
+  width: 100%;
+  height: 160px;
+  border: 1.5px dashed #ccc;
+  border-radius: 6px;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  
+  svg {
+    width: 32px;
+    height: 32px;
+    opacity: 0.5;
+  }
+  
+  .placeholder-text {
+    font-size: 11px;
+    color: #999;
+  }
+}
+
+.package-impact-description {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+  border-radius: 8px;
+  border: 1px solid #e8e8e8;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  animation: fadeIn 0.3s ease;
+}
+
+.impact-items-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.impact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+    transform: translateX(2px);
+  }
+}
+
+.impact-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1a1a1a;
+  margin-top: 2px;
+  
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.impact-text {
+  font-size: 11px;
+  line-height: 1.4;
+  color: #555;
+  flex: 1;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.impact-title {
+  margin: 0 0 6px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  letter-spacing: -0.2px;
+}
+
+.impact-intro {
+  margin: 0 0 10px 0;
+  font-size: 11px;
+  font-weight: 500;
+  color: #666;
+  line-height: 1.4;
+}
+
+.donation-right {
+  flex: 0 0 40%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  background-color: #f5f5f5;
+  padding: 16px;
+  gap: 14px;
+  
+  @media (max-width: 1024px) {
+    flex: 0 0 100%;
+    padding: 12px;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .donation-layout {
+    flex-direction: column;
+  }
+  
+  .donation-left,
+  .donation-right {
+    height: auto;
+    min-height: 50vh;
+  }
+}

@@ -1,0 +1,19 @@
+<div class="goal-progress">
+  <div class="goal-header">
+    <div class="goal-info">
+      <span class="current-amount">${{ formatNumber(currentAmount) }}</span>
+      <span class="goal-amount">/ ${{ formatNumber(goalAmount) }}</span>
+    </div>
+  </div>
+  
+  <div class="progress-bar-container">
+    <div class="progress-bar" [style.width.%]="progressPercentage">
+      <div class="progress-fill"></div>
+    </div>
+  </div>
+  
+  <div class="goal-footer">
+    <span class="remaining-text">{{ formatNumber(remaining) }}$ restants pour atteindre l'objectif</span>
+  </div>
+</div>
+

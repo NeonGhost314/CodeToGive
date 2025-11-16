@@ -4,54 +4,68 @@
   }
 
   @if (selectedFund) {
-    <app-donation-options-modal 
-      [fund]="selectedFund"
-      (close)="closeFundDetail()">
-    </app-donation-options-modal>
-  }
-
-  @if (!selectedFund) {
-    @if (funds.length === 0 && !error) {
-      <p>Chargement des fonds…</p>
-    } @else if (funds.length === 0) {
-      <p>Aucun fonds disponible.</p>
-    } @else {
-      <div class="gallery-container">
-        <button 
-          class="nav-arrow nav-arrow-up" 
-          (click)="navigateUp()"
-          [attr.aria-label]="'Previous fund'">
-          ↑
-        </button>
-
-        <div class="funds-gallery">
-          @for (fund of funds; track fund.id; let i = $index) {
-            @if (i === currentFundIndex - 1 || i === currentFundIndex || i === currentFundIndex + 1 || 
-                 (currentFundIndex === 0 && i === funds.length - 1) ||
-                 (currentFundIndex === funds.length - 1 && i === 0)) {
-              <div 
-                class="fund-card"
-                [class.active]="i === currentFundIndex"
-                [class.above]="i === currentFundIndex - 1 || (currentFundIndex === 0 && i === funds.length - 1)"
-                [class.below]="i === currentFundIndex + 1 || (currentFundIndex === funds.length - 1 && i === 0)"
-                (click)="openFundDetail(fund)">
-                <h3>{{ fund.name }}</h3>
-                @if (fund.description) {
-                  <p>{{ fund.description }}</p>
-                }
-              </div>
-            }
+    <div class="donation-layout">
+      <!-- Colonne gauche (60%) -->
+      <div class="donation-left">
+        <!-- 1. Nom de l'organisation -->
+        <h1 class="org-name-main">{{ selectedFund.name }}</h1>
+        
+        <!-- 2. Description courte (sous-titre) -->
+        @if (selectedFund.description) {
+          <p class="org-subtitle">{{ selectedFund.description }}</p>
+        }
+        
+        <!-- 3. Section Options de montant (titre + packages) -->
+        <app-donation-amount-options
+          [selectedAmount]="selectedAmount"
+          (amountSelected)="onPackageSelected($event)"
+          (customAmountSelected)="onCustomAmountSelected()">
+        </app-donation-amount-options>
+        
+        <!-- 4. Grande photo représentative -->
+        <div class="impact-photo-section">
+          @if (selectedFund.photoUrl) {
+            <img [src]="selectedFund.photoUrl" [alt]="'Photo représentative - ' + selectedFund.name" class="impact-photo">
+          } @else {
+            <div class="impact-photo-placeholder">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 19V5C21 3.9 20.1 3 19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19ZM8.5 13.5L11 16.51L14.5 12L19 18H5L8.5 13.5Z" fill="#999"/>
+              </svg>
+              <p class="placeholder-text">Ajouter une photo représentative</p>
+            </div>
           }
         </div>
-
-        <button 
-          class="nav-arrow nav-arrow-down" 
-          (click)="navigateDown()"
-          [attr.aria-label]="'Next fund'">
-          ↓
-        </button>
+        
+        <!-- 5. Description détaillée de ce que permet d'acheter -->
+        @if (selectedPackage && !selectedPackage.isCustom) {
+          <div class="package-impact-description">
+            <h3 class="impact-title">{{ selectedPackage.title }}</h3>
+            <p class="impact-intro">Votre don permettra d'aider à financer :</p>
+            <div class="impact-items-grid">
+              @for (item of selectedPackage.impactItems; track item.text) {
+                <div class="impact-item">
+                  <div class="impact-icon" [innerHTML]="getIconSvg(item.icon)"></div>
+                  <span class="impact-text">{{ item.text }}</span>
+                </div>
+              }
+            </div>
+          </div>
+        }
       </div>
-    }
+      
+      <!-- Colonne droite (40%) -->
+      <div class="donation-right">
+        <!-- Formulaire donation -->
+        <app-donation-form
+          [selectedPackage]="selectedPackage"
+          [fund]="selectedFund"
+          [currentGoalAmount]="currentGoalAmount"
+          [goalAmount]="goalAmount"
+          (submit)="onDonationSubmit($event)">
+        </app-donation-form>
+      </div>
+    </div>
+  } @else {
+    <p>Chargement des fonds…</p>
   }
 </div>
-

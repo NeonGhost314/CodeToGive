@@ -1,0 +1,18 @@
+<div 
+  class="amount-card"
+  [class.selected]="isSelected"
+  [class.custom]="option.isCustom"
+  (click)="onSelect()">
+  @if (option.isCustom) {
+    <div class="amount-content">
+      <span class="package-title">Montant personnalisé</span>
+      <span class="amount-value">+</span>
+    </div>
+  } @else {
+    <div class="amount-content">
+      <span class="package-title">{{ option.title }}</span>
+      <span class="amount-value">{{ option.amount }}$</span>
+    </div>
+  }
+</div>
+
