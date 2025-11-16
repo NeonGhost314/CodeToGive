@@ -6,10 +6,10 @@
 }
 
 .options-title {
-  margin: 0 0 2px 0;
-  font-size: 14px;
+  margin: 0 0 12px 0;
+  font-size: 15px;
   font-weight: 600;
-  color: #1a1a1a;
+  color: #644A73; // plum
   letter-spacing: -0.1px;
 }
 
@@ -23,7 +23,13 @@
   }
 
   @media (max-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  @media (max-width: 480px) {
     grid-template-columns: 1fr;
+    gap: 8px;
   }
 }
 

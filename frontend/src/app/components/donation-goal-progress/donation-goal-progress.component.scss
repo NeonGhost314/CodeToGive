@@ -1,9 +1,9 @@
 .goal-progress {
   padding: 10px 12px;
-  background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+  background: linear-gradient(135deg, #FFFAF7 0%, #F7EEE5 100%); // cream to sand
   border-radius: 6px;
-  border: 1px solid #e8e8e8;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  border: 1px solid #F6F0EB; // fog
+  box-shadow: 0 1px 2px rgba(100, 74, 115, 0.08);
 }
 
 .goal-header {
@@ -22,20 +22,20 @@
 .current-amount {
   font-size: 14px;
   font-weight: 700;
-  color: #1a1a1a;
+  color: #644A73; // plum
   letter-spacing: -0.2px;
 }
 
 .goal-amount {
   font-size: 11px;
   font-weight: 500;
-  color: #666;
+  color: #6E8B6F; // forest
 }
 
 .progress-bar-container {
   width: 100%;
   height: 6px;
-  background-color: #e0e0e0;
+  background-color: #F6F0EB; // fog
   border-radius: 3px;
   overflow: hidden;
   margin-bottom: 6px;
@@ -43,7 +43,7 @@
 
 .progress-bar {
   height: 100%;
-  background: linear-gradient(90deg, #1a1a1a 0%, #2d2d2d 100%);
+  background: linear-gradient(90deg, #644A73 0%, #6E8B6F 100%); // plum to forest
   border-radius: 3px;
   transition: width 0.3s ease;
   position: relative;
@@ -54,7 +54,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, transparent 100%);
+    background: linear-gradient(90deg, rgba(255, 250, 247, 0.3) 0%, transparent 100%);
     border-radius: 3px;
   }
 }
@@ -65,7 +65,7 @@
 
 .remaining-text {
   font-size: 11px;
-  color: #666;
+  color: #6E8B6F; // forest
   font-weight: 500;
 }
 

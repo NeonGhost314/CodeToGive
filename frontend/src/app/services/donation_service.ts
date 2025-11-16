@@ -31,6 +31,14 @@ export interface DonationOptions {
   optionType: string;
 }
 
+export interface DonationFormData {
+  fundId: number;
+  amount: number;
+  type: 'one-time' | 'monthly';
+  message?: string;
+  fundName?: string;
+}
+
 
 interface DonationOptionsBackend {
   id: number;
@@ -44,7 +52,30 @@ interface DonationOptionsBackend {
   providedIn: 'root',
 })
 export class DonationService {
+  private pendingDonationData: DonationFormData | null = null;
+
   constructor(private http: HttpClient) {}
+
+  /**
+   * Stocke temporairement les données de don pour la page de paiement
+   */
+  setPendingDonationData(data: DonationFormData): void {
+    this.pendingDonationData = data;
+  }
+
+  /**
+   * Récupère les données de don stockées temporairement
+   */
+  getPendingDonationData(): DonationFormData | null {
+    return this.pendingDonationData;
+  }
+
+  /**
+   * Efface les données de don stockées temporairement
+   */
+  clearPendingDonationData(): void {
+    this.pendingDonationData = null;
+  }
 
   getImpactFunds(): Observable<ImpactFund[]> {
     // Mock data pour développement frontend (site interne)

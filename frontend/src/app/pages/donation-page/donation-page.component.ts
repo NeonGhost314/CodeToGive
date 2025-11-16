@@ -115,6 +115,19 @@ export class DonationPageComponent implements OnInit {
 
   onDonationSubmit(donationData: DonationData): void {
     console.log('Donation submitted:', donationData);
-    // TODO: Navigate to payment page
+    
+    // Stocker les données de don pour la page de paiement
+    if (this.selectedFund) {
+      this.donationService.setPendingDonationData({
+        fundId: donationData.fundId,
+        amount: donationData.amount,
+        type: donationData.type,
+        message: donationData.message,
+        fundName: this.selectedFund.name
+      });
+      
+      // Naviguer vers la page de paiement
+      this.router.navigate(['/payment']);
+    }
   }
 }

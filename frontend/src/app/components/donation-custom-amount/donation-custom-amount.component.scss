@@ -18,6 +18,9 @@
   padding: 0 12px;
   background-color: #fff;
   transition: border-color 0.2s;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box; // CRUCIAL
 
   &:focus-within {
     border-color: #000;
@@ -33,6 +36,7 @@
 
 .custom-amount-input {
   flex: 1;
+  min-width: 0; // Important pour flex - permet au contenu de se rétrécir
   border: none;
   outline: none;
   padding: 12px 0;
@@ -40,6 +44,9 @@
   font-weight: 600;
   color: #000;
   background: transparent;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   &::placeholder {
     color: #ccc;

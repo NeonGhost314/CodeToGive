@@ -2,19 +2,29 @@
   <h2 class="form-title">Complétez votre don</h2>
 
   <!-- Type de don -->
-  <div class="donation-type-tabs">
+  <div class="donation-type-tabs" role="tablist" aria-label="Type de don">
     <button
       type="button"
       class="tab-button"
+      role="tab"
       [class.active]="donationType === 'one-time'"
-      (click)="onDonationTypeChange('one-time')">
+      [attr.aria-selected]="donationType === 'one-time'"
+      [attr.aria-controls]="'donation-tab-one-time'"
+      (click)="onDonationTypeChange('one-time')"
+      (keydown.enter)="onDonationTypeChange('one-time')"
+      (keydown.space)="onDonationTypeChange('one-time'); $event.preventDefault()">
       Faites un don maintenant
     </button>
     <button
       type="button"
       class="tab-button"
+      role="tab"
       [class.active]="donationType === 'monthly'"
-      (click)="onDonationTypeChange('monthly')">
+      [attr.aria-selected]="donationType === 'monthly'"
+      [attr.aria-controls]="'donation-tab-monthly'"
+      (click)="onDonationTypeChange('monthly')"
+      (keydown.enter)="onDonationTypeChange('monthly')"
+      (keydown.space)="onDonationTypeChange('monthly'); $event.preventDefault()">
       Faites un don mensuel
     </button>
   </div>
@@ -38,14 +48,19 @@
 
   <!-- Message optionnel -->
   <div class="form-section">
-    <label class="form-label">Envoyez un message à cet organisme (facultatif)</label>
+    <label class="form-label" for="donationMessage">Envoyez un message à cet organisme (facultatif)</label>
     <textarea
+      id="donationMessage"
       class="form-textarea"
       [(ngModel)]="message"
       placeholder="Merci pour le bon travail que vous faites!"
       maxlength="500"
-      rows="3"></textarea>
-    <span class="character-count">{{ 500 - message.length }} caractères restants</span>
+      rows="3"
+      aria-label="Message optionnel pour l'organisme"
+      aria-describedby="message-count"></textarea>
+    <span class="character-count" id="message-count" [class.warning]="(500 - message.length) < 50">
+      {{ 500 - message.length }} caractères restants
+    </span>
   </div>
 
   <!-- Bouton soumettre -->
@@ -54,7 +69,10 @@
     class="submit-button"
     [class.disabled]="!canProceed()"
     [disabled]="!canProceed()"
-    (click)="onSubmit()">
+    (click)="onSubmit()"
+    (keydown.enter)="onSubmit()"
+    aria-label="Continuer pour terminer le don"
+    [attr.aria-disabled]="!canProceed()">
     Continuez pour terminer le don
   </button>
 
