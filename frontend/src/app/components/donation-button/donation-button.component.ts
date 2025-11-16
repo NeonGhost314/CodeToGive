@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DonationService, ImpactFund , DonationOptions} from '../../services/donation_service';
+import { DonationService, ImpactFund } from '../../services/donation_service';
 import { Observable, catchError, of } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -15,7 +15,6 @@ export class DonationButtonComponent implements OnInit {
   constructor(private donationService: DonationService, private router: Router) {}
 
   impactFunds$!: Observable<ImpactFund[]>;
-  donationOptions$!: Observable<DonationOptions[]>;
   error?: string;
 
   ngOnInit(): void {

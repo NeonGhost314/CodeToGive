@@ -16,14 +16,15 @@ export interface DonationImpactItem {
 }
 
 export interface DonationAmountOption {
-  amount: number;                  // 50, 200, 350
-  title: string;                   // Ex: "Package d'urgence", "Package de soutien", etc.
+  title?: string;
+  amount?: number;
   description?: string;            // Description courte (optionnelle)
-  impactItems: DonationImpactItem[]; // Liste d'items avec icônes
+  impactItems?: DonationImpactItem[];
   isCustom?: boolean;              // true pour option personnalisée
+  fundId?: number;
 }
 
-export interface DonationOptions {
+export interface DonationItems {
   id: number;
   fundId: number;
   description: string;
@@ -43,7 +44,7 @@ export interface DonationFormData {
 }
 
 
-interface DonationOptionsBackend {
+interface DonationItemsBackend {
   id: number;
   fund_id: number;
   description: string;
@@ -100,64 +101,34 @@ export class DonationService {
   }
 
   
-  getDonationOptions(fundId: number): Observable<DonationOptions[]> {
-    return this.http.get<DonationOptionsBackend[]>(`/api/donation-options/${fundId}`).pipe(
-      map(options => options.map(option => ({
-        id: option.id,
-        fundId: option.fund_id,
-        description: option.description,
-        suggestedAmount: option.suggested_amount,
-        optionType: option.option_type
+  getDonationItems(fundId: number): Observable<DonationItems[]> {
+    return this.http.get<DonationItemsBackend[]>(`/api/donation-items/${fundId}`).pipe(
+      map(items => items.map(item => ({
+        id: item.id,
+        fundId: item.fund_id,
+        description: item.description,
+        suggestedAmount: item.suggested_amount,
+        optionType: item.option_type
       })))
     );
   }
 
-  // Mock data pour options de montant avec packages
   getDonationAmountOptions(): DonationAmountOption[] {
     return [
       {
-        amount: 25,
-        title: "Emergency Package",
-        impactItems: [
-          { icon: "food", text: "Hot meals for 2 full days" },
-          { icon: "hygiene", text: "Essential hygiene kits" },
-          { icon: "clothing", text: "Emergency clothing" },
-          { icon: "phone", text: "24/7 crisis hotline access" },
-          { icon: "medical", text: "First aid kits" },
-          { icon: "legal", text: "2 hours of legal consultation" },
-          { icon: "transport", text: "Transport to safe shelter" },
-          { icon: "info", text: "Information resources and rights" }
-        ]
+        title: "Emergency Fund",
+        fundId: 1,
+        description: "Provide immediate safety and emergency support"
       },
       {
-        amount: 75,
-        title: "Support Package",
-        impactItems: [
-          { icon: "psychology", text: "5 hours of professional psychological support" },
-          { icon: "therapy", text: "3 individual therapy sessions" },
-          { icon: "group", text: "Peer support groups (2 months)" },
-          { icon: "legal", text: "Administrative process assistance" },
-          { icon: "social", text: "Personalized follow-up (6 weeks)" },
-          { icon: "workshop", text: "Skills development workshops" },
-          { icon: "education", text: "Professional training" },
-          { icon: "job", text: "Job search assistance" }
-        ]
+        title: "Support Fund",
+        fundId: 2,
+        description: "Support healing and recovery in the medium term"
       },
       {
-        amount: 350,
-        title: "Accommodation Package",
-        impactItems: [
-          { icon: "shelter", text: "Full night in secure shelter (24/7)" },
-          { icon: "food", text: "3 nutritious meals per day" },
-          { icon: "hygiene", text: "Hygiene products and complete clothing" },
-          { icon: "bed", text: "Private space for rest and recovery" },
-          { icon: "security", text: "Safety planning" },
-          { icon: "house", text: "Support finding permanent housing" },
-          { icon: "specialist", text: "Specialist consultations (psychologist, lawyer)" },
-          { icon: "workshop", text: "Workshops preparing for independent living" },
-          { icon: "children", text: "Children's resources (activities, school, daycare)" },
-          { icon: "follow", text: "Post-shelter follow-up (3 months)" }
-        ]
+        title: "Accommodation Fund",
+        fundId: 3,
+        description: "Build long-term autonomy and stability"
       }
     ];
   }

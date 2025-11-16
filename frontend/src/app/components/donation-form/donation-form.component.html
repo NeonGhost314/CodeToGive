@@ -38,11 +38,17 @@
         [minAmount]="1"
         (amountChanged)="onCustomAmountChange($event)">
       </app-donation-custom-amount>
+      @if (selectedFundCategory && !selectedFundCategory.isCustom && selectedItems.length > 0) {
+        <p class="info-text">Note: Selected items will be cleared when using custom amount.</p>
+      }
     } @else {
       <div class="amount-display">
         <span class="currency">$</span>
         <span class="amount-value">{{ amount }}</span>
       </div>
+      @if (selectedItems.length > 0) {
+        <p class="info-text">Based on {{ selectedItems.length }} selected item(s)</p>
+      }
     }
   </div>
 

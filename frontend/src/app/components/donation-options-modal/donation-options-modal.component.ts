@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { DonationService, DonationOptions, ImpactFund } from '../../services/donation_service';
+import { DonationService, DonationItems, ImpactFund } from '../../services/donation_service';
 import { Observable, catchError, of } from 'rxjs';
 
 @Component({
@@ -15,11 +15,11 @@ export class DonationOptionsModalComponent implements OnInit {
   @Input() fund!: ImpactFund;
   @Output() close = new EventEmitter<void>();
   
-  donationOptions$!: Observable<DonationOptions[]>;
+  donationOptions$!: Observable<DonationItems[]>;
   error?: string;
   
   // Selected donation option
-  selectedOption: DonationOptions | null = null;
+  selectedOption: DonationItems | null = null;
   selectedAmount: number | null = null;
   
   // Personalized amount
@@ -31,7 +31,7 @@ export class DonationOptionsModalComponent implements OnInit {
   membershipAmount: number = 0;
   membershipInterval: 'monthly' | 'quarterly' | 'yearly' = 'monthly';
   
-  getDefaultActionOptions(): DonationOptions[] {
+  getDefaultActionOptions(): DonationItems[] {
     return [
       {
         id: 1,
@@ -64,7 +64,7 @@ export class DonationOptionsModalComponent implements OnInit {
       const defaultOptions = this.getDefaultActionOptions();
       
       // Try to load from backend, fallback to defaults
-      this.donationOptions$ = this.donationService.getDonationOptions(this.fund.id).pipe(
+      this.donationOptions$ = this.donationService.getDonationItems(this.fund.id).pipe(
         catchError((err) => {
           console.error('Failed to load donation options, using defaults', err);
           return of(defaultOptions);
@@ -79,7 +79,7 @@ export class DonationOptionsModalComponent implements OnInit {
     this.close.emit();
   }
 
-  selectOption(option: DonationOptions): void {
+  selectOption(option: DonationItems): void {
     this.selectedOption = option;
     this.selectedAmount = option.suggestedAmount;
     this.showPersonalizedAmount = false;

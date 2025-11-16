@@ -13,10 +13,9 @@
         <!-- 2. Instruction simple -->
         <p class="org-subtitle">Select a donation amount below and complete the form to support this cause</p>
         
-        <!-- 3. Section Options de montant (titre + packages) -->
+        <!-- 3. Section Fund Selection (titre + funds) -->
         <app-donation-amount-options
-          [selectedAmount]="selectedAmount"
-          (amountSelected)="onPackageSelected($event)"
+          (amountSelected)="onFundSelected($event)"
           (customAmountSelected)="onCustomAmountSelected()">
         </app-donation-amount-options>
         
@@ -34,20 +33,12 @@
           }
         </div>
         
-        <!-- 5. Description détaillée de ce que permet d'acheter -->
-        @if (selectedPackage && !selectedPackage.isCustom) {
-          <div class="package-impact-description">
-            <h3 class="impact-title">{{ selectedPackage.title }}</h3>
-            <p class="impact-intro">Your support will help fund:</p>
-            <div class="impact-items-grid">
-              @for (item of selectedPackage.impactItems; track item.text) {
-                <div class="impact-item">
-                  <div class="impact-icon" [innerHTML]="getIconSvg(item.icon)"></div>
-                  <span class="impact-text">{{ item.text }}</span>
-                </div>
-              }
-            </div>
-          </div>
+        <!-- 5. Items list with checkboxes and prices -->
+        @if (selectedFundCategory && !isCustomAmountMode() && selectedFundCategory.fundId) {
+          <app-donation-items-list
+            [fundId]="selectedFundCategory.fundId"
+            (itemsSelected)="onItemsSelected($event)">
+          </app-donation-items-list>
         }
       </div>
       
@@ -55,7 +46,9 @@
       <div class="donation-right">
         <!-- Formulaire donation -->
         <app-donation-form
-          [selectedPackage]="selectedPackage"
+          [selectedFundCategory]="selectedFundCategory"
+          [selectedItems]="selectedItems"
+          [totalAmountFromItems]="totalAmountFromItems"
           [fund]="selectedFund"
           [currentGoalAmount]="currentGoalAmount"
           [goalAmount]="goalAmount"

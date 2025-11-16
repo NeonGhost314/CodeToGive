@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ImpactFund, DonationAmountOption } from '../../services/donation_service';
+import { ImpactFund, DonationAmountOption, DonationItems } from '../../services/donation_service';
 import { DonationCustomAmountComponent } from '../donation-custom-amount/donation-custom-amount.component';
 import { DonationGoalProgressComponent } from '../donation-goal-progress/donation-goal-progress.component';
 
@@ -23,7 +23,9 @@ export interface DonationData {
   styleUrl: './donation-form.component.scss'
 })
 export class DonationFormComponent implements OnInit, OnChanges {
-  @Input() selectedPackage?: DonationAmountOption;
+  @Input() selectedFundCategory?: DonationAmountOption;
+  @Input() selectedItems: DonationItems[] = [];
+  @Input() totalAmountFromItems: number = 0;
   @Input() fund!: ImpactFund;
   @Input() currentGoalAmount: number = 0;
   @Input() goalAmount: number = 10000;
@@ -44,7 +46,7 @@ export class DonationFormComponent implements OnInit, OnChanges {
   minDate: string = '';
 
   ngOnInit(): void {
-    this.updateFromPackage();
+    this.updateAmount();
     // Set minimum date to today
     const today = new Date();
     this.minDate = today.toISOString().split('T')[0];
@@ -78,30 +80,27 @@ export class DonationFormComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['selectedPackage'] && !changes['selectedPackage'].firstChange) {
-      this.updateFromPackage();
+    if ((changes['selectedFundCategory'] && !changes['selectedFundCategory'].firstChange) ||
+        (changes['totalAmountFromItems'] && !changes['totalAmountFromItems'].firstChange) ||
+        (changes['selectedItems'] && !changes['selectedItems'].firstChange)) {
+      this.updateAmount();
     }
   }
 
-  private updateFromPackage(): void {
-    if (this.selectedPackage && !this.selectedPackage.isCustom) {
-      this.amount = this.selectedPackage.amount;
-      this.showCustomAmount = false;
-    } else if (this.selectedPackage?.isCustom) {
+  private updateAmount(): void {
+    if (this.selectedFundCategory?.isCustom) {
       this.showCustomAmount = true;
-      this.amount = 0;
-    } else {
-      this.showCustomAmount = false;
-      this.amount = 0;
-    }
-  }
 
-  onPackageChange(packageOption: DonationAmountOption): void {
-    if (!packageOption.isCustom) {
-      this.amount = packageOption.amount;
+      if (this.customAmount === 0 && this.amount > 0) {
+        this.customAmount = this.amount;
+      } else {
+        this.amount = this.customAmount;
+      }
+    } else if (this.totalAmountFromItems > 0) {
       this.showCustomAmount = false;
+      this.amount = this.totalAmountFromItems;
     } else {
-      this.showCustomAmount = true;
+      this.showCustomAmount = false;
       this.amount = 0;
     }
   }

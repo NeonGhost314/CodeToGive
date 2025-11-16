@@ -12,17 +12,16 @@ import { DonationService } from '../../services/donation_service';
   styleUrl: './donation-amount-options.component.scss'
 })
 export class DonationAmountOptionsComponent implements OnInit {
-  @Input() selectedAmount?: number;
+  @Input() selectedFundId?: number;
   @Output() amountSelected = new EventEmitter<DonationAmountOption>();
   @Output() customAmountSelected = new EventEmitter<void>();
 
   options: DonationAmountOption[] = [];
   customOption: DonationAmountOption = {
-    amount: 0,
     title: 'Custom Amount',
-    impactItems: [],
     isCustom: true
   };
+  selectedOption?: DonationAmountOption;
 
   constructor(private donationService: DonationService) {}
 
@@ -32,14 +31,19 @@ export class DonationAmountOptionsComponent implements OnInit {
 
   onOptionSelected(option: DonationAmountOption): void {
     if (option.isCustom) {
+      this.selectedOption = this.customOption;
       this.customAmountSelected.emit();
     } else {
+      this.selectedOption = option;
       this.amountSelected.emit(option);
     }
   }
 
   isSelected(option: DonationAmountOption): boolean {
-    return !option.isCustom && this.selectedAmount === option.amount;
+    if (option.isCustom) {
+      return this.selectedOption === this.customOption;
+    }
+    return this.selectedOption?.fundId === option.fundId;
   }
 }
 
