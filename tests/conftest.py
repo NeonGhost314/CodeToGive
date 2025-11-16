@@ -6,8 +6,8 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if ROOT not in sys.path:
     sys.path.insert(0, ROOT)
 
-from app import create_app
-from app.extensions import db
+from backend import create_app
+from backend.extensions import db
 
 @pytest.fixture
 def app():

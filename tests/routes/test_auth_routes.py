@@ -1,6 +1,6 @@
 from werkzeug.security import generate_password_hash
-from app.models import db
-from app.models.user import User
+from backend.extensions import db
+from backend.models.user import User
 
 def test_login_success(client, app):
     # User existant

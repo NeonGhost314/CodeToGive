@@ -1,8 +1,8 @@
 def test_donation_pot_model(client, app):
-    from app.extensions import db
-    from app.models.story import Story
-    from app.models.user import User
-    from app.models.donation_pot import DonationPot
+    from backend.extensions import db
+    from backend.models.story import Story
+    from backend.models.user import User
+    from backend.models.donation_pot import DonationPot
 
     # Create required author
     author = User(mail="test@test.com", first_name="A", last_name="B", password_hash = "1234")

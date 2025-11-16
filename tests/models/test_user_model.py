@@ -1,6 +1,6 @@
 def test_user_model(client, app):
-    from app.extensions import db
-    from app.models.user import User
+    from backend.extensions import db
+    from backend.models.user import User
 
     user = User(
         mail="test@example.com",

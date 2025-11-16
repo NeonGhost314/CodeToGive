@@ -1,8 +1,12 @@
 from flask import Flask
+from flask_cors import CORS
 from .extensions import db
 
 def create_app(test_config=None):
     app = Flask(__name__)
+
+    # Configure CORS to allow requests from Angular app
+    CORS(app, resources={r"/api/*": {"origins": "http://localhost:4200"}})
 
     if test_config:
         app.config.update(test_config)

@@ -1,6 +1,4 @@
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
+from backend.extensions import db
 
 class DonationOptions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -8,3 +6,4 @@ class DonationOptions(db.Model):
     description = db.Column(db.String(120), unique=True, nullable=False)
     suggested_amount = db.Column(db.Float, nullable=True)
     option_type = db.Column(db.String(50), nullable=False)  # e.g., 'one-time', 'recurring'
+

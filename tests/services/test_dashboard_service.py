@@ -1,5 +1,5 @@
-from app.services.dashboard_service import DashboardService
-from app.services.user_service import UserService
+from backend.services.dashboard_service import DashboardService
+from backend.services.user_service import UserService
 
 def test_dashboard_summary(client, app):
     with app.app_context():

@@ -1,4 +1,4 @@
-from app.extensions import db
+from backend.extensions import db
 
 class Story(db.Model):
     __tablename__ = "story"

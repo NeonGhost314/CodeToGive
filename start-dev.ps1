@@ -21,7 +21,7 @@ Write-Host "Press Ctrl+C to stop all servers" -ForegroundColor Yellow
 Write-Host ""
 
 # Start backend in a new PowerShell window
-Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd '$PWD\backend'; .\venv\Scripts\Activate.ps1; flask run"
+Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd '$PWD'; .\backend\venv\Scripts\Activate.ps1; python app.py"
 
 # Wait a moment for backend to start
 Start-Sleep -Seconds 2

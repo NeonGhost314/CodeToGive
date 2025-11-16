@@ -1,5 +1,5 @@
 from werkzeug.security import check_password_hash
-from app.models.user import User
+from backend.models.user import User
 
 class AuthService:
     @staticmethod

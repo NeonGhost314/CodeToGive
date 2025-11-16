@@ -1,6 +1,6 @@
-from app.services.chapter_service import ChapterService
-from app.services.story_service import StoryService
-from app.services.user_service import UserService
+from backend.services.chapter_service import ChapterService
+from backend.services.story_service import StoryService
+from backend.services.user_service import UserService
 
 def test_create_chapter(client, app):
     user = UserService.create_user({
