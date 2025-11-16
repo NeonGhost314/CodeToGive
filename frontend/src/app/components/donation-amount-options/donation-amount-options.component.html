@@ -1,0 +1,18 @@
+<div class="amount-options">
+  <h2 class="options-title">Build Your Impact</h2>
+  <div class="options-grid">
+    @for (option of options; track option.fundId || option.title) {
+      <app-donation-amount-card
+        [option]="option"
+        [isSelected]="isSelected(option)"
+        (select)="onOptionSelected($event)">
+      </app-donation-amount-card>
+    }
+    <app-donation-amount-card
+      [option]="customOption"
+      [isSelected]="false"
+      (select)="onOptionSelected($event)">
+    </app-donation-amount-card>
+  </div>
+</div>
+

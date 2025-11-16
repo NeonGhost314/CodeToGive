@@ -1,8 +1,10 @@
 import { Routes } from '@angular/router';
+import { DonationPageComponent } from './pages/donation-page/donation-page.component';
+import { FundDetailPageComponent } from './pages/fund-detail-page/fund-detail-page.component';
+import { PaymentPageComponent } from './pages/payment-page/payment-page.component';
+import { PaymentConfirmationComponent } from './pages/payment-confirmation/payment-confirmation.component';
 import { LandingComponent } from './pages/landing/landing.component';
-import { DonationComponent } from './pages/donation/donation.component';
 import { VideoComponent } from './pages/video-page/video.component';
-import { HomeComponent } from './pages/home/home.component';
 
 export const routes: Routes = [
   {
@@ -11,15 +13,23 @@ export const routes: Routes = [
   },
   {
     path: 'donation',
-    component: DonationComponent
+    component: DonationPageComponent
+  },
+  {
+    path: 'donation/:id',
+    component: FundDetailPageComponent
+  },
+  {
+    path: 'payment',
+    component: PaymentPageComponent
+  },
+  {
+    path: 'payment/confirmation',
+    component: PaymentConfirmationComponent
   },
   {
     path: 'video',
     component: VideoComponent
-  },
-  {
-    path: 'home',
-    component: HomeComponent
   },
   // Story detail page will be added by Yann's team I guess
   // {

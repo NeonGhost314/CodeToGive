@@ -1,0 +1,159 @@
+.payment-confirmation {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #F6F0EB 0%, #F7EEE5 100%); // fog to sand
+  padding: 60px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pageFadeIn 0.5s ease;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.confirmation-container {
+  max-width: 600px;
+  width: 100%;
+  background: #FFFAF7; // cream
+  border-radius: 12px;
+  padding: 48px 32px;
+  box-shadow: 0 4px 16px rgba(100, 74, 115, 0.2); // plum
+  border: 1px solid #F6F0EB; // fog
+  text-align: center;
+  position: relative;
+}
+
+.success-animation {
+  margin-bottom: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: successPulse 0.6s ease-in-out 1.1s both;
+}
+
+.checkmark-circle {
+  width: 100px;
+  height: 100px;
+  margin: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkmark {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.checkmark-circle-bg {
+  fill: #6E8B6F; // forest - fond rempli pour plus de visibilité
+  stroke: #6E8B6F; // forest
+  stroke-width: 2;
+  animation: circleDraw 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark-check {
+  fill: none;
+  stroke: #FFFAF7; // cream - checkmark blanc pour contraste
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: checkDraw 0.5s cubic-bezier(0.65, 0, 0.45, 1) 0.6s forwards;
+}
+
+@keyframes circleDraw {
+  0% {
+    stroke-dasharray: 0 157;
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dasharray: 157 0;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes checkDraw {
+  0% {
+    stroke-dashoffset: 48;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes successPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.confirmation-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #644A73; // plum
+  margin: 0 0 16px 0;
+  letter-spacing: -0.5px;
+}
+
+.confirmation-message {
+  font-size: 15px;
+  color: #6E8B6F; // forest
+  line-height: 1.6;
+  margin: 0 0 24px 0;
+
+  strong {
+    color: #644A73; // plum
+    font-weight: 600;
+  }
+}
+
+.transaction-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px;
+  background: #F7EEE5; // sand
+  border-radius: 8px;
+  margin-top: 24px;
+  border: 1px solid #F6F0EB; // fog
+}
+
+.transaction-label {
+  font-size: 11px;
+  color: #A8C2D1; // bluemist
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.transaction-id {
+  font-size: 13px;
+  font-weight: 600;
+  color: #644A73; // plum
+  font-family: 'Courier New', monospace;
+}
+

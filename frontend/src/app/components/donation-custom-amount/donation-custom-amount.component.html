@@ -1,0 +1,36 @@
+<div class="custom-amount">
+  <label class="custom-amount-label">Custom Amount</label>
+  <div class="custom-amount-input-group">
+    <span class="currency-symbol">$</span>
+    <input
+      type="number"
+      class="custom-amount-input"
+      [(ngModel)]="customAmount"
+      (input)="onAmountChange()"
+      [min]="minAmount ?? 1"
+      [max]="maxAmount ?? 10000"
+      placeholder="0">
+  </div>
+
+  <div class="quick-amounts">
+    <span class="quick-amounts-label">Quick suggestions:</span>
+    <div class="quick-amounts-buttons">
+      @for (amount of quickAmounts; track amount) {
+        <button
+          type="button"
+          class="quick-amount-button"
+          [class.active]="customAmount === amount"
+          (click)="selectQuickAmount(amount)">
+          ${{ amount }}
+        </button>
+      }
+    </div>
+  </div>
+
+  @if (customAmount > 0 && !isValid()) {
+    <p class="error-message">
+      The amount must be between ${{ minAmount }} and ${{ maxAmount }}
+    </p>
+  }
+</div>
+

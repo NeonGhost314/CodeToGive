@@ -1,0 +1,240 @@
+:host {
+  --lavender: #C8BEEA;
+  --rose: #EEC9D2;
+  --bluemist: #A8C2D1;
+  --sand: #F7EEE5;
+  --peach: #F9D8C4;
+  --plum: #644A73;
+  --forest: #6E8B6F;
+  --gold: #F4D292;
+  --cream: #FFFAF7;
+  --fog: #F6F0EB;
+  --error: #EF4444;
+}
+
+.newsletter-container {
+  background: linear-gradient(135deg, var(--cream) 0%, var(--fog) 100%);
+  padding: 4rem 2rem;
+  margin-top: 3rem;
+  
+  .newsletter-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+}
+
+.newsletter-left {
+  .newsletter-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--plum);
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  
+  .newsletter-description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--forest);
+    margin: 0;
+  }
+}
+
+.newsletter-right {
+  .newsletter-form {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(100, 74, 115, 0.1);
+    border: 1px solid var(--lavender);
+    
+    .form-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--plum);
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+      
+      label {
+        display: block;
+        font-weight: 500;
+        color: var(--plum);
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+      }
+      
+      input, select {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0.75rem 1rem;
+        border: 2px solid var(--lavender);
+        border-radius: 8px;
+        font-size: 1rem;
+        background: var(--cream);
+        transition: all 0.3s ease;
+        
+        &:focus {
+          outline: none;
+          border-color: var(--plum);
+          background: white;
+          box-shadow: 0 0 0 3px rgba(196, 190, 234, 0.2);
+        }
+        
+        &.error {
+          border-color: var(--error);
+          background: #FEF2F2;
+        }
+        
+        &::placeholder {
+          color: #999;
+        }
+      }
+      
+      // Reserved space for error message to prevent layout shifts
+      .field-error-container {
+        height: 1.2rem; // Fixed height to reserve space
+        margin-top: 0.25rem;
+        
+        .field-error {
+          display: block;
+          color: var(--error);
+          font-size: 0.8rem;
+          font-weight: 500;
+          line-height: 1.2;
+          opacity: 1;
+          transition: opacity 0.2s ease;
+          
+          &:empty {
+            opacity: 0;
+          }
+        }
+      }
+      
+      select {
+        cursor: pointer;
+        
+        option {
+          padding: 0.5rem;
+        }
+      }
+    }
+    
+    .subscribe-btn {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.875rem 2rem;
+      background: linear-gradient(135deg, var(--plum) 0%, var(--forest) 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      
+      &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(100, 74, 115, 0.3);
+      }
+      
+      &:active:not(:disabled) {
+        transform: translateY(0);
+      }
+      
+      &:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+      
+      .loading-spinner {
+        width: 16px;
+        height: 16px;
+        border: 2px solid transparent;
+        border-top: 2px solid currentColor;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+    }
+    
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    
+    .privacy-note {
+      font-size: 0.8rem;
+      color: #666;
+      text-align: center;
+      line-height: 1.4;
+      margin: 0;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .newsletter-container {
+    padding: 2rem 1rem;
+    
+    .newsletter-content {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+  
+  .newsletter-left {
+    text-align: center;
+    
+    .newsletter-title {
+      font-size: 2rem;
+    }
+  }
+  
+  .newsletter-right {
+    .newsletter-form {
+      padding: 2rem 1.5rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .newsletter-container {
+    padding: 1.5rem 0.5rem;
+  }
+  
+  .newsletter-left {
+    .newsletter-title {
+      font-size: 1.75rem;
+    }
+    
+    .newsletter-description {
+      font-size: 1rem;
+    }
+  }
+  
+  .newsletter-right {
+    .newsletter-form {
+      padding: 1.5rem 1rem;
+      
+      .form-title {
+        font-size: 1.25rem;
+      }
+    }
+  }
+}

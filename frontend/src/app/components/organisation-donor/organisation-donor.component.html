@@ -1,0 +1,67 @@
+<div class="organisation-donor-section">
+  <h2 class="section-title">Become a sponsor</h2>
+  
+  <div class="section-content">
+    <p class="description">
+      Shield of Athena is open to corporate sponsors who want to make a meaningful impact 
+      in supporting survivors of domestic violence. By becoming a sponsor, your organization 
+      can help us provide essential services and resources to those in need.
+    </p>
+    
+    <p class="description">
+      To get started, please complete our sponsorship form and send it to us by email. 
+      Our team will work with you to create a partnership that aligns with your corporate 
+      values and social responsibility goals.
+    </p>
+    
+    <div class="form-section">
+      <h3 class="form-title">Sponsorship Form</h3>
+      <p class="form-description">
+        Download our comprehensive sponsorship form to learn about the various 
+        sponsorship opportunities available.
+      </p>
+      <button 
+        class="download-btn"
+        (click)="onDownloadForm()"
+        aria-label="Download sponsorship form PDF">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" fill="currentColor"/>
+        </svg>
+        Download Sponsorship Form (PDF)
+      </button>
+    </div>
+    
+    <div class="contact-section">
+      <h3 class="contact-title">Get in Touch</h3>
+      <p class="contact-description">
+        Have questions about sponsorship opportunities? Our team is ready to help.
+      </p>
+      
+      <div class="contact-methods">
+        <div class="contact-item">
+          <button 
+            class="contact-btn phone-btn"
+            (click)="onCallPhone()"
+            aria-label="Call Shield of Athena">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z" fill="currentColor"/>
+            </svg>
+            <span>{{ phoneNumber }}</span>
+          </button>
+        </div>
+        
+        <div class="contact-item">
+          <button 
+            class="contact-btn email-btn"
+            (click)="onSendEmail()"
+            aria-label="Email Shield of Athena">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z" fill="currentColor"/>
+            </svg>
+            <span>{{ email }}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

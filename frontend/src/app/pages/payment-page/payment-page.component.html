@@ -1,0 +1,233 @@
+<div class="payment-page">
+  @if (isProcessing) {
+    <app-payment-loading></app-payment-loading>
+  } @else {
+    <div class="payment-container">
+      <h1 class="page-title">Paiement</h1>
+
+      <div class="payment-layout">
+      <!-- Formulaire de paiement -->
+      <div class="payment-form-section">
+        <!-- Méthode de paiement -->
+        <div class="form-section">
+          <label class="section-label">Méthode de paiement*</label>
+          <div class="payment-methods">
+            <label class="payment-method-card" [class.selected]="paymentMethod === 'visa'">
+              <input type="radio" name="paymentMethod" value="visa" [(ngModel)]="paymentMethod">
+              <div class="method-content">
+                <span class="method-name">Visa</span>
+                <svg width="40" height="24" viewBox="0 0 40 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="40" height="24" rx="4" fill="#1434CB"/>
+                  <path d="M17.5 8L15 16H12.5L15 8H17.5ZM28.5 8L26 16H23.5L26 8H28.5Z" fill="white"/>
+                </svg>
+              </div>
+            </label>
+            <label class="payment-method-card" [class.selected]="paymentMethod === 'mastercard'">
+              <input type="radio" name="paymentMethod" value="mastercard" [(ngModel)]="paymentMethod">
+              <div class="method-content">
+                <span class="method-name">MasterCard</span>
+                <svg width="40" height="24" viewBox="0 0 40 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="40" height="24" rx="4" fill="#EB001B"/>
+                  <circle cx="15" cy="12" r="6" fill="#F79E1B"/>
+                  <circle cx="25" cy="12" r="6" fill="#FF5F00"/>
+                </svg>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Informations de carte -->
+        <div class="form-section">
+          <label class="form-label" for="cardNumber">Numéro de carte*</label>
+          <input
+            id="cardNumber"
+            type="text"
+            class="form-input"
+            [(ngModel)]="cardNumber"
+            (input)="formatCardNumber($event); validateField('cardNumber')"
+            (blur)="validateField('cardNumber')"
+            placeholder="1234 5678 9012 3456"
+            maxlength="19"
+            aria-label="Numéro de carte bancaire"
+            aria-describedby="cardNumber-error"
+            aria-invalid="!!errors['cardNumber']"
+            [class.error]="errors['cardNumber']">
+          @if (errors['cardNumber']) {
+            <span class="error-message" id="cardNumber-error" role="alert" aria-live="polite">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                <path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              {{ errors['cardNumber'] }}
+            </span>
+          }
+        </div>
+
+        <div class="form-row">
+          <div class="form-section">
+            <label class="form-label" for="expiryDate">Date d'expiration*</label>
+            <input
+              id="expiryDate"
+              type="text"
+              class="form-input"
+              [(ngModel)]="expiryDate"
+              (input)="formatExpiryDate($event); validateField('expiryDate')"
+              (blur)="validateField('expiryDate')"
+              placeholder="MM/YY"
+              maxlength="5"
+              aria-label="Date d'expiration de la carte"
+              aria-describedby="expiryDate-error"
+              aria-invalid="!!errors['expiryDate']"
+              [class.error]="errors['expiryDate']">
+            @if (errors['expiryDate']) {
+              <span class="error-message" id="expiryDate-error" role="alert" aria-live="polite">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                  <path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                {{ errors['expiryDate'] }}
+              </span>
+            }
+          </div>
+
+          <div class="form-section">
+            <label class="form-label" for="cvv">CVV*</label>
+            <input
+              id="cvv"
+              type="text"
+              class="form-input"
+              [(ngModel)]="cvv"
+              (input)="validateField('cvv')"
+              (blur)="validateField('cvv')"
+              placeholder="123"
+              maxlength="4"
+              aria-label="Code de sécurité CVV"
+              aria-describedby="cvv-error"
+              aria-invalid="!!errors['cvv']"
+              [class.error]="errors['cvv']">
+            @if (errors['cvv']) {
+              <span class="error-message" id="cvv-error" role="alert" aria-live="polite">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                  <path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                {{ errors['cvv'] }}
+              </span>
+            }
+          </div>
+        </div>
+
+        <div class="form-section">
+          <label class="form-label" for="cardName">Nom sur la carte*</label>
+          <input
+            id="cardName"
+            type="text"
+            class="form-input"
+            [(ngModel)]="cardName"
+            (input)="validateField('cardName')"
+            (blur)="validateField('cardName')"
+            placeholder="Jean Dupont"
+            aria-label="Nom du titulaire de la carte"
+            aria-describedby="cardName-error"
+            aria-invalid="!!errors['cardName']"
+            [class.error]="errors['cardName']">
+          @if (errors['cardName']) {
+            <span class="error-message" id="cardName-error" role="alert" aria-live="polite">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                <path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              {{ errors['cardName'] }}
+            </span>
+          }
+        </div>
+
+        <div class="form-section">
+          <label class="form-label" for="email">Email pour confirmation*</label>
+          <input
+            id="email"
+            type="email"
+            class="form-input"
+            [(ngModel)]="email"
+            (input)="validateField('email')"
+            (blur)="validateField('email')"
+            placeholder="jean.dupont@example.com"
+            aria-label="Adresse email pour confirmation"
+            aria-describedby="email-error"
+            aria-invalid="!!errors['email']"
+            [class.error]="errors['email']">
+          @if (errors['email']) {
+            <span class="error-message" id="email-error" role="alert" aria-live="polite">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                <path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              {{ errors['email'] }}
+            </span>
+          }
+        </div>
+
+        @if (errors['general']) {
+          <div class="error-banner" role="alert" aria-live="assertive">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+              <path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            {{ errors['general'] }}
+          </div>
+        }
+
+        <button
+          type="button"
+          class="submit-button"
+          [class.disabled]="isProcessing"
+          [class.loading]="isProcessing"
+          [disabled]="isProcessing"
+          (click)="onSubmit()"
+          aria-label="Payer le montant total"
+          aria-busy="isProcessing">
+          @if (isProcessing) {
+            <span class="button-content">
+              <svg class="spinner" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" stroke-opacity="0.25"/>
+                <path d="M12 2C6.48 2 2 6.48 2 12" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+              </svg>
+              Traitement en cours...
+            </span>
+          } @else {
+            <span class="button-content">Payer {{ formatNumber(total) }}$</span>
+          }
+        </button>
+      </div>
+
+      <!-- Résumé -->
+      <div class="payment-summary-section">
+        <div class="summary-card">
+          <h2 class="summary-title">Résumé</h2>
+          <div class="summary-content">
+            <div class="summary-row">
+              <span class="summary-label">Montant du don</span>
+              <span class="summary-value">{{ formatNumber(amount) }}$</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">Taxes (TPS+TVQ 15%)</span>
+              <span class="summary-value">{{ formatNumber(taxes) }}$</span>
+            </div>
+            <div class="summary-row total">
+              <span class="summary-label">Total</span>
+              <span class="summary-value">{{ formatNumber(total) }}$</span>
+            </div>
+          </div>
+          @if (donationData) {
+            <div class="summary-fund">
+              <span class="fund-label">Organisme</span>
+              <span class="fund-name">{{ donationData.fundName || 'Organisme' }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+    </div>
+  }
+</div>
+

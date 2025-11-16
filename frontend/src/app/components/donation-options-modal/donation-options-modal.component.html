@@ -1,0 +1,121 @@
+<div class="donation-options-container">
+  <button class="close-button" (click)="onClose()" aria-label="Fermer">×</button>
+  
+  <div class="donation-content">
+    <!-- Fund Description -->
+    <div class="fund-header">
+      <h2 class="fund-title">{{ fund.name }}</h2>
+      @if (fund.description) {
+        <p class="fund-description">{{ fund.description }}</p>
+      }
+    </div>
+
+    <div class="divider"></div>
+
+    <h3 class="section-title">Choisissez votre impact</h3>
+    <p class="section-subtitle">Soutenez ce parcours avec une action concrète</p>
+    
+    @if (error) {
+      <p class="error">{{ error }}</p>
+    }
+
+    @if (donationOptions$ | async; as options) {
+      <!-- Action-based donation options -->
+      <div class="options-list">
+        @for (option of options; track option.id) {
+          <button 
+            class="option-item"
+            [class.selected]="selectedOption?.id === option.id"
+            (click)="selectOption(option)">
+            <div class="option-content">
+              <strong class="option-description">{{ option.description }}</strong>
+              <span class="option-amount">{{ option.suggestedAmount }}$</span>
+            </div>
+          </button>
+        }
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Personalized Amount -->
+      <div class="custom-option">
+        <button 
+          class="custom-option-toggle"
+          [class.active]="showPersonalizedAmount"
+          (click)="togglePersonalizedAmount()">
+          <span>Montant personnalisé</span>
+          <span class="toggle-icon">{{ showPersonalizedAmount ? '−' : '+' }}</span>
+        </button>
+        @if (showPersonalizedAmount) {
+          <div class="custom-option-content">
+            <label for="personalized-amount">Montant (CAD $)</label>
+            <input 
+              type="number" 
+              id="personalized-amount"
+              [(ngModel)]="personalizedAmount"
+              min="1"
+              step="1"
+              placeholder="Entrez un montant"
+              class="amount-input">
+          </div>
+        }
+      </div>
+
+      <!-- Membership Option -->
+      <div class="custom-option">
+        <button 
+          class="custom-option-toggle"
+          [class.active]="showMembership"
+          (click)="toggleMembership()">
+          <span>Devenir partenaire (don récurrent)</span>
+          <span class="toggle-icon">{{ showMembership ? '−' : '+' }}</span>
+        </button>
+        @if (showMembership) {
+          <div class="custom-option-content">
+            <label for="membership-amount">Montant par période (CAD $)</label>
+            <input 
+              type="number" 
+              id="membership-amount"
+              [(ngModel)]="membershipAmount"
+              min="1"
+              step="1"
+              placeholder="Entrez un montant"
+              class="amount-input">
+            
+            <label for="membership-interval">Fréquence</label>
+            <select 
+              id="membership-interval"
+              [(ngModel)]="membershipInterval"
+              class="interval-select">
+              <option value="monthly">Mensuel</option>
+              <option value="quarterly">Trimestriel</option>
+              <option value="yearly">Annuel</option>
+            </select>
+            
+            <p class="membership-info">
+              Vous contribuerez {{ membershipAmount || 0 }}$ 
+              @switch (membershipInterval) {
+                @case ('monthly') { chaque mois }
+                @case ('quarterly') { chaque trimestre }
+                @case ('yearly') { chaque année }
+              }
+            </p>
+          </div>
+        }
+      </div>
+      
+      <div class="divider"></div>
+      
+      <button 
+        class="proceed-button" 
+        [class.disabled]="!canProceed()"
+        [disabled]="!canProceed()"
+        (click)="onProceedToPayment()">
+        Continuer vers le paiement
+      </button>
+    } @else {
+      <p>Chargement des options de don…</p>
+    }
+  </div>
+</div>
+

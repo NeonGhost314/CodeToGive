@@ -1,0 +1,29 @@
+<div class="payment-confirmation">
+  <div class="confirmation-container">
+    <div class="success-animation">
+      <div class="checkmark-circle">
+        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+          <circle class="checkmark-circle-bg" cx="26" cy="26" r="25"/>
+          <path class="checkmark-check" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+        </svg>
+      </div>
+    </div>
+
+    <h1 class="confirmation-title">Transaction réussie !</h1>
+    
+    @if (paymentResult) {
+      <p class="confirmation-message">
+        Un email de confirmation a été envoyé à <strong>{{ paymentResult.email }}</strong>
+      </p>
+      <div class="transaction-info">
+        <span class="transaction-label">ID de transaction :</span>
+        <span class="transaction-id">{{ paymentResult.transactionId }}</span>
+      </div>
+    }
+
+    @if (showPersonalGoal) {
+      <app-personal-donation-goal (goalCreated)="onGoalCreated()"></app-personal-donation-goal>
+    }
+  </div>
+</div>
+

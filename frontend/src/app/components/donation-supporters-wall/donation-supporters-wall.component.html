@@ -1,0 +1,24 @@
+<div class="supporters-wall">
+  <h3 class="supporters-title">Mur des supporteurs</h3>
+  <div class="supporters-list">
+    @for (supporter of supporters; track supporter.name) {
+      <div class="supporter-item">
+        <div class="supporter-avatar">
+          @if (supporter.avatar) {
+            <img [src]="supporter.avatar" [alt]="supporter.name">
+          } @else {
+            <span class="avatar-initials">{{ getInitials(supporter.name) }}</span>
+          }
+        </div>
+        <div class="supporter-info">
+          <div class="supporter-name">{{ supporter.name }}</div>
+          <div class="supporter-donation">
+            <span class="donation-amount">{{ formatNumber(supporter.amount) }}$</span>
+            <span class="donation-date">{{ supporter.date }}</span>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>
+

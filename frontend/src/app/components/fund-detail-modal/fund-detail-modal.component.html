@@ -1,0 +1,19 @@
+@if (!showAsPanel) {
+  <div class="modal-backdrop" (click)="onClose()"></div>
+}
+<div class="modal-panel" [class.panel-mode]="showAsPanel">
+  <button class="close-button" (click)="onClose()">×</button>
+  
+  <div class="modal-content">
+    <h2 class="title">{{ fund.name }}</h2>
+    
+    @if (fund.description) {
+      <div class="description">
+        <p>{{ fund.description }}</p>
+      </div>
+    }
+    
+    <button class="donate-button" (click)="onDonate()">Donate</button>
+  </div>
+</div>
+
