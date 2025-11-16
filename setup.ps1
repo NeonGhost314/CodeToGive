@@ -83,6 +83,15 @@ if ($LASTEXITCODE -ne 0) {
 }
 Write-Host "Frontend dependencies installed successfully" -ForegroundColor Green
 
+# Install Video.js
+Write-Host "Installing Video.js..." -ForegroundColor Yellow
+npm install video.js
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "ERROR: Failed to install Video.js" -ForegroundColor Red
+    exit 1
+}
+Write-Host "Video.js installed successfully" -ForegroundColor Green
+
 Set-Location ..
 
 Write-Host ""
