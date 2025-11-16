@@ -1,0 +1,45 @@
+<div class="fund-detail-page">
+  @if (fund$ | async; as fund) {
+    @if (fund) {
+      <div class="page-layout">
+        <div class="fund-display">
+          <button class="back-button" (click)="onClose()">← Back</button>
+          <div class="fund-card">
+            <h2>{{ fund.name }}</h2>
+            @if (fund.description) {
+              <p>{{ fund.description }}</p>
+            }
+          </div>
+        </div>
+
+        <div class="modal-panel-container">
+          <app-fund-detail-modal
+            [fund]="fund"
+            [showAsPanel]="true"
+            (close)="onClose()"
+            (donate)="onDonate()">
+          </app-fund-detail-modal>
+        </div>
+      </div>
+
+      @if (showDonationOptionsModal && fund) {
+        <app-donation-options-modal
+          [fund]="fund"
+          (close)="closeDonationOptionsModal()">
+        </app-donation-options-modal>
+      }
+    } @else {
+      <div class="error-state">
+        <p>Fund not found</p>
+        <button (click)="onClose()">Go back</button>
+      </div>
+    }
+  } @else {
+    <p>Loading fund details...</p>
+  }
+
+  @if (error) {
+    <p class="error">{{ error }}</p>
+  }
+</div>
+

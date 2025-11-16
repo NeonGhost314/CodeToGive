@@ -1,0 +1,37 @@
+.payment-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #F6F0EB 0%, #F7EEE5 100%); // fog to sand
+}
+
+.spinner-container {
+  margin-bottom: 24px;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid #F6F0EB; // fog
+  border-top-color: #644A73; // plum
+  border-right-color: #6E8B6F; // forest
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-message {
+  font-size: 15px;
+  color: #644A73; // plum
+  font-weight: 500;
+  margin: 0;
+}
+

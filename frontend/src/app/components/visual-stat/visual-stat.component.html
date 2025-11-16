@@ -1,0 +1,17 @@
+<div class="visual-stat-card" [style.--stat-color]="stat.color">
+    <!-- Three.js Effect Canvas -->
+    <div #effectCanvas class="effect-canvas"></div>
+
+    <div class="stat-visual">
+        <canvas #chartCanvas width="140" height="140" class="stat-chart"></canvas>
+        <span class="stat-icon-overlay material-symbols-outlined">{{ stat.icon }}</span>
+    </div>
+
+    <div class="stat-content">
+        <div class="stat-number">
+            {{ animatedValue }}<span class="stat-suffix">{{ stat.suffix }}</span>
+        </div>
+        <div class="stat-label">{{ stat.label }}</div>
+        <div class="stat-sublabel">{{ stat.sublabel }}</div>
+    </div>
+</div>

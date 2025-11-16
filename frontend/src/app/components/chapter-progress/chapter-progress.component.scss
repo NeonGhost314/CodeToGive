@@ -1,0 +1,102 @@
+@import '../../../styles.scss';
+
+.chapter-progress {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  &.large {
+    gap: 12px;
+  }
+}
+
+.chapter-dot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.dot-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  position: relative;
+
+  .large & {
+    width: 48px;
+    height: 48px;
+  }
+
+  .unlocked & {
+    background: linear-gradient(135deg, #C8BEEA, #EEC9D2);
+    box-shadow:
+      0 4px 12px rgba(200, 190, 234, 0.4),
+      0 0 20px rgba(238, 201, 210, 0.3);
+    animation: pulse 2s ease-in-out infinite;
+
+    .check-icon {
+      color: #644A73;
+    }
+  }
+
+  .locked & {
+    background: #F7EEE5;
+    box-shadow: 0 2px 8px rgba(247, 238, 229, 0.5);
+
+    .lock-icon {
+      color: rgba(100, 74, 115, 0.4);
+    }
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+.chapter-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-width: 80px;
+}
+
+.chapter-num {
+  font-size: 0.75rem;
+  color: rgba(100, 74, 115, 0.6);
+  font-style: italic;
+}
+
+.chapter-title {
+  font-size: 0.875rem;
+  color: #644A73;
+  font-weight: 500;
+  font-family: Georgia, serif;
+
+  .locked & {
+    opacity: 0.5;
+  }
+}
+
+// Hover effect
+.chapter-dot:hover .dot-circle {
+  transform: translateY(-2px);
+
+  &.unlocked {
+    box-shadow:
+      0 6px 16px rgba(200, 190, 234, 0.5),
+      0 0 30px rgba(238, 201, 210, 0.4);
+  }
+}

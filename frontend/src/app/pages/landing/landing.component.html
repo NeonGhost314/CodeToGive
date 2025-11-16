@@ -1,0 +1,283 @@
+<div class="landing-page">
+
+    <app-navbar></app-navbar>
+    <app-scroll-indicator></app-scroll-indicator>
+
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="hero" (mousemove)="onParticleMouseMove($event)">
+        <div #particleCanvas class="particle-canvas"></div>
+
+        <div class="hero-content" @fadeInUp>
+            <div class="hero-badge">
+                <span class="badge-icon material-symbols-outlined">shield</span>
+                <span>Helping Victims of Family Violence Since 1991</span>
+            </div>
+
+            <h1 class="hero-title">
+                Breaking the Cycle of Abuse.<br>
+                <span class="highlight-text">Building Lives of Freedom.</span>
+            </h1>
+
+            <p class="hero-description">
+                For over 34 years, Shield of Athena has been a beacon of hope for women and children escaping
+                conjugal and family violence. Our culturally-attuned, multilingual support transforms crisis
+                into safety, trauma into healing, and fear into empowerment.
+            </p>
+
+            <div class="hero-stats-mini">
+                <div class="mini-stat">
+                    <div class="mini-stat-icon material-symbols-outlined">schedule</div>
+                    <div class="mini-stat-content">
+                        <div class="mini-stat-number">24/7</div>
+                        <div class="mini-stat-label">Emergency Shelter</div>
+                    </div>
+                </div>
+                <div class="mini-stat-divider"></div>
+                <div class="mini-stat">
+                    <div class="mini-stat-icon material-symbols-outlined">language</div>
+                    <div class="mini-stat-content">
+                        <div class="mini-stat-number">10+</div>
+                        <div class="mini-stat-label">Languages</div>
+                    </div>
+                </div>
+                <div class="mini-stat-divider"></div>
+                <div class="mini-stat">
+                    <div class="mini-stat-icon material-symbols-outlined">emoji_events</div>
+                    <div class="mini-stat-content">
+                        <div class="mini-stat-number">34</div>
+                        <div class="mini-stat-label">Years Strong</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scroll-indicator" (click)="scrollToHelp()">
+                <div class="scroll-text">Discover How We Help</div>
+                <div class="scroll-mouse">
+                    <div class="scroll-wheel"></div>
+                </div>
+                <svg class="scroll-arrow" width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M12 5v14M19 12l-7 7-7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW WE HELP SECTION -->
+    <section class="how-we-help-section" id="how-we-help" @fadeIn>
+        <div class="section-container-wide">
+            <div class="section-header-centered">
+                <div class="section-tag">Our Services</div>
+                <h2 class="section-title">Multidisciplinary, Multilingual Support</h2>
+                <p class="section-subtitle">
+                    From emergency shelter to long-term empowerment, our professional team provides culturally-attuned
+                    services in over 10 languages to women and children throughout Montreal and Laval.
+                </p>
+            </div>
+
+            <div class="help-services-grid">
+                <div class="help-service-card" *ngFor="let service of helpServices"
+                    [style.--service-color]="service.color">
+                    <div class="service-icon-wrapper">
+                        <span class="service-icon material-symbols-outlined">{{ service.icon }}</span>
+                    </div>
+                    <h3 class="service-title">{{ service.title }}</h3>
+                    <p class="service-description">{{ service.description }}</p>
+                    <div class="service-accent"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- IMPACT STATS SECTION -->
+    <section class="impact-stats-section" id="impact-stats" @fadeIn>
+        <div #warmthCanvas class="warmth-canvas"></div>
+
+        <div class="section-container-wide">
+            <div class="section-header-centered">
+                <div class="section-tag">Our Impact</div>
+                <h2 class="section-title">Real Numbers, Real Lives Changed</h2>
+                <p class="section-subtitle">
+                    Behind every statistic is a woman or child who found safety, strength, and a new beginning
+                </p>
+            </div>
+
+            <div class="visual-stats-grid">
+                <app-visual-stat *ngFor="let stat of visualStats" [stat]="stat"></app-visual-stat>
+            </div>
+
+            <div class="impact-quote">
+                <div class="quote-icon">"</div>
+                <blockquote>
+                    Shield of Athena gave me more than shelter—they gave me hope, strength, and a new beginning.
+                    With their support, I rebuilt my life and am now helping other survivors find their way.
+                </blockquote>
+                <cite>— Former Resident, Now Independent & Thriving</cite>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURED STORY SECTION -->
+    <section class="featured-story-section" id="featured-story" *ngIf="featuredStory" @fadeIn>
+        <div class="section-container">
+            <div class="section-header">
+                <div class="section-tag">Real Stories</div>
+                <h2 class="section-title">Follow a Journey of Transformation</h2>
+                <p class="section-subtitle">
+                    Witness {{ featuredStory.name }}'s path from crisis to independence. Each chapter represents
+                    real progress made possible by community support and professional intervention.
+                </p>
+            </div>
+
+            <app-story-card [story]="featuredStory"></app-story-card>
+        </div>
+    </section>
+
+    <!-- TRANSITION BRIDGE SECTION -->
+    <section class="story-to-shelter-bridge" @fadeIn>
+        <div class="section-container">
+            <div class="bridge-content">
+                <div class="bridge-icon material-symbols-outlined">volunteer_activism</div>
+                <h2 class="bridge-title">Maria's Story Isn't Finished</h2>
+                <p class="bridge-text">
+                    Maria found safety at Shield of Athena. But <strong>right now</strong>,
+                    there are women just like her—mothers with children, sisters, daughters—
+                    waiting for a place they can call safe. <strong>Your support today</strong>
+                    doesn't just fund a building. It funds freedom, healing, and hope.
+                </p>
+                <div class="bridge-stats">
+                    <div class="bridge-stat">
+                        <span class="stat-icon material-symbols-outlined">schedule</span>
+                        <span class="stat-text"><strong>Every 6 minutes</strong>, a woman calls for help</span>
+                    </div>
+                    <div class="bridge-stat">
+                        <span class="stat-icon material-symbols-outlined">home</span>
+                        <span class="stat-text"><strong>Our shelters are at capacity</strong>, turning families
+                            away</span>
+                    </div>
+                    <div class="bridge-stat">
+                        <span class="stat-icon material-symbols-outlined">trending_up</span>
+                        <span class="stat-text"><strong>Together, we can change this</strong> story</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SHELTER PROGRESS SECTION -->
+    <section class="shelter-progress-section" id="shelter-progress" @fadeIn>
+        <div class="section-container">
+            <app-shelter-progress [current]="shelterCurrent" [goal]="shelterGoal" [debugMode]="shelterDebugMode">
+            </app-shelter-progress>
+
+            <!-- Call to Action Buttons -->
+            <div class="shelter-cta-buttons">
+                <a href="https://www.canadahelps.org/en/dn/27709" target="_blank" class="btn-donate-now">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                            fill="currentColor" />
+                    </svg>
+                    <div class="btn-content">
+                        <span class="btn-label">Donate Now</span>
+                        <span class="btn-sublabel">Build Hope Today</span>
+                    </div>
+                </a>
+
+                <button class="btn-share" (click)="shareStory()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <circle cx="18" cy="5" r="3" stroke="currentColor" stroke-width="2" />
+                        <circle cx="6" cy="12" r="3" stroke="currentColor" stroke-width="2" />
+                        <circle cx="18" cy="19" r="3" stroke="currentColor" stroke-width="2" />
+                        <path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                    <span>Share This Mission</span>
+                </button>
+            </div>
+
+            <!-- Social Proof -->
+            <div class="social-proof">
+                <div class="supporter-avatars">
+                    <div class="avatar material-symbols-outlined">person</div>
+                    <div class="avatar material-symbols-outlined">person</div>
+                    <div class="avatar material-symbols-outlined">person</div>
+                    <div class="avatar material-symbols-outlined">person</div>
+                    <div class="avatar-more">+43</div>
+                </div>
+                <p class="supporter-text">
+                    <strong>47 caring people</strong> have already contributed to building this shelter.
+                    <span class="join-text">Join them today!</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA SECTION -->
+    <section class="final-cta-section" id="final-cta" @fadeIn>
+        <div class="section-container">
+            <div class="cta-content">
+                <div class="cta-urgency-badge">
+                    <span class="urgency-pulse"></span>
+                    <span>24/7 Emergency Support Available</span>
+                </div>
+
+                <h2 class="cta-title">Are You a Victim of Family Violence?</h2>
+                <p class="cta-description">
+                    If you or someone you know needs help, our multilingual team is here 24/7.
+                    All services are free and confidential.
+                </p>
+
+                <div class="cta-buttons">
+                    <a href="tel:514-873-9010" class="btn-emergency">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <div class="btn-content">
+                            <span class="btn-label">Emergency Line</span>
+                            <span class="btn-phone">514-873-9010</span>
+                        </div>
+                    </a>
+
+                    <a href="https://www.canadahelps.org/en/dn/27709" target="_blank" class="btn-support">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                                fill="currentColor" />
+                        </svg>
+                        <span>Support Our Mission</span>
+                    </a>
+
+                    <button class="btn-contact" (click)="scrollToHelp()">
+                        <span>Learn More</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="cta-footer">
+                    <p class="safety-note">
+                        <span class="material-symbols-outlined" style="vertical-align: middle; font-size: 1.2em;">warning</span>
+                        <strong> In immediate danger?</strong> Call 911 first, then reach out to us for ongoing
+                        support.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Integrated Emergency Contacts -->
+            <div class="emergency-contacts-integrated">
+                <app-emergency-contacts></app-emergency-contacts>
+            </div>
+        </div>
+    </section>
+
+    <!-- Loading State -->
+    <div class="loading-container" *ngIf="isLoading">
+        <div class="loading-spinner"></div>
+        <p>Loading our stories of hope...</p>
+    </div>
+
+</div>

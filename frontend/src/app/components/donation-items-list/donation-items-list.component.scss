@@ -1,0 +1,114 @@
+.fund-impact-description {
+  margin-top: 4px;
+  padding: 18px 20px;
+  background: linear-gradient(135deg, #FFFAF7 0%, #F7EEE5 100%); // cream to sand
+  border-radius: 16px;
+  border: 1px solid rgba(168, 194, 209, 0.3); // bluemist with transparency
+  box-shadow: 0 4px 16px rgba(100, 74, 115, 0.12), 0 2px 4px rgba(100, 74, 115, 0.08);
+  animation: fadeIn 0.4s ease;
+  backdrop-filter: blur(10px);
+}
+
+.impact-title {
+  margin: 0 0 6px 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #644A73; // plum
+  letter-spacing: -0.3px;
+  text-shadow: 0 1px 2px rgba(100, 74, 115, 0.1);
+}
+
+.impact-items-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 12px;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
+.impact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  background-color: rgba(255, 250, 247, 0.9); // cream avec transparence
+  border-radius: 12px;
+  border: 1px solid rgba(168, 194, 209, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(100, 74, 115, 0.06);
+  cursor: pointer;
+  
+  &:hover {
+    background: linear-gradient(135deg, #F9D8C4 0%, #F7EEE5 100%); // peach to sand
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(100, 74, 115, 0.12);
+    border-color: rgba(168, 194, 209, 0.4);
+  }
+
+  &.selected {
+    background: linear-gradient(135deg, #E8D5E0 0%, #F0E6F0 100%); // light plum gradient
+    border-color: rgba(100, 74, 115, 0.5);
+    box-shadow: 0 4px 12px rgba(100, 74, 115, 0.2);
+  }
+}
+
+.item-checkbox {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  cursor: pointer;
+  accent-color: #644A73; // plum
+}
+
+.impact-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #644A73; // plum
+  margin-top: 2px;
+  
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.item-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.impact-text {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #6E8B6F; // forest
+  font-weight: 500;
+}
+
+.item-price {
+  font-size: 14px;
+  font-weight: 700;
+  color: #644A73; // plum
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

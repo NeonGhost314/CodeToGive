@@ -10,7 +10,7 @@ from .donation import Donation
 from .payment import Payment
 from .subscribe import Subscribe
 from .impact_funds import ImpactFunds
-from .donation_options import DonationOptions
+from .donation_items import DonationItems
 
 __all__ = [
     "User",
@@ -22,5 +22,5 @@ __all__ = [
     "Payment",
     "Subscribe",
     "ImpactFunds",
-    "DonationOptions"
+    "DonationItems"
 ]
