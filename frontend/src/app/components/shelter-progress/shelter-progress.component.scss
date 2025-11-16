@@ -53,6 +53,8 @@
 .badge-icon {
   font-size: 1.25rem;
   animation: heartbeat 2s ease-in-out infinite;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  color: var(--brand-dark, #644A73);
 }
 
 @keyframes heartbeat {
@@ -85,6 +87,8 @@
   font-size: 2.5rem;
   vertical-align: middle;
   margin-right: 0.5rem;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+  color: var(--brand-dark, #644A73);
 }
 
 .personal-message {
@@ -336,6 +340,8 @@
 
 .milestone-icon {
   font-size: 1.75rem;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  color: var(--brand-dark, #644A73);
 
   @media (max-width: 768px) {
     font-size: 1.5rem;

@@ -19,11 +19,11 @@ export class ScrollIndicatorComponent {
   scrollProgress = 0;
 
   journeySteps: JourneyStep[] = [
-    { id: 'hero', icon: '🏠', label: 'Welcome' },
-    { id: 'how-we-help', icon: '🤝', label: 'Our Services' },
-    { id: 'impact-stats', icon: '💙', label: 'Our Impact' },
-    { id: 'featured-story', icon: '✨', label: 'Real Stories' },
-    { id: 'final-cta', icon: '📞', label: 'Get Help' },
+    { id: 'hero', icon: 'home', label: 'Welcome' },
+    { id: 'how-we-help', icon: 'support', label: 'Our Services' },
+    { id: 'impact-stats', icon: 'insights', label: 'Our Impact' },
+    { id: 'featured-story', icon: 'auto_stories', label: 'Real Stories' },
+    { id: 'final-cta', icon: 'phone', label: 'Get Help' },
   ];
 
   @HostListener('window:scroll')

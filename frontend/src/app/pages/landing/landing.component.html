@@ -9,7 +9,7 @@
 
         <div class="hero-content" @fadeInUp>
             <div class="hero-badge">
-                <span class="badge-icon">🛡️</span>
+                <span class="badge-icon material-symbols-outlined">shield</span>
                 <span>Helping Victims of Family Violence Since 1991</span>
             </div>
 
@@ -26,7 +26,7 @@
 
             <div class="hero-stats-mini">
                 <div class="mini-stat">
-                    <div class="mini-stat-icon">⏰</div>
+                    <div class="mini-stat-icon material-symbols-outlined">schedule</div>
                     <div class="mini-stat-content">
                         <div class="mini-stat-number">24/7</div>
                         <div class="mini-stat-label">Emergency Shelter</div>
@@ -34,7 +34,7 @@
                 </div>
                 <div class="mini-stat-divider"></div>
                 <div class="mini-stat">
-                    <div class="mini-stat-icon">🌍</div>
+                    <div class="mini-stat-icon material-symbols-outlined">language</div>
                     <div class="mini-stat-content">
                         <div class="mini-stat-number">10+</div>
                         <div class="mini-stat-label">Languages</div>
@@ -42,7 +42,7 @@
                 </div>
                 <div class="mini-stat-divider"></div>
                 <div class="mini-stat">
-                    <div class="mini-stat-icon">🏆</div>
+                    <div class="mini-stat-icon material-symbols-outlined">emoji_events</div>
                     <div class="mini-stat-content">
                         <div class="mini-stat-number">34</div>
                         <div class="mini-stat-label">Years Strong</div>
@@ -79,7 +79,7 @@
                 <div class="help-service-card" *ngFor="let service of helpServices"
                     [style.--service-color]="service.color">
                     <div class="service-icon-wrapper">
-                        <div class="service-icon">{{ service.icon }}</div>
+                        <span class="service-icon material-symbols-outlined">{{ service.icon }}</span>
                     </div>
                     <h3 class="service-title">{{ service.title }}</h3>
                     <p class="service-description">{{ service.description }}</p>
@@ -137,7 +137,7 @@
     <section class="story-to-shelter-bridge" @fadeIn>
         <div class="section-container">
             <div class="bridge-content">
-                <div class="bridge-icon">💝</div>
+                <div class="bridge-icon material-symbols-outlined">volunteer_activism</div>
                 <h2 class="bridge-title">Maria's Story Isn't Finished</h2>
                 <p class="bridge-text">
                     Maria found safety at Shield of Athena. But <strong>right now</strong>,
@@ -147,16 +147,16 @@
                 </p>
                 <div class="bridge-stats">
                     <div class="bridge-stat">
-                        <span class="stat-icon">⏰</span>
+                        <span class="stat-icon material-symbols-outlined">schedule</span>
                         <span class="stat-text"><strong>Every 6 minutes</strong>, a woman calls for help</span>
                     </div>
                     <div class="bridge-stat">
-                        <span class="stat-icon">🏠</span>
+                        <span class="stat-icon material-symbols-outlined">home</span>
                         <span class="stat-text"><strong>Our shelters are at capacity</strong>, turning families
                             away</span>
                     </div>
                     <div class="bridge-stat">
-                        <span class="stat-icon">💪</span>
+                        <span class="stat-icon material-symbols-outlined">trending_up</span>
                         <span class="stat-text"><strong>Together, we can change this</strong> story</span>
                     </div>
                 </div>
@@ -198,10 +198,10 @@
             <!-- Social Proof -->
             <div class="social-proof">
                 <div class="supporter-avatars">
-                    <div class="avatar">👤</div>
-                    <div class="avatar">👤</div>
-                    <div class="avatar">👤</div>
-                    <div class="avatar">👤</div>
+                    <div class="avatar material-symbols-outlined">person</div>
+                    <div class="avatar material-symbols-outlined">person</div>
+                    <div class="avatar material-symbols-outlined">person</div>
+                    <div class="avatar material-symbols-outlined">person</div>
                     <div class="avatar-more">+43</div>
                 </div>
                 <p class="supporter-text">
@@ -260,7 +260,8 @@
 
                 <div class="cta-footer">
                     <p class="safety-note">
-                        <strong>⚠️ In immediate danger?</strong> Call 911 first, then reach out to us for ongoing
+                        <span class="material-symbols-outlined" style="vertical-align: middle; font-size: 1.2em;">warning</span>
+                        <strong> In immediate danger?</strong> Call 911 first, then reach out to us for ongoing
                         support.
                     </p>
                 </div>

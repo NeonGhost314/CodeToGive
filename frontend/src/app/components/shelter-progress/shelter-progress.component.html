@@ -2,12 +2,12 @@
     <!-- Emotional Connection Header -->
     <div class="emotional-header">
         <div class="impact-badge">
-            <span class="badge-icon">💝</span>
+            <span class="badge-icon material-symbols-outlined">volunteer_activism</span>
             <span class="badge-text">EVERY DONATION BUILDS HOPE</span>
         </div>
 
         <h3 class="progress-title">
-            <span class="title-icon">🏠</span>
+            <span class="title-icon material-symbols-outlined">home</span>
             Help Us Build Maria's Next Safe Haven
         </h3>
 
@@ -59,29 +59,30 @@
         <!-- Success Message -->
         <div class="canvas-story-text success" *ngIf="progressPercentage >= 100">
             <p>
-                <strong>🎉 Together, we built hope!</strong>
+                <span class="material-symbols-outlined" style="vertical-align: middle; font-size: 1.2em; margin-right: 0.5em;">check_circle</span>
+                <strong>Together, we built hope!</strong>
                 This shelter will provide safety, healing, and new beginnings for families in need.
             </p>
         </div>
 
         <div class="progress-milestone-labels">
             <div class="milestone" [class.reached]="progressPercentage >= 0">
-                <span class="milestone-icon">🏗️</span>
+                <span class="milestone-icon material-symbols-outlined">foundation</span>
                 <span class="milestone-text">Foundation</span>
                 <span class="milestone-amount" *ngIf="progressPercentage >= 0">$15k</span>
             </div>
             <div class="milestone" [class.reached]="progressPercentage >= 40">
-                <span class="milestone-icon">🧱</span>
+                <span class="milestone-icon material-symbols-outlined">construction</span>
                 <span class="milestone-text">Structure</span>
                 <span class="milestone-amount" *ngIf="progressPercentage >= 40">$40k</span>
             </div>
             <div class="milestone" [class.reached]="progressPercentage >= 75">
-                <span class="milestone-icon">🚪</span>
+                <span class="milestone-icon material-symbols-outlined">door_front</span>
                 <span class="milestone-text">Finishing</span>
                 <span class="milestone-amount" *ngIf="progressPercentage >= 75">$75k</span>
             </div>
             <div class="milestone" [class.reached]="progressPercentage >= 100">
-                <span class="milestone-icon">✨</span>
+                <span class="milestone-icon material-symbols-outlined">check_circle</span>
                 <span class="milestone-text">Complete!</span>
                 <span class="milestone-amount" *ngIf="progressPercentage >= 100">$100k</span>
             </div>
@@ -123,7 +124,10 @@
 
         <!-- Donation Impact Examples -->
         <div class="donation-impact-grid">
-            <h4 class="impact-grid-title">💝 What Your Donation Provides:</h4>
+            <h4 class="impact-grid-title">
+                <span class="material-symbols-outlined" style="vertical-align: middle; font-size: 1.2em; margin-right: 0.5em;">volunteer_activism</span>
+                What Your Donation Provides:
+            </h4>
             <div class="impact-examples">
                 <div class="impact-example">
                     <span class="example-amount">$50</span>
@@ -147,27 +151,32 @@
         <!-- Urgency Message -->
         <div class="progress-message">
             <p *ngIf="progressPercentage < 25">
-                <strong>🌱 Right now, women are waiting.</strong>
+                <span class="material-symbols-outlined" style="vertical-align: middle; font-size: 1.2em; margin-right: 0.5em;">trending_up</span>
+                <strong>Right now, women are waiting.</strong>
                 Every contribution lays the foundation for someone's fresh start.
                 <em>Be the reason someone finds safety tonight.</em>
             </p>
             <p *ngIf="progressPercentage >= 25 && progressPercentage < 50">
-                <strong>🏗️ The walls are rising!</strong>
+                <span class="material-symbols-outlined" style="vertical-align: middle; font-size: 1.2em; margin-right: 0.5em;">construction</span>
+                <strong>The walls are rising!</strong>
                 We're building more than a shelter—we're building hope.
                 <em>Your support is changing lives right now.</em>
             </p>
             <p *ngIf="progressPercentage >= 50 && progressPercentage < 75">
-                <strong>💪 We're over halfway there!</strong>
+                <span class="material-symbols-outlined" style="vertical-align: middle; font-size: 1.2em; margin-right: 0.5em;">trending_up</span>
+                <strong>We're over halfway there!</strong>
                 Can you imagine the families who will find safety here?
                 <em>Help us finish what we started together.</em>
             </p>
             <p *ngIf="progressPercentage >= 75 && progressPercentage < 100">
-                <strong>🎯 We're SO close!</strong>
+                <span class="material-symbols-outlined" style="vertical-align: middle; font-size: 1.2em; margin-right: 0.5em;">flag</span>
+                <strong>We're SO close!</strong>
                 Women and children are counting on us.
                 <em>Be part of the final push to open these doors.</em>
             </p>
             <p *ngIf="progressPercentage >= 100">
-                <strong>🎉 Together, we did it!</strong>
+                <span class="material-symbols-outlined" style="vertical-align: middle; font-size: 1.2em; margin-right: 0.5em;">check_circle</span>
+                <strong>Together, we did it!</strong>
                 This shelter will provide safety and new beginnings for countless families.
                 <em>Thank you for being part of this life-changing mission.</em>
             </p>
@@ -177,7 +186,8 @@
     <!-- Debug Controls (only shown when debugMode is true) -->
     <div class="debug-controls" *ngIf="debugMode">
         <label class="debug-label">
-            <span>🔧 Debug Progress: {{ debugProgress }}%</span>
+            <span class="material-symbols-outlined" style="vertical-align: middle; font-size: 1.2em; margin-right: 0.5em;">settings</span>
+            <span>Debug Progress: {{ debugProgress }}%</span>
             <input type="range" min="0" max="100" [(ngModel)]="debugProgress" (input)="onDebugSliderChange()"
                 class="debug-slider" />
         </label>

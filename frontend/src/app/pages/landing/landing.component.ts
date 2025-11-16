@@ -67,7 +67,7 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
   // Updated with accurate Shield of Athena data
   visualStats = [
     {
-      icon: '🏠',
+      icon: 'home',
       value: 150,
       suffix: '',
       label: 'Annual Shelter',
@@ -75,7 +75,7 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
       color: '#C8BEEA',
     },
     {
-      icon: '🌍',
+      icon: 'language',
       value: 10,
       suffix: '+',
       label: 'Languages',
@@ -83,7 +83,7 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
       color: '#EEC9D2',
     },
     {
-      icon: '📍',
+      icon: 'location_on',
       value: 2,
       suffix: '',
       label: 'Locations',
@@ -91,7 +91,7 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
       color: '#F4D292',
     },
     {
-      icon: '⏰',
+      icon: 'schedule',
       value: 24,
       suffix: '/7',
       label: 'Always Here',
@@ -103,28 +103,28 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
   // Updated services to match Shield of Athena's actual offerings
   helpServices: HelpService[] = [
     {
-      icon: '🏠',
+      icon: 'home',
       title: "Athena's House",
       description:
         'Emergency shelter providing 24/7 safe housing for women and children fleeing conjugal or family violence in a secure, empowering environment.',
       color: '#C8BEEA',
     },
     {
-      icon: '💬',
+      icon: 'psychology',
       title: 'Professional Counseling',
       description:
         'Trained social workers, caseworkers, and cultural intermediaries provide multidisciplinary support in over 10 languages.',
       color: '#EEC9D2',
     },
     {
-      icon: '⚖️',
+      icon: 'gavel',
       title: 'Legal Support',
       description:
         'Supervised law students and legal advocates provide guidance through police procedures, court processes, and available resources.',
       color: '#F4D292',
     },
     {
-      icon: '🌍',
+      icon: 'groups',
       title: 'Community Outreach',
       description:
         'Information and education programs delivered across Montreal and Laval in multiple languages to raise awareness and prevent violence.',
