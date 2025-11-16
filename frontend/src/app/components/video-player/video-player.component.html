@@ -1,6 +1,8 @@
 <video
-  #target
-  class="video-js vjs-default-skin vjs-big-play-centered vjs-fluid"
+  class="video-player"
   controls
-  preload="auto">
+  preload="metadata"
+  crossorigin="anonymous">
+  <source [src]="videoSrc" type="video/mp4">
+  Your browser does not support the video tag.
 </video>

@@ -1,38 +1,20 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import videojs from 'video.js';
-import type Player from 'video.js/dist/types/player';
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-video-player',
   standalone: true,
+  imports: [CommonModule],
   templateUrl: './video-player.component.html',
   styleUrls: ['./video-player.component.scss']
 })
-export class VideoPlayerComponent implements OnInit, OnDestroy {
-  @ViewChild('target', { static: true }) target!: ElementRef;
+export class VideoPlayerComponent {
   @Input() videoSrc!: string;
-  player!: Player;
-
-  ngOnInit(): void {
-    this.player = videojs(this.target.nativeElement, {
-      controls: true,
-      autoplay: false,
-      preload: "auto",
-      fluid: true,               // <-- VERY IMPORTANT
-      aspectRatio: "16:9",       // <-- forces correct height
-      sources: [
-        {
-          src: this.videoSrc,
-          type: "video/webm",
-        },
-      ],
-    });
-  }
-
-
-  ngOnDestroy(): void {
-    if (this.player) {
-      this.player.dispose();
-    }
+  
+  constructor(private sanitizer: DomSanitizer) {}
+  
+  getSafeUrl(): SafeUrl {
+    return this.sanitizer.bypassSecurityTrustUrl(this.videoSrc);
   }
 }
