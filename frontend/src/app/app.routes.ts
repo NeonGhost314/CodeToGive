@@ -1,16 +1,15 @@
 import { Routes } from '@angular/router';
-import { HomePageComponent } from './pages/home-page/home-page.component';
 import { DonationPageComponent } from './pages/donation-page/donation-page.component';
 import { FundDetailPageComponent } from './pages/fund-detail-page/fund-detail-page.component';
 import { PaymentPageComponent } from './pages/payment-page/payment-page.component';
 import { PaymentConfirmationComponent } from './pages/payment-confirmation/payment-confirmation.component';
+import { LandingComponent } from './pages/landing/landing.component';
 import { VideoComponent } from './pages/video-page/video.component';
-import { HomeComponent } from './pages/home/home.component'; // Importez le nouveau composant
 
 export const routes: Routes = [
   {
     path: '',
-    component: HomePageComponent
+    component: LandingComponent,
   },
   {
     path: 'donation',
@@ -31,5 +30,14 @@ export const routes: Routes = [
   {
     path: 'video',
     component: VideoComponent
-  }
+  },
+  // Story detail page will be added by Yann's team I guess
+  // {
+  //   path: 'story/:id',
+  //   component: StoryDetailComponent
+  // },
+  {
+    path: '**',
+    redirectTo: '',
+  },
 ];
