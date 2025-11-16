@@ -22,6 +22,7 @@ import { fadeInUp, fadeIn } from '../../shared/animations/page.animations';
 import { StoryService } from '../../services/story/story.service';
 import { ThreeParticleService } from '../../services/three-particle/three-particle.service';
 import { WarmthService } from '../../services/warmth/warmth.service';
+import { ShelterProgressComponent } from '../../components/shelter-progress/shelter-progress.component';
 
 interface HelpService {
   icon: string;
@@ -41,6 +42,7 @@ interface HelpService {
     StoryCardComponent,
     VisualStatComponent,
     EmergencyContactsComponent,
+    ShelterProgressComponent,
   ],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
@@ -57,6 +59,10 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
   impactStats?: ImpactStats;
   impactChallenges: ImpactChallenge[] = [];
   isLoading = true;
+
+  shelterCurrent: number = 0;
+  shelterGoal: number = 100;
+  shelterDebugMode: boolean = true; // Set to true to test!
 
   // Updated with accurate Shield of Athena data
   visualStats = [
@@ -198,5 +204,26 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
     if (helpSection) {
       helpSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+  }
+
+  shareStory(): void {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: 'Help Build Hope at Shield of Athena',
+          text: 'Join me in supporting women and children escaping violence. Every donation builds safety and hope.',
+          url: window.location.href,
+        })
+        .catch(() => {
+          this.copyLinkToClipboard();
+        });
+    } else {
+      this.copyLinkToClipboard();
+    }
+  }
+  private copyLinkToClipboard(): void {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      alert('Link copied! Share it with your friends and family.');
+    });
   }
 }

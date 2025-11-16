@@ -2,6 +2,8 @@
 
     <app-navbar></app-navbar>
     <app-scroll-indicator></app-scroll-indicator>
+
+    <!-- HERO SECTION -->
     <section class="hero-section" id="hero" (mousemove)="onParticleMouseMove($event)">
         <div #particleCanvas class="particle-canvas"></div>
 
@@ -61,6 +63,7 @@
         </div>
     </section>
 
+    <!-- HOW WE HELP SECTION -->
     <section class="how-we-help-section" id="how-we-help" @fadeIn>
         <div class="section-container-wide">
             <div class="section-header-centered">
@@ -86,6 +89,7 @@
         </div>
     </section>
 
+    <!-- IMPACT STATS SECTION -->
     <section class="impact-stats-section" id="impact-stats" @fadeIn>
         <div #warmthCanvas class="warmth-canvas"></div>
 
@@ -113,6 +117,7 @@
         </div>
     </section>
 
+    <!-- FEATURED STORY SECTION -->
     <section class="featured-story-section" id="featured-story" *ngIf="featuredStory" @fadeIn>
         <div class="section-container">
             <div class="section-header">
@@ -128,49 +133,86 @@
         </div>
     </section>
 
-    <section class="impact-challenges-section" *ngIf="impactChallenges.length" @fadeIn>
+    <!-- TRANSITION BRIDGE SECTION -->
+    <section class="story-to-shelter-bridge" @fadeIn>
         <div class="section-container">
-            <div class="section-header-centered">
-                <div class="section-tag">Current Needs</div>
-                <h2 class="section-title">Help Us Expand Our Capacity</h2>
-                <p class="section-subtitle">
-                    Athena's House is at full capacity. Your support helps us serve more women and children
-                    escaping violence.
+            <div class="bridge-content">
+                <div class="bridge-icon">💝</div>
+                <h2 class="bridge-title">Maria's Story Isn't Finished</h2>
+                <p class="bridge-text">
+                    Maria found safety at Shield of Athena. But <strong>right now</strong>,
+                    there are women just like her—mothers with children, sisters, daughters—
+                    waiting for a place they can call safe. <strong>Your support today</strong>
+                    doesn't just fund a building. It funds freedom, healing, and hope.
                 </p>
-            </div>
-
-            <div class="challenges-grid">
-                <div class="challenge-card" *ngFor="let challenge of impactChallenges">
-                    <div class="challenge-header">
-                        <div class="challenge-info">
-                            <h3 class="challenge-title">{{ challenge.title }}</h3>
-                            <p class="challenge-subtitle">
-                                <strong>{{ challenge.goal - challenge.current }}</strong> {{ challenge.unit }} still
-                                needed
-                            </p>
-                        </div>
-                        <div class="challenge-percentage" [style.backgroundColor]="challenge.color + '33'"
-                            [style.color]="challenge.color">
-                            {{ getPercentage(challenge.current, challenge.goal) }}%
-                        </div>
+                <div class="bridge-stats">
+                    <div class="bridge-stat">
+                        <span class="stat-icon">⏰</span>
+                        <span class="stat-text"><strong>Every 6 minutes</strong>, a woman calls for help</span>
                     </div>
-
-                    <div class="progress-bar-container" [style.backgroundColor]="challenge.color + '1A'">
-                        <div class="progress-bar-fill"
-                            [style.width.%]="getPercentage(challenge.current, challenge.goal)"
-                            [style.background]="'linear-gradient(90deg, ' + challenge.color + ', #F4D292)'">
-                        </div>
+                    <div class="bridge-stat">
+                        <span class="stat-icon">🏠</span>
+                        <span class="stat-text"><strong>Our shelters are at capacity</strong>, turning families
+                            away</span>
                     </div>
-
-                    <div class="challenge-stats">
-                        <span><strong>{{ challenge.current }}</strong> {{ challenge.unit }} funded</span>
-                        <span>Goal: {{ challenge.goal }}</span>
+                    <div class="bridge-stat">
+                        <span class="stat-icon">💪</span>
+                        <span class="stat-text"><strong>Together, we can change this</strong> story</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- SHELTER PROGRESS SECTION -->
+    <section class="shelter-progress-section" id="shelter-progress" @fadeIn>
+        <div class="section-container">
+            <app-shelter-progress [current]="shelterCurrent" [goal]="shelterGoal" [debugMode]="shelterDebugMode">
+            </app-shelter-progress>
+
+            <!-- Call to Action Buttons -->
+            <div class="shelter-cta-buttons">
+                <a href="https://www.canadahelps.org/en/dn/27709" target="_blank" class="btn-donate-now">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                            fill="currentColor" />
+                    </svg>
+                    <div class="btn-content">
+                        <span class="btn-label">Donate Now</span>
+                        <span class="btn-sublabel">Build Hope Today</span>
+                    </div>
+                </a>
+
+                <button class="btn-share" (click)="shareStory()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <circle cx="18" cy="5" r="3" stroke="currentColor" stroke-width="2" />
+                        <circle cx="6" cy="12" r="3" stroke="currentColor" stroke-width="2" />
+                        <circle cx="18" cy="19" r="3" stroke="currentColor" stroke-width="2" />
+                        <path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                    <span>Share This Mission</span>
+                </button>
+            </div>
+
+            <!-- Social Proof -->
+            <div class="social-proof">
+                <div class="supporter-avatars">
+                    <div class="avatar">👤</div>
+                    <div class="avatar">👤</div>
+                    <div class="avatar">👤</div>
+                    <div class="avatar">👤</div>
+                    <div class="avatar-more">+43</div>
+                </div>
+                <p class="supporter-text">
+                    <strong>47 caring people</strong> have already contributed to building this shelter.
+                    <span class="join-text">Join them today!</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA SECTION -->
     <section class="final-cta-section" id="final-cta" @fadeIn>
         <div class="section-container">
             <div class="cta-content">
@@ -231,6 +273,7 @@
         </div>
     </section>
 
+    <!-- Loading State -->
     <div class="loading-container" *ngIf="isLoading">
         <div class="loading-spinner"></div>
         <p>Loading our stories of hope...</p>
