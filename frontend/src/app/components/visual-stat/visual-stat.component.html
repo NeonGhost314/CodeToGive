@@ -1,4 +1,7 @@
 <div class="visual-stat-card" [style.--stat-color]="stat.color">
+    <!-- Three.js Effect Canvas -->
+    <div #effectCanvas class="effect-canvas"></div>
+
     <div class="stat-visual">
         <canvas #chartCanvas width="140" height="140" class="stat-chart"></canvas>
         <div class="stat-icon-overlay">{{ stat.icon }}</div>

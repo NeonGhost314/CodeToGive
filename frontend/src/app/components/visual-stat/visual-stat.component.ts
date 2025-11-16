@@ -6,8 +6,10 @@ import {
   ElementRef,
   ViewChild,
   OnDestroy,
+  HostListener,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { StatCardEffectService } from '../../services/stat-card-effect/stat-card-effect.service';
 
 interface StatData {
   icon: string;
@@ -29,21 +31,57 @@ export class VisualStatComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() stat!: StatData;
   @ViewChild('chartCanvas', { static: false })
   chartCanvas!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('effectCanvas', { static: false })
+  effectCanvas!: ElementRef<HTMLDivElement>;
 
   animatedValue = 0;
   private animationFrame?: number;
+  private effectService?: StatCardEffectService;
 
   ngOnInit(): void {
     this.animateNumber();
   }
 
   ngAfterViewInit(): void {
-    setTimeout(() => this.drawChart(), 100);
+    setTimeout(() => {
+      this.drawChart();
+      if (this.effectCanvas && this.stat.color) {
+        this.effectService = new StatCardEffectService();
+        this.effectService.init(
+          this.effectCanvas.nativeElement,
+          this.stat.color
+        );
+      }
+    }, 100);
   }
 
   ngOnDestroy(): void {
     if (this.animationFrame) {
       cancelAnimationFrame(this.animationFrame);
+    }
+    if (this.effectService) {
+      this.effectService.dispose();
+    }
+  }
+
+  @HostListener('mouseenter')
+  onMouseEnter(): void {
+    if (this.effectService) {
+      this.effectService.onMouseEnter();
+    }
+  }
+
+  @HostListener('mouseleave')
+  onMouseLeave(): void {
+    if (this.effectService) {
+      this.effectService.onMouseLeave();
+    }
+  }
+
+  @HostListener('mousemove', ['$event'])
+  onMouseMove(event: MouseEvent): void {
+    if (this.effectCanvas && this.effectService) {
+      this.effectService.onMouseMove(event, this.effectCanvas.nativeElement);
     }
   }
 

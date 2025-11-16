@@ -12,6 +12,7 @@
   box-shadow: 0 8px 32px rgba(200, 190, 234, 0.15);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid rgba(0, 0, 0, 0.05);
+  overflow: hidden;
 
   &:hover {
     transform: translateY(-12px) scale(1.02);
@@ -27,6 +28,20 @@
   }
 }
 
+.effect-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+
+  canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
 .stat-visual {
   position: relative;
   width: 140px;
@@ -34,6 +49,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1;
 }
 
 .stat-chart {
@@ -46,11 +62,25 @@
   font-size: 3.5rem;
   transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
+  z-index: 2;
+
+  /* Force emoji text rendering, not images */
+  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+
+  /* Prevent image replacement */
+  img {
+    display: none !important;
+  }
 }
 
 .stat-content {
   text-align: center;
   width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
 .stat-number {

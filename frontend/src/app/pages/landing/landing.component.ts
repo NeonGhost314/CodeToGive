@@ -58,29 +58,30 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
   impactChallenges: ImpactChallenge[] = [];
   isLoading = true;
 
+  // Updated with accurate Shield of Athena data
   visualStats = [
-    {
-      icon: '👥',
-      value: 2400,
-      suffix: '+',
-      label: 'Lives Touched',
-      sublabel: 'Women and children helped annually',
-      color: '#C8BEEA',
-    },
     {
       icon: '🏠',
       value: 150,
       suffix: '',
-      label: 'Shelter Spaces',
-      sublabel: 'Safe refuge provided yearly',
+      label: 'Annual Shelter',
+      sublabel: 'Women and children sheltered yearly',
+      color: '#C8BEEA',
+    },
+    {
+      icon: '🌍',
+      value: 10,
+      suffix: '+',
+      label: 'Languages',
+      sublabel: 'Multilingual support available',
       color: '#EEC9D2',
     },
     {
-      icon: '⭐',
-      value: 98,
-      suffix: '%',
-      label: 'Success Rate',
-      sublabel: 'Survivors rebuild their lives',
+      icon: '📍',
+      value: 2,
+      suffix: '',
+      label: 'Locations',
+      sublabel: 'Montreal & Laval offices',
       color: '#F4D292',
     },
     {
@@ -93,33 +94,34 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
     },
   ];
 
+  // Updated services to match Shield of Athena's actual offerings
   helpServices: HelpService[] = [
     {
       icon: '🏠',
       title: "Athena's House",
       description:
-        'Emergency shelter providing safe haven for women and children fleeing violence. Available 24/7 with no waiting list.',
+        'Emergency shelter providing 24/7 safe housing for women and children fleeing conjugal or family violence in a secure, empowering environment.',
       color: '#C8BEEA',
     },
     {
       icon: '💬',
-      title: 'Counseling & Support',
+      title: 'Professional Counseling',
       description:
-        'Professional therapy services in multiple languages, including individual, family, and group counseling.',
+        'Trained social workers, caseworkers, and cultural intermediaries provide multidisciplinary support in over 10 languages.',
       color: '#EEC9D2',
     },
     {
       icon: '⚖️',
-      title: 'Legal Advocacy',
+      title: 'Legal Support',
       description:
-        'Expert legal guidance through the justice system, including court accompaniment and documentation support.',
+        'Supervised law students and legal advocates provide guidance through police procedures, court processes, and available resources.',
       color: '#F4D292',
     },
     {
-      icon: '🎓',
-      title: 'Life Skills & Training',
+      icon: '🌍',
+      title: 'Community Outreach',
       description:
-        'Educational programs, job training, and financial literacy workshops to build long-term independence.',
+        'Information and education programs delivered across Montreal and Laval in multiple languages to raise awareness and prevent violence.',
       color: '#A8C2D1',
     },
   ];

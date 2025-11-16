@@ -5,7 +5,15 @@
     </div>
 
     <div class="contacts-list">
-        <div class="contact-group" *ngFor="let contact of contacts">
+        <div class="contact-group" *ngFor="let contact of contacts; let i = index" (mouseenter)="onCardMouseEnter(i)"
+            (mouseleave)="onCardMouseLeave(i)">
+
+            <!-- Three.js Effect Canvas -->
+            <div #effectCanvas1 *ngIf="i === 0" class="effect-canvas"></div>
+            <div #effectCanvas2 *ngIf="i === 1" class="effect-canvas"></div>
+            <div #effectCanvas3 *ngIf="i === 2" class="effect-canvas"></div>
+            <div #effectCanvas4 *ngIf="i === 3" class="effect-canvas"></div>
+
             <h3 class="contact-title">{{ contact.title }}</h3>
 
             <div class="phone-numbers">

@@ -1,5 +1,13 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  AfterViewInit,
+  OnDestroy,
+  ViewChild,
+  ElementRef,
+  HostListener,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ContactCardEffectService } from '../../services/contact-card-effect/contact-card-effect.service';
 
 interface ContactInfo {
   title: string;
@@ -17,7 +25,19 @@ interface ContactInfo {
   templateUrl: './emergencyContacts.component.html',
   styleUrl: './emergencyContacts.component.scss',
 })
-export class EmergencyContactsComponent {
+export class EmergencyContactsComponent implements AfterViewInit, OnDestroy {
+  @ViewChild('effectCanvas1', { static: false })
+  effectCanvas1!: ElementRef<HTMLDivElement>;
+  @ViewChild('effectCanvas2', { static: false })
+  effectCanvas2!: ElementRef<HTMLDivElement>;
+  @ViewChild('effectCanvas3', { static: false })
+  effectCanvas3!: ElementRef<HTMLDivElement>;
+  @ViewChild('effectCanvas4', { static: false })
+  effectCanvas4!: ElementRef<HTMLDivElement>;
+
+  private effectServices: ContactCardEffectService[] = [];
+  private hoveredIndex = -1;
+
   contacts: ContactInfo[] = [
     {
       title: 'Police',
@@ -46,4 +66,41 @@ export class EmergencyContactsComponent {
       ],
     },
   ];
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      const canvases = [
+        this.effectCanvas1,
+        this.effectCanvas2,
+        this.effectCanvas3,
+        this.effectCanvas4,
+      ];
+
+      canvases.forEach((canvas, index) => {
+        if (canvas) {
+          const service = new ContactCardEffectService();
+          service.init(canvas.nativeElement);
+          this.effectServices[index] = service;
+        }
+      });
+    }, 100);
+  }
+
+  ngOnDestroy(): void {
+    this.effectServices.forEach((service) => service.dispose());
+  }
+
+  onCardMouseEnter(index: number): void {
+    this.hoveredIndex = index;
+    if (this.effectServices[index]) {
+      this.effectServices[index].onMouseEnter();
+    }
+  }
+
+  onCardMouseLeave(index: number): void {
+    this.hoveredIndex = -1;
+    if (this.effectServices[index]) {
+      this.effectServices[index].onMouseLeave();
+    }
+  }
 }

@@ -35,10 +35,27 @@
 }
 
 .contact-group {
+  position: relative;
   background: white;
   border-radius: 16px;
   padding: 2rem;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  border: 2px solid transparent;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(200, 190, 234, 0.2);
+    border-color: rgba(238, 201, 210, 0.4);
+  }
+}
+
+.effect-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .contact-title {
@@ -49,12 +66,16 @@
   font-family: Georgia, serif;
   padding-bottom: 0.75rem;
   border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+  position: relative;
+  z-index: 1;
 }
 
 .phone-numbers {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  position: relative;
+  z-index: 1;
 }
 
 .phone-link {
