@@ -1,0 +1,27 @@
+<div class="donations-list">
+  <h3 class="section-title">My Donations</h3>
+
+  <div *ngIf="loading" class="loading">
+    Loading donations...
+  </div>
+
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && !error">
+    <div *ngIf="donations.length === 0" class="empty-state">
+      <p>You haven't made any donations yet.</p>
+    </div>
+
+    <div *ngIf="donations.length > 0" class="donations-grid">
+      <div *ngFor="let donation of donations" class="donation-card">
+        <div class="donation-amount">{{ formatAmount(donation.amount) }}</div>
+        <div class="donation-state">
+          <span [class]="getStateClass(donation.state)">{{ donation.state }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

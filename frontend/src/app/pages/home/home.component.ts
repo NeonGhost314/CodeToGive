@@ -39,6 +39,14 @@ export class HomeComponent implements OnInit {
   navigateToVideo(): void {
     this.router.navigate(['/video']);
   }
+
+  navigateToAuth(): void {
+    this.router.navigate(['/auth']);
+  }
+
+  navigateToSettings(): void {
+    this.router.navigate(['/settings']);
+  }
 }
 
 

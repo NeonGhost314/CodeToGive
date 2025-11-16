@@ -1,0 +1,42 @@
+<form (ngSubmit)="onSubmit()" class="auth-form">
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      [(ngModel)]="email"
+      required
+      placeholder="Enter your email"
+    />
+  </div>
+
+  <div class="form-group" *ngIf="mode === 'register'">
+    <label for="first_name">First Name</label>
+    <input
+      type="text"
+      id="first_name"
+      name="first_name"
+      [(ngModel)]="first_name"
+      required
+      placeholder="Enter your first name"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      [(ngModel)]="password"
+      required
+      placeholder="Enter your password"
+    />
+  </div>
+
+  <button type="submit" class="submit-btn">
+    {{ mode === 'login' ? 'Sign In' : 'Sign Up' }}
+  </button>
+</form>
+

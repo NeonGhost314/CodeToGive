@@ -1,0 +1,43 @@
+<div class="auth-page">
+  <div class="auth-container">
+    <div class="auth-card">
+      <h1 class="auth-title">
+        {{ mode === 'login' ? 'Welcome Back' : 'Create Account' }}
+      </h1>
+      <p class="auth-subtitle">
+        {{
+          mode === 'login'
+            ? 'Sign in to continue'
+            : 'Sign up to get started'
+        }}
+      </p>
+
+      <div *ngIf="error" class="error-message">
+        {{ error }}
+      </div>
+
+      <app-auth-form
+        [mode]="mode"
+        (submit)="onFormSubmit($event)"
+      ></app-auth-form>
+
+      <div class="toggle-section">
+        <p>
+          {{
+            mode === 'login'
+              ? "Don't have an account?"
+              : 'Already have an account?'
+          }}
+          <button type="button" class="toggle-link" (click)="toggleMode()">
+            {{ mode === 'login' ? 'Sign Up' : 'Sign In' }}
+          </button>
+        </p>
+      </div>
+
+      <div *ngIf="loading" class="loading-overlay">
+        <div class="spinner"></div>
+      </div>
+    </div>
+  </div>
+</div>
+

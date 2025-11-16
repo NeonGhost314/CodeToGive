@@ -1,0 +1,68 @@
+<div class="settings-page">
+  <div class="settings-container">
+    <h1 class="page-title">Account Settings</h1>
+
+    <div *ngIf="user" class="settings-sections">
+      <!-- Profile Section -->
+      <section class="settings-section">
+        <h2 class="section-title">Profile Information</h2>
+        <div class="form-container">
+          <div class="form-group">
+            <label for="email-display">Email</label>
+            <input
+              type="text"
+              id="email-display"
+              [value]="user.mail"
+              disabled
+              class="disabled-input"
+            />
+            <p class="help-text">Email cannot be changed</p>
+          </div>
+
+          <div class="form-group">
+            <label for="first_name">First Name</label>
+            <input
+              type="text"
+              id="first_name"
+              name="first_name"
+              [(ngModel)]="first_name"
+              placeholder="Enter your first name"
+            />
+          </div>
+
+          <div *ngIf="profileSuccess" class="success-message">
+            {{ profileSuccess }}
+          </div>
+
+          <div *ngIf="profileError" class="error-message">
+            {{ profileError }}
+          </div>
+
+          <button
+            type="button"
+            class="submit-btn"
+            (click)="updateProfile()"
+            [disabled]="profileLoading"
+          >
+            {{ profileLoading ? 'Updating...' : 'Update Profile' }}
+          </button>
+        </div>
+      </section>
+
+      <!-- Donations Section -->
+      <section class="settings-section" *ngIf="userId">
+        <app-user-donations-list [userId]="userId"></app-user-donations-list>
+      </section>
+
+      <!-- Logout Section -->
+      <section class="settings-section">
+        <div class="logout-section">
+          <button type="button" class="logout-btn" (click)="logout()">
+            Logout
+          </button>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+

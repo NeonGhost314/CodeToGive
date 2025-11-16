@@ -3,6 +3,21 @@
     "target": "http://127.0.0.1:5000",
     "secure": false,
     "changeOrigin": true
+  },
+  "/auth": {
+    "target": "http://127.0.0.1:5000",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/users": {
+    "target": "http://127.0.0.1:5000",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/donations": {
+    "target": "http://127.0.0.1:5000",
+    "secure": false,
+    "changeOrigin": true
   }
 }
 
