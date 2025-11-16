@@ -1,0 +1,109 @@
+@import '../../../styles.scss';
+
+.visual-stat-card {
+  position: relative;
+  background: white;
+  border-radius: 32px;
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  box-shadow: 0 8px 32px rgba(200, 190, 234, 0.15);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(200, 190, 234, 0.25);
+
+    .stat-chart {
+      filter: drop-shadow(0 8px 24px var(--stat-color));
+    }
+
+    .stat-icon-overlay {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.effect-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+
+  canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+.stat-visual {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.stat-chart {
+  display: block;
+  transition: filter 0.4s ease;
+}
+
+.stat-icon-overlay {
+  position: absolute;
+  font-size: 3.5rem;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
+  z-index: 2;
+  color: var(--stat-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+}
+
+.stat-content {
+  text-align: center;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.stat-number {
+  font-size: clamp(2.75rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--brand-dark, #644A73);
+  font-family: Georgia, serif;
+  line-height: 1;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
+
+  .stat-suffix {
+    font-size: 0.7em;
+    opacity: 0.8;
+  }
+}
+
+.stat-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--brand-dark, #644A73);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+
+.stat-sublabel {
+  font-size: 0.875rem;
+  color: rgba(100, 74, 115, 0.6);
+  line-height: 1.4;
+  font-style: italic;
+}

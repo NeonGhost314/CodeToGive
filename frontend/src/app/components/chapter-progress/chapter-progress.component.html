@@ -1,0 +1,23 @@
+<div class="chapter-progress" [class.large]="size === 'large'">
+    <div *ngFor="let chapter of chapters; let i = index" class="chapter-dot" [class.unlocked]="chapter.isUnlocked"
+        [class.locked]="!chapter.isUnlocked" [attr.data-chapter]="chapter.num">
+
+        <div class="dot-circle">
+            <svg *ngIf="chapter.isUnlocked" class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+            <svg *ngIf="!chapter.isUnlocked" class="lock-icon" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+        </div>
+
+        <div *ngIf="showLabels" class="chapter-label">
+            <span class="chapter-num">{{ chapter.num }}</span>
+            <span class="chapter-title">{{ chapter.title }}</span>
+        </div>
+    </div>
+</div>
