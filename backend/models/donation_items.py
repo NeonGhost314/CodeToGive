@@ -1,4 +1,4 @@
-from flask_sqlalchemy import SQLAlchemy
+from backend.extensions import db
 
 db = SQLAlchemy()
 
