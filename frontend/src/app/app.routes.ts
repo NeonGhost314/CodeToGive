@@ -27,7 +27,7 @@ export const routes: Routes = [
   {
     path: 'payment/confirmation',
     component: PaymentConfirmationComponent
-  }
+  },
   {
     path: 'video',
     component: VideoComponent

@@ -1,6 +1,4 @@
-from backend.extensions import db
-
-db = SQLAlchemy()
+from ..extensions import db
 
 class DonationItems(db.Model):
     id = db.Column(db.Integer, primary_key=True)
