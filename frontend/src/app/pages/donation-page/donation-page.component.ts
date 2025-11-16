@@ -5,6 +5,7 @@ import { DonationService, ImpactFund, DonationAmountOption, DonationImpactItem }
 import { Observable, catchError, of, switchMap } from 'rxjs';
 import { DonationAmountOptionsComponent } from '../../components/donation-amount-options/donation-amount-options.component';
 import { DonationFormComponent, DonationData } from '../../components/donation-form/donation-form.component';
+import { NewsletterComponent } from '../../components/newsletter/newsletter.component';
 
 @Component({
   selector: 'app-donation-page',
@@ -12,7 +13,8 @@ import { DonationFormComponent, DonationData } from '../../components/donation-f
   imports: [
     CommonModule,
     DonationAmountOptionsComponent,
-    DonationFormComponent
+    DonationFormComponent,
+    NewsletterComponent
   ],
   templateUrl: './donation-page.component.html',
   styleUrl: './donation-page.component.scss',
