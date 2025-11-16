@@ -1,0 +1,19 @@
+<div class="scroll-tracker">
+    <div class="tracker-container">
+        <div class="tracker-line"></div>
+
+        <div *ngFor="let section of sections; let i = index" class="tracker-section"
+            [class.active]="currentSection === section.id" [class.completed]="getSectionProgress(i) >= 100"
+            (click)="scrollToSection(section.id)">
+
+            <div class="section-dot">
+                <span class="dot-icon">{{ section.icon }}</span>
+                <div class="progress-ring" [style.--progress]="getSectionProgress(i) + '%'"></div>
+            </div>
+
+            <div class="section-label">
+                {{ section.label }}
+            </div>
+        </div>
+    </div>
+</div>

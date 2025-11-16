@@ -9,7 +9,9 @@ import {
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { ScrollTrackerComponent } from '../../components/scroll-tracker/scroll-tracker.component';
 import { StoryCardComponent } from '../../components/story-card/story-card.component';
+import { VisualStatComponent } from '../../components/visual-stat/visual-stat.component';
 import {
   HealingStory,
   ImpactStats,
@@ -18,11 +20,26 @@ import {
 import { fadeInUp, fadeIn } from '../../shared/animations/page.animations';
 import { StoryService } from '../../services/story/story.service';
 import { ThreeParticleService } from '../../services/three-particle/three-particle.service';
+import { WarmthService } from '../../services/warmth/warmth.service';
+
+interface HelpService {
+  icon: string;
+  title: string;
+  description: string;
+  color: string;
+}
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [CommonModule, RouterModule, NavbarComponent, StoryCardComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    NavbarComponent,
+    ScrollTrackerComponent,
+    StoryCardComponent,
+    VisualStatComponent,
+  ],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
   animations: [fadeInUp, fadeIn],
@@ -31,18 +48,84 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('particleCanvas', { static: false })
   particleCanvas!: ElementRef<HTMLDivElement>;
 
+  @ViewChild('warmthCanvas', { static: false })
+  warmthCanvas!: ElementRef<HTMLDivElement>;
+
   featuredStory?: HealingStory;
   impactStats?: ImpactStats;
   impactChallenges: ImpactChallenge[] = [];
   isLoading = true;
 
-  animatedLivesTouched = 0;
-  animatedStories = 0;
-  animatedRecoveryRate = 0;
+  visualStats = [
+    {
+      icon: '👥',
+      value: 2400,
+      suffix: '+',
+      label: 'Lives Touched',
+      sublabel: 'Women and children helped annually',
+      color: '#C8BEEA',
+    },
+    {
+      icon: '🏠',
+      value: 150,
+      suffix: '',
+      label: 'Shelter Spaces',
+      sublabel: 'Safe refuge provided yearly',
+      color: '#EEC9D2',
+    },
+    {
+      icon: '🌟',
+      value: 98,
+      suffix: '%',
+      label: 'Success Rate',
+      sublabel: 'Survivors rebuild their lives',
+      color: '#F4D292',
+    },
+    {
+      icon: '⏰',
+      value: 24,
+      suffix: '/7',
+      label: 'Always Here',
+      sublabel: 'Emergency support available',
+      color: '#A8C2D1',
+    },
+  ];
+
+  helpServices: HelpService[] = [
+    {
+      icon: '🏠',
+      title: "Athena's House",
+      description:
+        'Emergency shelter providing safe haven for women and children fleeing violence. Available 24/7 with no waiting list.',
+      color: '#C8BEEA',
+    },
+    {
+      icon: '💬',
+      title: 'Counseling & Support',
+      description:
+        'Professional therapy services in multiple languages, including individual, family, and group counseling.',
+      color: '#EEC9D2',
+    },
+    {
+      icon: '⚖️',
+      title: 'Legal Advocacy',
+      description:
+        'Expert legal guidance through the justice system, including court accompaniment and documentation support.',
+      color: '#F4D292',
+    },
+    {
+      icon: '🎓',
+      title: 'Life Skills & Training',
+      description:
+        'Educational programs, job training, and financial literacy workshops to build long-term independence.',
+      color: '#A8C2D1',
+    },
+  ];
 
   constructor(
     private storyService: StoryService,
-    private threeParticleService: ThreeParticleService
+    private threeParticleService: ThreeParticleService,
+    private warmthService: WarmthService
   ) {}
 
   ngOnInit(): void {
@@ -55,10 +138,17 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
         this.threeParticleService.init(this.particleCanvas.nativeElement);
       }, 100);
     }
+
+    if (this.warmthCanvas) {
+      setTimeout(() => {
+        this.warmthService.init(this.warmthCanvas.nativeElement);
+      }, 100);
+    }
   }
 
   ngOnDestroy(): void {
     this.threeParticleService.dispose();
+    this.warmthService.dispose();
   }
 
   private loadData(): void {
@@ -76,7 +166,6 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
     this.storyService.getImpactStats().subscribe({
       next: (stats) => {
         this.impactStats = stats;
-        this.animateNumbers(stats);
       },
     });
 
@@ -85,43 +174,6 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
         this.impactChallenges = challenges;
       },
     });
-  }
-
-  private animateNumbers(stats: ImpactStats): void {
-    this.animateNumber(0, stats.livesTouched, 2000, (val) => {
-      this.animatedLivesTouched = val;
-    });
-
-    this.animateNumber(0, stats.storiesOfHope, 1800, (val) => {
-      this.animatedStories = val;
-    });
-
-    this.animateNumber(0, stats.recoveryRate, 2000, (val) => {
-      this.animatedRecoveryRate = val;
-    });
-  }
-
-  private animateNumber(
-    start: number,
-    end: number,
-    duration: number,
-    callback: (val: number) => void
-  ): void {
-    const startTime = performance.now();
-    const animate = (currentTime: number) => {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-
-      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-      const current = Math.floor(start + (end - start) * easeOutQuart);
-
-      callback(current);
-
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
-    };
-    requestAnimationFrame(animate);
   }
 
   onParticleMouseMove(event: MouseEvent): void {
@@ -137,10 +189,10 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
     return Math.round((current / goal) * 100);
   }
 
-  scrollToStory(): void {
-    const storySection = document.getElementById('featured-story');
-    if (storySection) {
-      storySection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  scrollToHelp(): void {
+    const helpSection = document.getElementById('how-we-help');
+    if (helpSection) {
+      helpSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
 }

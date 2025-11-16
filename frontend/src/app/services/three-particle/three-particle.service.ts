@@ -29,16 +29,15 @@ export class ThreeParticleService {
   private pageInstances: PageInstance[] = [];
   private animationId?: number;
   private resizeHandler?: () => void;
-
-  private readonly PAGE_COUNT = 28;
-
+  private readonly PAGE_COUNT = 15;
   private rootGroup = new THREE.Group();
   private prevTime = performance.now();
-
   private targetTiltX = 0;
   private targetTiltY = 0;
   private currentTiltX = 0;
   private currentTiltY = 0;
+  private lastRenderTime = 0;
+  private readonly FPS_LIMIT = 30;
 
   init(container: HTMLElement): void {
     this.dispose();
@@ -53,10 +52,11 @@ export class ThreeParticleService {
     this.camera.position.z = 6;
 
     this.renderer = new THREE.WebGLRenderer({
-      antialias: true,
+      antialias: false,
       alpha: true,
+      powerPreference: 'low-power',
     });
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.renderer.setPixelRatio(1);
     this.renderer.setSize(width, height);
     this.renderer.setClearColor(0x000000, 0);
 
@@ -76,20 +76,14 @@ export class ThreeParticleService {
     const rect = container.getBoundingClientRect();
     const x = (event.clientX - rect.left) / rect.width - 0.5;
     const y = (event.clientY - rect.top) / rect.height - 0.5;
-
-    this.targetTiltY = x * 0.18;
-    this.targetTiltX = -y * 0.14;
+    this.targetTiltY = x * 0.1;
+    this.targetTiltX = -y * 0.08;
   }
 
   dispose(): void {
     if (this.animationId) {
       cancelAnimationFrame(this.animationId);
       this.animationId = undefined;
-    }
-
-    if (this.renderer) {
-      this.renderer.dispose();
-      this.renderer = undefined;
     }
 
     if (this.pageInstances.length && this.scene) {
@@ -102,6 +96,11 @@ export class ThreeParticleService {
       }
     }
     this.pageInstances = [];
+
+    if (this.renderer) {
+      this.renderer.dispose();
+      this.renderer.forceContextLoss();
+    }
 
     if (this.scene) {
       this.scene.clear();
@@ -117,18 +116,15 @@ export class ThreeParticleService {
   private createPages(): void {
     if (!this.scene) return;
 
-    this.pageInstances = [];
-
-    const baseGeometry = new THREE.PlaneGeometry(0.4, 0.28, 6, 2);
+    const baseGeometry = new THREE.PlaneGeometry(0.4, 0.28, 4, 2); // Reduced segments
 
     for (let i = 0; i < this.PAGE_COUNT; i++) {
       const particle = this.createParticle();
-
       const texture = this.createJournalPageTexture();
 
       const material = new THREE.MeshBasicMaterial({
         transparent: true,
-        opacity: 0.55,
+        opacity: 0.45,
         side: THREE.DoubleSide,
         map: texture,
         color: new THREE.Color('#FFFFFF'),
@@ -148,119 +144,55 @@ export class ThreeParticleService {
       mesh.rotation.set(startRot.x, startRot.y, startRot.z);
 
       this.rootGroup.add(mesh);
-
       this.pageInstances.push({ mesh, particle, basePositions });
     }
   }
+
   private createJournalPageTexture(): THREE.CanvasTexture {
     const canvas = document.createElement('canvas');
-    const size = 512;
+    const size = 256; // Reduced from 512
     canvas.width = size;
     canvas.height = size;
 
     const ctx = canvas.getContext('2d')!;
-
     ctx.fillStyle = '#F5E6D3';
     ctx.fillRect(0, 0, size, size);
 
-    for (let i = 0; i < 1200; i++) {
-      const x = Math.random() * size;
-      const y = Math.random() * size;
-      const opacity = Math.random() * 0.08;
-      ctx.fillStyle = `rgba(100, 74, 115, ${opacity})`;
-      ctx.fillRect(x, y, 1, 1);
-    }
-
-    ctx.strokeStyle = 'rgba(200, 190, 234, 0.35)';
-    ctx.lineWidth = 1.5;
-    const lineSpacing = 28;
-    const marginTop = 40;
-
-    for (let y = marginTop; y < size - 20; y += lineSpacing) {
+    // Simplified texture - fewer details
+    ctx.strokeStyle = 'rgba(200, 190, 234, 0.3)';
+    ctx.lineWidth = 1;
+    const lineSpacing = 20;
+    for (let y = 30; y < size - 20; y += lineSpacing) {
       ctx.beginPath();
-      ctx.moveTo(30, y);
-      ctx.lineTo(size - 30, y);
+      ctx.moveTo(20, y);
+      ctx.lineTo(size - 20, y);
       ctx.stroke();
     }
 
-    ctx.strokeStyle = 'rgba(238, 201, 210, 0.4)';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(60, 20);
-    ctx.lineTo(60, size - 20);
-    ctx.stroke();
-
-    ctx.strokeStyle = 'rgba(100, 74, 115, 0.25)';
-    ctx.lineWidth = 2;
-    ctx.lineCap = 'round';
-
-    for (let y = marginTop; y < size - 20; y += lineSpacing) {
-      const numMarks = Math.floor(Math.random() * 3) + 2;
-      let xPos = 70;
-
-      for (let m = 0; m < numMarks; m++) {
-        const markLength = Math.random() * 80 + 40;
-        const yOffset = Math.random() * 3 - 1.5;
-
-        ctx.beginPath();
-        ctx.moveTo(xPos, y + yOffset);
-        ctx.lineTo(xPos + markLength, y + yOffset);
-        ctx.stroke();
-
-        xPos += markLength + (Math.random() * 15 + 8);
-
-        if (xPos > size - 60) break;
-      }
-    }
-
-    ctx.strokeStyle = 'rgba(100, 74, 115, 0.3)';
-    ctx.lineWidth = 3;
-    ctx.strokeRect(8, 8, size - 16, size - 16);
-
-    const edgeGradient = ctx.createRadialGradient(
-      size / 2,
-      size / 2,
-      size / 3,
-      size / 2,
-      size / 2,
-      size / 1.5
-    );
-    edgeGradient.addColorStop(0, 'rgba(100, 74, 115, 0)');
-    edgeGradient.addColorStop(1, 'rgba(100, 74, 115, 0.08)');
-    ctx.fillStyle = edgeGradient;
-    ctx.fillRect(0, 0, size, size);
-
     const texture = new THREE.CanvasTexture(canvas);
     texture.needsUpdate = true;
-
     return texture;
   }
 
   private createParticle(): PageParticle {
-    const startX = THREE.MathUtils.randFloat(-0.28, 0.28);
-    const startY = THREE.MathUtils.randFloat(-3.0, -2.6);
-
-    const driftX = THREE.MathUtils.randFloat(-2.6, 2.6);
-
     return {
-      startX,
-      startY,
-      driftX,
+      startX: THREE.MathUtils.randFloat(-0.28, 0.28),
+      startY: THREE.MathUtils.randFloat(-3.0, -2.6),
+      driftX: THREE.MathUtils.randFloat(-2.6, 2.6),
       progress: Math.random(),
-      speed: THREE.MathUtils.randFloat(0.1, 0.18),
-      swayAmp: THREE.MathUtils.randFloat(0.06, 0.18),
-      swaySpeed: THREE.MathUtils.randFloat(0.9, 1.6),
+      speed: THREE.MathUtils.randFloat(0.08, 0.15),
+      swayAmp: THREE.MathUtils.randFloat(0.06, 0.15),
+      swaySpeed: THREE.MathUtils.randFloat(0.8, 1.4),
       phase: Math.random() * Math.PI * 2,
-      spinSpeed: THREE.MathUtils.randFloat(1.2, 2.2),
-      z: THREE.MathUtils.randFloat(-3.0, -2.0),
-      scale: THREE.MathUtils.randFloat(0.65, 0.9),
+      spinSpeed: THREE.MathUtils.randFloat(1.0, 1.8),
+      z: THREE.MathUtils.randFloat(-2.5, -1.5),
+      scale: THREE.MathUtils.randFloat(0.7, 0.9),
     };
   }
 
   private progressToY(startY: number, progress: number): number {
     const eased = 1 - Math.pow(1 - progress, 2.0);
-    const endY = 3.8;
-    return THREE.MathUtils.lerp(startY, endY, eased);
+    return THREE.MathUtils.lerp(startY, 3.8, eased);
   }
 
   private getPagePosition(
@@ -269,18 +201,12 @@ export class ThreeParticleService {
     time: number
   ): THREE.Vector3 {
     const y = this.progressToY(p.startY, progress);
-
-    const eased = progress;
-    const baseX = p.startX + p.driftX * eased;
-
+    const baseX = p.startX + p.driftX * progress;
     const sway =
       Math.sin(p.phase + time * p.swaySpeed) *
       p.swayAmp *
       (0.6 + 0.4 * (1 - progress));
-
-    const x = baseX + sway;
-
-    return new THREE.Vector3(x, y, p.z);
+    return new THREE.Vector3(baseX + sway, y, p.z);
   }
 
   private getPageRotation(
@@ -289,20 +215,13 @@ export class ThreeParticleService {
     progress: number
   ): THREE.Euler {
     const flutterPhase = time * p.spinSpeed + p.phase;
-    const flutter = Math.sin(flutterPhase);
-    const bank = Math.cos(flutterPhase * 0.8 + p.phase);
-
-    const intensity = 0.5 + 0.7 * (1 - progress);
-
-    const rx = flutter * 0.9 * intensity;
-    const ry = bank * 0.8 * intensity;
-
+    const intensity = 0.5 + 0.5 * (1 - progress);
+    const rx = Math.sin(flutterPhase) * 0.7 * intensity;
+    const ry = Math.cos(flutterPhase * 0.8 + p.phase) * 0.6 * intensity;
     const direction = p.driftX >= 0 ? 1 : -1;
-    const baseSpin = direction * 0.6 * progress;
-    const wobble = Math.sin(flutterPhase * 0.6) * 0.2 * intensity;
-
-    const rz = baseSpin + wobble;
-
+    const rz =
+      direction * 0.5 * progress +
+      Math.sin(flutterPhase * 0.6) * 0.15 * intensity;
     return new THREE.Euler(rx, ry, rz);
   }
 
@@ -312,26 +231,16 @@ export class ThreeParticleService {
     const posAttr = geom.attributes['position'] as THREE.BufferAttribute;
     const positions = posAttr.array as Float32Array;
 
-    const flutterFactor =
-      Math.sin(time * 2.0 + inst.particle.phase) * 0.5 + 0.5;
-    const intensity = 0.35 + 0.7 * (1 - progress);
-    const bendStrength = 0.18 * flutterFactor * intensity;
-
-    const halfWidth = 0.4 / 2;
+    const intensity = 0.3 + 0.5 * (1 - progress);
+    const bendStrength =
+      0.12 * Math.sin(time * 1.5 + inst.particle.phase) * intensity;
 
     for (let i = 0; i < positions.length; i += 3) {
-      const baseX = basePositions[i];
-      const baseY = basePositions[i + 1];
-      const baseZ = basePositions[i + 2];
-
-      const nx = baseX / halfWidth;
-      const curve = Math.sin(nx * Math.PI);
-
-      const zOffset = curve * bendStrength;
-
-      positions[i] = baseX;
-      positions[i + 1] = baseY;
-      positions[i + 2] = baseZ + zOffset;
+      const nx = basePositions[i] / 0.2;
+      const zOffset = Math.sin(nx * Math.PI) * bendStrength;
+      positions[i] = basePositions[i];
+      positions[i + 1] = basePositions[i + 1];
+      positions[i + 2] = basePositions[i + 2] + zOffset;
     }
 
     posAttr.needsUpdate = true;
@@ -341,6 +250,14 @@ export class ThreeParticleService {
     if (!this.scene || !this.camera || !this.renderer) return;
 
     const now = performance.now();
+    const elapsed = now - this.lastRenderTime;
+
+    if (elapsed < 1000 / this.FPS_LIMIT) {
+      this.animationId = requestAnimationFrame(() => this.animate());
+      return;
+    }
+
+    this.lastRenderTime = now;
     const delta = (now - this.prevTime) / 1000;
     this.prevTime = now;
     const t = now / 1000;
@@ -348,12 +265,12 @@ export class ThreeParticleService {
     this.currentTiltX = THREE.MathUtils.lerp(
       this.currentTiltX,
       this.targetTiltX,
-      0.08
+      0.05
     );
     this.currentTiltY = THREE.MathUtils.lerp(
       this.currentTiltY,
       this.targetTiltY,
-      0.08
+      0.05
     );
     this.rootGroup.rotation.x = this.currentTiltX;
     this.rootGroup.rotation.y = this.currentTiltY;
@@ -375,19 +292,10 @@ export class ThreeParticleService {
       inst.mesh.rotation.set(rot.x, rot.y, rot.z);
       inst.mesh.scale.setScalar(p.scale);
 
-      const fadeInDuration = 0.15;
-      const fadeOutStart = 0.9;
-
-      let opacity = 0.55;
-
-      if (p.progress < fadeInDuration) {
-        opacity = (p.progress / fadeInDuration) * 0.55;
-      } else if (p.progress > fadeOutStart) {
-        const fadeOutProgress =
-          (p.progress - fadeOutStart) / (1 - fadeOutStart);
-        opacity = 0.55 * (1 - fadeOutProgress);
-      }
-
+      let opacity = 0.45;
+      if (p.progress < 0.1) opacity = (p.progress / 0.1) * 0.45;
+      else if (p.progress > 0.9)
+        opacity = 0.45 * (1 - (p.progress - 0.9) / 0.1);
       (inst.mesh.material as THREE.MeshBasicMaterial).opacity = opacity;
 
       this.applyBend(inst, t, p.progress);
@@ -399,10 +307,8 @@ export class ThreeParticleService {
 
   private onResize(container: HTMLElement): void {
     if (!this.renderer || !this.camera) return;
-
     const width = container.clientWidth;
     const height = container.clientHeight;
-
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(width, height);

@@ -1,40 +1,115 @@
 <div class="landing-page">
 
     <app-navbar></app-navbar>
+    <app-scroll-tracker></app-scroll-tracker>
 
-    <section class="hero-section" (mousemove)="onParticleMouseMove($event)">
+    <section class="hero-section" id="hero" (mousemove)="onParticleMouseMove($event)">
         <div #particleCanvas class="particle-canvas"></div>
 
         <div class="hero-content" @fadeInUp>
             <div class="hero-badge">
-                <span class="badge-icon">✦</span>
-                <span>Athena Center — Impact Partnership</span>
+                <span class="badge-icon">🛡️</span>
+                <span>Fighting Violence Against Women Since 1975</span>
             </div>
 
             <h1 class="hero-title">
-                Transform Giving Into<br>
-                Lasting Impact
+                Breaking Cycles of Violence.<br>
+                <span class="highlight-text">Building Lives of Freedom.</span>
             </h1>
 
             <p class="hero-description">
-                Follow real healing journeys chapter by chapter. Your support unlocks
-                stories of transformation and creates tangible change in lives rebuilding from trauma.
+                For 50 years, Shield of Athena has been a beacon of hope for women and children escaping violence.
+                Our comprehensive support transforms crisis into opportunity, trauma into healing, and fear into
+                courage.
             </p>
 
-            <div class="hero-actions">
-                <button class="btn-primary" (click)="scrollToStory()">
-                    <span>Discover This Month's Journey</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 5v14M19 12l-7 7-7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                </button>
+            <div class="hero-stats-mini">
+                <div class="mini-stat">
+                    <div class="mini-stat-icon">⏰</div>
+                    <div class="mini-stat-content">
+                        <div class="mini-stat-number">24/7</div>
+                        <div class="mini-stat-label">Crisis Support</div>
+                    </div>
+                </div>
+                <div class="mini-stat-divider"></div>
+                <div class="mini-stat">
+                    <div class="mini-stat-icon">🔒</div>
+                    <div class="mini-stat-content">
+                        <div class="mini-stat-number">100%</div>
+                        <div class="mini-stat-label">Confidential</div>
+                    </div>
+                </div>
+                <div class="mini-stat-divider"></div>
+                <div class="mini-stat">
+                    <div class="mini-stat-icon">🌟</div>
+                    <div class="mini-stat-content">
+                        <div class="mini-stat-number">50+</div>
+                        <div class="mini-stat-label">Years Strong</div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Live indicator -->
-            <div class="live-indicator">
-                <div class="live-dot"></div>
-                <span><strong>12 people</strong> are supporting a journey right now</span>
+            <div class="scroll-indicator" (click)="scrollToHelp()">
+                <div class="scroll-text">Discover How We Help</div>
+                <div class="scroll-mouse">
+                    <div class="scroll-wheel"></div>
+                </div>
+                <svg class="scroll-arrow" width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M12 5v14M19 12l-7 7-7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-we-help-section" id="how-we-help" @fadeIn>
+        <div class="section-container-wide">
+            <div class="section-header-centered">
+                <div class="section-tag">Our Services</div>
+                <h2 class="section-title">Comprehensive Support at Every Stage</h2>
+                <p class="section-subtitle">
+                    From emergency shelter to long-term independence, we walk alongside survivors every step of their
+                    healing journey.
+                </p>
+            </div>
+
+            <div class="help-services-grid">
+                <div class="help-service-card" *ngFor="let service of helpServices"
+                    [style.--service-color]="service.color">
+                    <div class="service-icon-wrapper">
+                        <div class="service-icon">{{ service.icon }}</div>
+                    </div>
+                    <h3 class="service-title">{{ service.title }}</h3>
+                    <p class="service-description">{{ service.description }}</p>
+                    <div class="service-accent"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="impact-stats-section" id="impact-stats" @fadeIn>
+        <div #warmthCanvas class="warmth-canvas"></div>
+
+        <div class="section-container-wide">
+            <div class="section-header-centered">
+                <div class="section-tag">Our Impact</div>
+                <h2 class="section-title">Real Numbers, Real Lives Changed</h2>
+                <p class="section-subtitle">
+                    Behind every statistic is a story of resilience, hope, and transformation
+                </p>
+            </div>
+
+            <div class="visual-stats-grid">
+                <app-visual-stat *ngFor="let stat of visualStats" [stat]="stat"></app-visual-stat>
+            </div>
+
+            <div class="impact-quote">
+                <div class="quote-icon">"</div>
+                <blockquote>
+                    Shield of Athena gave me more than shelter—they gave me hope, strength, and a new beginning.
+                    Today, I'm independent, safe, and helping other survivors find their way.
+                </blockquote>
+                <cite>— Maria, Survivor & Advocate</cite>
             </div>
         </div>
     </section>
@@ -42,9 +117,11 @@
     <section class="featured-story-section" id="featured-story" *ngIf="featuredStory" @fadeIn>
         <div class="section-container">
             <div class="section-header">
-                <h2 class="section-title">This Month's Featured Journey</h2>
+                <div class="section-tag">Real Stories</div>
+                <h2 class="section-title">Follow a Journey of Transformation</h2>
                 <p class="section-subtitle">
-                    Support {{ featuredStory.name }}'s healing path and unlock chapters as her journey progresses
+                    Witness {{ featuredStory.name }}'s path from crisis to independence. Each chapter represents
+                    real progress made possible by community support.
                 </p>
             </div>
 
@@ -52,44 +129,24 @@
         </div>
     </section>
 
-    <section class="impact-stats-section" *ngIf="impactStats" @fadeIn>
+    <section class="impact-challenges-section" *ngIf="impactChallenges.length" @fadeIn>
         <div class="section-container">
             <div class="section-header-centered">
-                <h2 class="section-title">Our Collective Impact</h2>
+                <div class="section-tag">Help Us Today</div>
+                <h2 class="section-title">Critical Needs This Month</h2>
                 <p class="section-subtitle">
-                    Together, we're creating lasting change one journey at a time
+                    Your support directly addresses urgent community needs
                 </p>
             </div>
 
-            <div class="stats-grid">
-                <div class="stat-card" *ngFor="let stat of [
-          { icon: '👥', number: animatedLivesTouched, suffix: '+', label: 'Lives Touched', color: '#C8BEEA' },
-          { icon: '📖', number: animatedStories, suffix: '', label: 'Stories of Hope', color: '#EEC9D2' },
-          { icon: '🌟', number: animatedRecoveryRate, suffix: '%', label: 'Recovery Rate', color: '#F4D292' },
-          { icon: '🛡️', number: '24/7', suffix: '', label: 'Support Available', color: '#A8C2D1' }
-        ]">
-                    <div class="stat-icon">{{ stat.icon }}</div>
-                    <div class="stat-number" [style.color]="stat.color">
-                        <ng-container *ngIf="stat.number !== '24/7'; else staticNumber">
-                            {{ stat.number }}{{ stat.suffix }}
-                        </ng-container>
-                        <ng-template #staticNumber>{{ stat.number }}</ng-template>
-                    </div>
-                    <div class="stat-label">{{ stat.label }}</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="impact-challenges-section" *ngIf="impactChallenges.length" @fadeIn>
-        <div class="section-container">
             <div class="challenges-grid">
                 <div class="challenge-card" *ngFor="let challenge of impactChallenges">
                     <div class="challenge-header">
                         <div class="challenge-info">
                             <h3 class="challenge-title">{{ challenge.title }}</h3>
                             <p class="challenge-subtitle">
-                                {{ challenge.goal - challenge.current }} {{ challenge.unit }} needed to reach goal
+                                <strong>{{ challenge.goal - challenge.current }}</strong> {{ challenge.unit }} still
+                                needed
                             </p>
                         </div>
                         <div class="challenge-percentage" [style.backgroundColor]="challenge.color + '33'"
@@ -114,9 +171,62 @@
         </div>
     </section>
 
+    <section class="final-cta-section" id="final-cta" @fadeIn>
+        <div class="section-container">
+            <div class="cta-content">
+                <div class="cta-urgency-badge">
+                    <span class="urgency-pulse"></span>
+                    <span>24/7 Support Available</span>
+                </div>
+
+                <h2 class="cta-title">Ready to Make a Difference?</h2>
+                <p class="cta-description">
+                    Whether you need help, want to support survivors, or learn more about our work—we're here for you.
+                </p>
+
+                <div class="cta-buttons">
+                    <a href="tel:514-274-8117" class="btn-emergency">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <div class="btn-content">
+                            <span class="btn-label">Crisis Line</span>
+                            <span class="btn-phone">514-274-8117</span>
+                        </div>
+                    </a>
+
+                    <button class="btn-support">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                                fill="currentColor" />
+                        </svg>
+                        <span>Support Our Mission</span>
+                    </button>
+
+                    <button class="btn-contact">
+                        <span>Contact Us</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="cta-footer">
+                    <p class="safety-note">
+                        <strong>⚠️ In immediate danger?</strong> Call 911 first, then reach out to us.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <div class="loading-container" *ngIf="isLoading">
         <div class="loading-spinner"></div>
-        <p>Loading healing journeys...</p>
+        <p>Loading our stories of hope...</p>
     </div>
 
 </div>
