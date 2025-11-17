@@ -16,3 +16,8 @@ class User(db.Model):
         default=lambda: datetime.now(timezone.utc),
         nullable=False
     )
+
+    # Relationships
+    transactions = db.relationship("Transaction", backref="user", lazy=True, cascade="all, delete-orphan")
+    video_accesses = db.relationship("UserVideoAccess", backref="user", lazy=True, cascade="all, delete-orphan")
+    achievements = db.relationship("UserAchievement", backref="user", lazy=True, cascade="all, delete-orphan")
