@@ -1,0 +1,151 @@
+<div class="shelter-progress-container">
+    <!-- Emotional Connection Header -->
+    <div class="emotional-header">
+        <div class="impact-badge">
+            <span class="badge-icon material-symbols-outlined">volunteer_activism</span>
+            <span class="badge-text">EVERY DONATION BUILDS HOPE</span>
+        </div>
+
+        <h3 class="progress-title">
+            <span class="title-icon material-symbols-outlined">home</span>
+            Help Us Build Maria's Next Safe Haven
+        </h3>
+
+        <p class="personal-message">
+            Maria found safety here. But <strong>right now</strong>, there are women and children
+            waiting for a place just like this. <strong>Your contribution today</strong> doesn't just
+            build walls—it builds futures, hope, and new beginnings.
+        </p>
+
+        <div class="urgency-indicator">
+            <span class="urgency-pulse"></span>
+            <span class="urgency-text">
+                <strong>{{ goal - (debugMode ? debugProgress : current) }} more needed</strong> to break ground
+            </span>
+        </div>
+    </div>
+
+    <!-- Debug Controls (only shown when debugMode is true) -->
+    <div class="debug-controls" *ngIf="debugMode">
+        <label class="debug-label">
+            <span class="material-symbols-outlined" style="vertical-align: middle; font-size: 1.2em; margin-right: 0.5em;">settings</span>
+            <span>Debug Progress: {{ debugProgress }}%</span>
+            <input type="range" min="0" max="100" [(ngModel)]="debugProgress" (input)="onDebugSliderChange()"
+                class="debug-slider" />
+        </label>
+    </div>
+
+    <!-- Progress Badge -->
+    <div class="progress-header">
+        <div class="progress-badge" [class.complete]="progressPercentage >= 100">
+            <span class="badge-percentage">{{ progressPercentage }}%</span>
+            <span class="badge-label">Funded</span>
+        </div>
+    </div>
+
+    <div class="shelter-canvas-wrapper">
+        <!-- Personal Touch Above Canvas -->
+        <div class="canvas-story-text" *ngIf="progressPercentage < 100">
+            <p *ngIf="progressPercentage < 25">
+                <strong>Every foundation starts with one brick.</strong>
+                Your donation today lays the groundwork for someone's tomorrow.
+            </p>
+            <p *ngIf="progressPercentage >= 25 && progressPercentage < 50">
+                <strong>The walls are rising because of people like you.</strong>
+                Each contribution brings us closer to opening our doors.
+            </p>
+            <p *ngIf="progressPercentage >= 50 && progressPercentage < 75">
+                <strong>We're halfway to creating a safe space!</strong>
+                With your help, we can finish what we started.
+            </p>
+            <p *ngIf="progressPercentage >= 75 && progressPercentage < 100">
+                <strong>We're so close!</strong>
+                Just a little more and we'll be ready to welcome our first residents.
+            </p>
+        </div>
+
+        <canvas #shelterCanvas class="shelter-canvas"></canvas>
+
+        <!-- Success Message -->
+        <div class="canvas-story-text success" *ngIf="progressPercentage >= 100">
+            <p>
+                <span class="material-symbols-outlined" style="vertical-align: middle; font-size: 1.2em; margin-right: 0.5em;">check_circle</span>
+                <strong>Together, we built hope!</strong>
+                This shelter will provide safety, healing, and new beginnings for families in need.
+            </p>
+        </div>
+
+        <div class="progress-milestone-labels">
+            <div class="milestone" [class.reached]="progressPercentage >= 0">
+                <span class="milestone-icon material-symbols-outlined">foundation</span>
+                <span class="milestone-text">Foundation</span>
+                <span class="milestone-amount" *ngIf="progressPercentage >= 0">$15k</span>
+            </div>
+            <div class="milestone" [class.reached]="progressPercentage >= 40">
+                <span class="milestone-icon material-symbols-outlined">construction</span>
+                <span class="milestone-text">Structure</span>
+                <span class="milestone-amount" *ngIf="progressPercentage >= 40">$40k</span>
+            </div>
+            <div class="milestone" [class.reached]="progressPercentage >= 75">
+                <span class="milestone-icon material-symbols-outlined">door_front</span>
+                <span class="milestone-text">Finishing</span>
+                <span class="milestone-amount" *ngIf="progressPercentage >= 75">$75k</span>
+            </div>
+            <div class="milestone" [class.reached]="progressPercentage >= 100">
+                <span class="milestone-icon material-symbols-outlined">check_circle</span>
+                <span class="milestone-text">Complete!</span>
+                <span class="milestone-amount" *ngIf="progressPercentage >= 100">$100k</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-info">
+        <!-- Real Impact Stats -->
+        <div class="impact-counter">
+            <div class="impact-stat">
+                <span class="impact-number">{{ debugMode ? debugProgress : current }} k$</span>
+                <span class="impact-label">Raised</span>
+                <span class="impact-sublabel">By amazing supporters like you</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="impact-stat">
+                <span class="impact-number">{{ goal }} k$</span>
+                <span class="impact-label">Goal</span>
+                <span class="impact-sublabel">To build a complete shelter</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="impact-stat highlight">
+                <span class="impact-number">{{ goal - (debugMode ? debugProgress : current) }} k$</span>
+                <span class="impact-label">Still Needed</span>
+                <span class="impact-sublabel">To open our doors</span>
+            </div>
+        </div>
+
+
+        <!-- Donation Impact Examples -->
+        <div class="donation-impact-grid">
+            <h4 class="impact-grid-title">
+                <span class="material-symbols-outlined" style="vertical-align: middle; font-size: 1.2em; margin-right: 0.5em;">volunteer_activism</span>
+                What Your Donation Provides:
+            </h4>
+            <div class="impact-examples">
+                <div class="impact-example">
+                    <span class="example-amount">$50</span>
+                    <span class="example-provides">Emergency kit for new arrivals</span>
+                </div>
+                <div class="impact-example">
+                    <span class="example-amount">$100</span>
+                    <span class="example-provides">One week of safe shelter</span>
+                </div>
+                <div class="impact-example">
+                    <span class="example-amount">$250</span>
+                    <span class="example-provides">Counseling sessions for a family</span>
+                </div>
+                <div class="impact-example">
+                    <span class="example-amount">$500</span>
+                    <span class="example-provides">Complete support for one month</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

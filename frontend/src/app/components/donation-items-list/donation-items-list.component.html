@@ -1,0 +1,22 @@
+<div class="fund-impact-description">
+  <div class="impact-items-grid">
+    @for (item of items; track item.id) {
+      <div class="impact-item" [class.selected]="isSelected(item)" (click)="toggleItem(item)">
+        <input 
+          type="checkbox" 
+          [checked]="isSelected(item)"
+          (change)="toggleItem(item)"
+          class="item-checkbox"
+          [attr.aria-label]="'Select ' + item.description">
+        <div class="impact-icon">
+          <i [class]="'fas fa-' + getIconClass(getIconForItem(item.description))"></i>
+        </div>
+        <div class="item-content">
+          <span class="impact-text">{{ item.description }}</span>
+          <span class="item-price">${{ item.suggestedAmount }}</span>
+        </div>
+      </div>
+    }
+  </div>
+</div>
+

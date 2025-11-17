@@ -1,0 +1,24 @@
+<div 
+  class="amount-card"
+  [class.selected]="isSelected"
+  [class.custom]="option.isCustom"
+  (click)="onSelect()"
+  (keydown.enter)="onSelect()"
+  (keydown.space)="onSelect(); $event.preventDefault()"
+  role="button"
+  [attr.aria-label]="option.isCustom ? 'General' : option.title"
+  [attr.aria-pressed]="isSelected"
+  tabindex="0">
+  
+  @if (option.imageUrl) {
+    <img [src]="option.imageUrl" [alt]="option.isCustom ? 'General' : option.title" class="card-image">
+  }
+  
+  <div class="amount-content">
+    <span class="package-title">{{ option.isCustom ? 'General' : option.title }}</span>
+    @if (option.fixedAmount && option.amount) {
+      <span class="amount-value">${{ option.amount }}</span>
+    }
+  </div>
+</div>
+

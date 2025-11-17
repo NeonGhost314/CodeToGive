@@ -1,0 +1,177 @@
+.organisation-donor-section {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #FFFAF7 0%, #F6F0EB 100%);
+  border-radius: 12px;
+  border: 1px solid #C8BEEA;
+  box-shadow: 0 2px 8px rgba(100, 74, 115, 0.1);
+  
+  @media (max-width: 768px) {
+    margin-top: 1.5rem;
+    padding: 1.25rem;
+    border-radius: 10px;
+  }
+  
+  @media (max-width: 480px) {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+  }
+  
+  .section-title {
+    margin: 0 0 12px 0;
+    font-size: 36px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #644A73 0%, #8B6F9E 50%, #644A73 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-transform: uppercase;
+    line-height: 1.2;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(100, 74, 115, 0.2);
+    position: relative;
+    padding-bottom: 8px;
+    text-align: center;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #644A73 0%, #8B6F9E 100%);
+      border-radius: 2px;
+      box-shadow: 0 2px 4px rgba(100, 74, 115, 0.3);
+    }
+    
+    @media (max-width: 768px) {
+      font-size: 28px;
+      letter-spacing: 0.8px;
+      
+      &::after {
+        width: 50px;
+        height: 2.5px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 24px;
+      letter-spacing: 0.6px;
+      margin-bottom: 10px;
+      
+      &::after {
+        width: 40px;
+        height: 2px;
+      }
+    }
+  }
+  
+  .section-content {
+    .description {
+      font-size: 0.95rem;
+      color: #644A73;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      
+      @media (max-width: 768px) {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin-bottom: 1.25rem;
+      }
+      
+      @media (max-width: 480px) {
+        font-size: 0.85rem;
+        line-height: 1.4;
+        margin-bottom: 1rem;
+      }
+      
+      .email-link {
+        color: #644A73;
+        font-weight: 600;
+        text-decoration: underline;
+        transition: color 0.3s ease;
+        word-break: break-word;
+        
+        &:hover {
+          color: #8B6F9E;
+        }
+      }
+    }
+  }
+  
+  .form-section {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    
+    .download-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      background: #A8C2D1;
+      color: #644A73;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-height: 44px; // Better touch target
+      
+      @media (max-width: 480px) {
+        padding: 0.65rem 1rem;
+        font-size: 0.85rem;
+        width: 100%;
+        justify-content: center;
+      }
+      
+      &:hover {
+        background: #644A73;
+        color: #FFFAF7;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(100, 74, 115, 0.3);
+        
+        @media (max-width: 768px) {
+          transform: none;
+        }
+      }
+      
+      &:active {
+        transform: translateY(0);
+        
+        @media (max-width: 768px) {
+          transform: scale(0.98);
+        }
+      }
+      
+      svg {
+        flex-shrink: 0;
+      }
+    }
+  }
+}
+
+// Responsive design déjà géré dans les sections ci-dessus
+
+// Additional accent variations for visual interest
+.organisation-donor-section {
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, #C8BEEA, #EEC9D2, #A8C2D1, #F4D292);
+    border-radius: 14px;
+    z-index: -1;
+    opacity: 0.3;
+  }
+}

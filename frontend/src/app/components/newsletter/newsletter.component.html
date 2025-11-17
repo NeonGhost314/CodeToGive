@@ -1,0 +1,77 @@
+<div class="newsletter-container">
+  <div class="newsletter-content">
+    <!-- Left Section -->
+    <div class="newsletter-left">
+      <h2 class="newsletter-title">Stay connected with our mission</h2>
+      <p class="newsletter-description">
+        Be the first to know when new chapters are unlocked, discover inspiring stories,
+        get updates on upcoming events, and receive exclusive content about our impact.
+        Join our community and stay informed about how your contributions are making a difference.
+      </p>
+    </div>
+    
+    <!-- Right Section -->
+    <div class="newsletter-right">
+      <form class="newsletter-form" (ngSubmit)="onSubscribe()">
+        <h3 class="form-title">Subscribe to our newsletter</h3>
+        
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email"
+            [(ngModel)]="email" 
+            (input)="onEmailChange()"
+            placeholder="Enter your email address"
+            [class.error]="emailError"
+            required>
+          <div class="field-error-container">
+            <span class="field-error">{{ emailError }}</span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="language">Preferred Language</label>
+          <select id="language" [(ngModel)]="selectedLanguage" name="language">
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="it">Italiano</option>
+            <option value="pt">Português</option>
+            <option value="ar">العربية</option>
+            <option value="zh">中文</option>
+            <option value="ja">日本語</option>
+            <option value="hi">हिन्दी</option>
+          </select>
+        </div>
+        
+        <button 
+          type="submit" 
+          class="subscribe-btn" 
+          [disabled]="!isFormValid || isSubmitting">
+          @if (isSubmitting) {
+            <span class="loading-spinner"></span>
+            Subscribing...
+          } @else {
+            Subscribe
+          }
+        </button>
+        
+        <p class="privacy-note">
+          We respect your privacy. You can unsubscribe at any time by clicking the link in our emails.
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Notifications -->
+  @for (notification of notifications; track notification.id) {
+    <app-notification
+      [type]="notification.type"
+      [message]="notification.message"
+      (closed)="removeNotification(notification.id)">
+    </app-notification>
+  }
+</div>

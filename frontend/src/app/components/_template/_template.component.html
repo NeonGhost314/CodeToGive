@@ -1,0 +1,24 @@
+<!-- Template Component HTML -->
+<!-- Replace 'template' with your component name -->
+
+<div class="template-container">
+  <h2 *ngIf="title">{{ title }}</h2>
+  
+  <div *ngIf="isLoading" class="loading">
+    Loading...
+  </div>
+  
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>
+  
+  <div *ngIf="!isLoading && !error && data" class="content">
+    <!-- TODO: Add your component template here -->
+    <p>Template component content</p>
+  </div>
+  
+  <button (click)="handleAction({action: 'click'})">
+    Action Button
+  </button>
+</div>
+

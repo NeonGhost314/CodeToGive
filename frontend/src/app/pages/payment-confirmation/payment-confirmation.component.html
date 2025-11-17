@@ -1,0 +1,33 @@
+<div class="payment-confirmation">
+  <div class="confirmation-container">
+    <div class="success-animation">
+      <div class="checkmark-circle">
+        <i class="fas fa-check-circle"></i>
+      </div>
+    </div>
+
+    <h1 class="confirmation-title">Transaction Successful!</h1>
+    
+    @if (paymentResult) {
+      <p class="confirmation-message">
+        A confirmation email has been sent to <strong>{{ paymentResult.email }}</strong>
+      </p>
+      <div class="transaction-info">
+        <span class="transaction-label">Transaction ID:</span>
+        <span class="transaction-id">{{ paymentResult.transactionId }}</span>
+      </div>
+    }
+
+    @if (showPersonalGoal) {
+      <app-personal-donation-goal (goalCreated)="onGoalCreated()"></app-personal-donation-goal>
+    }
+  </div>
+
+  @if (showJoinModal) {
+    <app-join-athena-modal
+      (accepted)="onJoinAccepted()"
+      (declined)="onJoinDeclined()">
+    </app-join-athena-modal>
+  }
+</div>
+

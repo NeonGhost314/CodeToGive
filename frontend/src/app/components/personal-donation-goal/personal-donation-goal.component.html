@@ -1,0 +1,115 @@
+<div class="personal-goal-overlay" (click)="onSkip()">
+  <div class="personal-goal-modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div class="header-content">
+        <div class="thank-you-section">
+          <div class="celebration-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#F4D292"/>
+            </svg>
+          </div>
+          <h3 class="thank-you-title">Merci pour votre générosité !</h3>
+        </div>
+        <button 
+          type="button" 
+          class="close-button" 
+          (click)="onSkip()"
+          (keydown.enter)="onSkip()"
+          aria-label="Fermer la modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="modal-content">
+      <div class="motivation-section">
+        <p class="motivation-text">
+          Votre don fait une réelle différence dans la vie de ceux qui en ont besoin.
+        </p>
+        <p class="slogan">
+          Ensemble, créons un avenir meilleur, un don à la fois.
+        </p>
+      </div>
+
+      <div class="goal-intro">
+        <h4 class="goal-title">Créez votre objectif de don personnel</h4>
+        <p class="goal-description">
+          Définissez un objectif pour vous rappeler de contribuer régulièrement et suivre votre impact.
+        </p>
+      </div>
+
+      <div class="form-section">
+        <label class="form-label" for="goalAmount">Montant de l'objectif ($)*</label>
+        <input
+          id="goalAmount"
+          type="number"
+          class="form-input"
+          [(ngModel)]="amount"
+          (input)="errors['amount'] = ''"
+          (blur)="validateForm()"
+          placeholder="100"
+          min="1"
+          aria-label="Montant de l'objectif de don"
+          aria-describedby="goalAmount-error"
+          aria-invalid="!!errors['amount']"
+          [class.error]="errors['amount']">
+        @if (errors['amount']) {
+          <span class="error-message" id="goalAmount-error" role="alert" aria-live="polite">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+              <path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            {{ errors['amount'] }}
+          </span>
+        }
+      </div>
+
+      <div class="form-section">
+        <label class="form-label" for="targetDate">Date cible*</label>
+        <input
+          id="targetDate"
+          type="date"
+          class="form-input"
+          [(ngModel)]="targetDate"
+          (change)="errors['targetDate'] = ''"
+          (blur)="validateForm()"
+          [min]="getMinDate()"
+          aria-label="Date cible pour atteindre l'objectif"
+          aria-describedby="targetDate-error"
+          aria-invalid="!!errors['targetDate']"
+          [class.error]="errors['targetDate']">
+        @if (errors['targetDate']) {
+          <span class="error-message" id="targetDate-error" role="alert" aria-live="polite">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+              <path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            {{ errors['targetDate'] }}
+          </span>
+        }
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button 
+        type="button" 
+        class="skip-button" 
+        (click)="onSkip()"
+        (keydown.enter)="onSkip()"
+        aria-label="Passer la création d'objectif">
+        Passer
+      </button>
+      <button 
+        type="button" 
+        class="create-button" 
+        (click)="onCreateGoal()"
+        (keydown.enter)="onCreateGoal()"
+        aria-label="Créer mon objectif de don">
+        Créer mon objectif
+      </button>
+    </div>
+  </div>
+</div>
+

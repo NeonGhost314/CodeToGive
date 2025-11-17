@@ -1,0 +1,63 @@
+<div class="story-card-wrapper">
+    <div class="card" [class.hovered]="isHovered">
+
+        <!-- Background glow -->
+        <div class="card-glow"></div>
+
+        <!-- Story image -->
+        <div class="card-image">
+            <img [src]="story.thumbnail" [alt]="story.name + ' journey'"
+                (error)="$any($event.target).src='https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=600&fit=crop'" />
+            <div class="image-overlay"></div>
+        </div>
+
+        <!-- Card content -->
+        <div class="card-content">
+
+            <!-- Chapter progress -->
+            <div class="chapter-section">
+                <app-chapter-progress [chapters]="story.chapters" size="small">
+                </app-chapter-progress>
+                <span class="chapter-text">
+                    Chapter {{ unlockedCount }} unlocked
+                </span>
+            </div>
+
+            <!-- Story info -->
+            <div class="story-info">
+                <h3 class="story-title">{{ story.title }}</h3>
+                <p class="story-meta">
+                    {{ story.name }}'s Journey
+                </p>
+            </div>
+
+            <!-- Stats -->
+            <div class="story-stats">
+                <span class="stat">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    {{ story.supporterCount }} partners
+                </span>
+                <span class="stat">
+                    Stage {{ story.currentStage }}/{{ story.totalStages }}
+                </span>
+            </div>
+
+            <!-- CTA Button -->
+            <a routerLink="/video" class="cta-button">
+                <span>Follow Her Journey</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </a>
+
+        </div>
+    </div>
+</div>

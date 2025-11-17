@@ -1,0 +1,128 @@
+.donation-history {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  height: 100%;
+  width: 100%;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #644A73; // plum
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.loading-state,
+.error-state,
+.empty-state {
+  padding: 2rem;
+  text-align: center;
+  color: #333; // black
+  font-size: 14px;
+
+  p {
+    margin: 0.5rem 0;
+  }
+  
+  .empty-state-subtitle {
+    font-size: 0.9rem;
+    color: #888;
+    font-style: italic;
+  }
+}
+
+.error-state {
+  color: #644A73; // plum
+  background: rgba(238, 201, 210, 0.2);
+  border-radius: 12px;
+  border: 1px solid rgba(238, 201, 210, 0.5);
+}
+
+.donations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.donation-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem;
+  background: linear-gradient(135deg, #FFFAF7 0%, #F7EEE5 100%);
+  border-radius: 12px;
+  border: 1px solid rgba(168, 194, 209, 0.3);
+  box-shadow: 0 2px 8px rgba(100, 74, 115, 0.1);
+  transition: all 0.3s ease;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(100, 74, 115, 0.15);
+  }
+}
+
+.donation-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 200px;
+}
+
+.donation-fund {
+  font-size: 15px;
+  font-weight: 600;
+  color: #644A73; // plum
+}
+
+.donation-date {
+  font-size: 13px;
+  color: #333; // black
+}
+
+.donation-amount {
+  font-size: 18px;
+  font-weight: 700;
+  color: #644A73; // plum
+  white-space: nowrap;
+}
+
+.donation-status {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+  white-space: nowrap;
+
+  &.status-completed {
+    background: rgba(110, 139, 111, 0.2);
+    color: #333; // black
+  }
+
+  &.status-pending {
+    background: rgba(168, 194, 209, 0.2);
+    color: #644A73; // plum
+  }
+
+  &.status-failed {
+    background: rgba(238, 201, 210, 0.2);
+    color: #644A73; // plum
+  }
+}
+
+@media (max-width: 768px) {
+  .donation-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .donation-amount {
+    font-size: 20px;
+  }
+}
+

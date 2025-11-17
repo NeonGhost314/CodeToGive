@@ -1,0 +1,29 @@
+<div class="modal-overlay" (click)="onDecline()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2 class="modal-title">Join The Community of Shield Of Athena</h2>
+      <button class="close-button" (click)="onDecline()" aria-label="Close">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <div class="modal-body">
+      <p class="modal-description">
+        Create a free account to track your donation history, set personal goals, and receive updates on how your contributions are making a difference in the lives of those we serve.
+      </p>
+      <p class="modal-benefits">
+        With an account, you'll have access to detailed information about your donations, personalized impact reports, and the ability to manage your giving goals all in one place.
+      </p>
+    </div>
+
+    <div class="modal-actions">
+      <button class="button-primary" (click)="onAccept()">
+        Join Now
+      </button>
+      <button class="button-secondary" (click)="onDecline()">
+        Maybe Later
+      </button>
+    </div>
+  </div>
+</div>
+

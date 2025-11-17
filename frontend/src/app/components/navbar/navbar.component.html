@@ -1,0 +1,46 @@
+<nav class="navbar">
+    <div class="navbar-container">
+        <div class="navbar-left">
+            <a routerLink="/" class="navbar-brand">
+                <img src="/logo.png" alt="Shield of Athena" class="brand-logo" />
+            </a>
+        </div>
+
+        <div class="navbar-center">
+            <p class="campaign-slogan">
+                <span class="slogan-highlight">The Shield of Athena</span> — a leader in preventing conjugal violence, launching their new campaign during the days of action against violence towards women.
+            </p>
+        </div>
+
+        <div class="navbar-right">
+            @if (showSupportButton) {
+                <a routerLink="/donation" class="btn-donate" title="Support Us">
+                    <i class="fas fa-heart"></i>
+                    <span>Support Us</span>
+                </a>
+            }
+
+            @if (isAuthenticated) {
+                <div class="user-menu-container">
+                    <button class="user-menu-button" (click)="toggleUserMenu($event)" type="button" title="Account Settings">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                    @if (showUserMenu) {
+                        <div class="user-menu-dropdown">
+                            <button class="menu-item" (click)="goToDashboard()" title="Dashboard">
+                                <i class="fas fa-th-large"></i>
+                            </button>
+                            <button class="menu-item" (click)="logout()" title="Logout">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </button>
+                        </div>
+                    }
+                </div>
+            } @else if (showLoginButton) {
+                <button class="btn-login" (click)="goToLogin()" type="button" title="Login">
+                    <i class="fas fa-user"></i>
+                </button>
+            }
+        </div>
+    </div>
+</nav>
