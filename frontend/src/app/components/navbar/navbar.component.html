@@ -8,17 +8,15 @@
 
         <div class="navbar-center">
             <p class="campaign-slogan">
-                <span class="slogan-highlight">The Shield of Athena</span> — a leader in community outreach and
-                prevention of conjugal violence, launching their new campaign during the designated days of
-                action regarding violence against women.
+                <span class="slogan-highlight">The Shield of Athena</span> — a leader in preventing conjugal violence, launching their new campaign during the days of action against violence towards women.
             </p>
         </div>
 
         <div class="navbar-right">
             <nav class="nav-links">
-                <a routerLink="/" class="nav-link">Our Mission</a>
-                <a href="#how-we-help" class="nav-link">Services</a>
-                <a href="#impact-stats" class="nav-link">Impact</a>
+                @if (showOurMission) {
+                    <a routerLink="/" class="nav-link">Our Mission</a>
+                }
             </nav>
 
             @if (showSupportButton) {

@@ -32,12 +32,19 @@
   <!-- Montant -->
   <div class="form-section">
     <label class="form-label">Commitment Amount*</label>
-    <div class="amount-display">
-      <span class="currency">$</span>
-      <span class="amount-value">{{ amount }}</span>
-    </div>
-    @if (selectedItems.length > 0) {
-      <p class="info-text">Based on {{ selectedItems.length }} selected item(s)</p>
+    @if (isCustomAmountMode) {
+      <app-donation-custom-amount
+        [currentAmount]="amount"
+        (amountChanged)="onCustomAmountChange($event)">
+      </app-donation-custom-amount>
+    } @else {
+      <div class="amount-display">
+        <span class="currency">$</span>
+        <span class="amount-value">{{ amount }}</span>
+      </div>
+      @if (selectedItems.length > 0) {
+        <p class="info-text">Based on {{ selectedItems.length }} selected item(s)</p>
+      }
     }
   </div>
 

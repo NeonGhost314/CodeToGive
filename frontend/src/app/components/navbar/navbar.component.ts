@@ -12,5 +12,6 @@ import { COLORS } from '../../shared/constants/colors.constants';
 })
 export class NavbarComponent {
   @Input() showSupportButton: boolean = true;
+  @Input() showOurMission: boolean = true;
   colors = COLORS;
 }

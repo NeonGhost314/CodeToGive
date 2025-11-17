@@ -1,5 +1,5 @@
 <div class="donation-page">
-  <app-navbar [showSupportButton]="false"></app-navbar>
+  <app-navbar [showSupportButton]="false" [showOurMission]="true"></app-navbar>
 
   @if (error) {
     <p class="error">{{ error }}</p>
@@ -57,6 +57,7 @@
           [fund]="selectedFund"
           [currentGoalAmount]="currentGoalAmount"
           [goalAmount]="goalAmount"
+          [isCustomAmountMode]="isCustomAmountMode()"
           (submit)="onDonationSubmit($event)">
         </app-donation-form>
       </div>

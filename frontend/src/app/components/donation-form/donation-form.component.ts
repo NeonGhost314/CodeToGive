@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ImpactFund, DonationAmountOption, DonationItems } from '../../services/donation_service';
 import { DonationGoalProgressComponent } from '../donation-goal-progress/donation-goal-progress.component';
+import { DonationCustomAmountComponent } from '../donation-custom-amount/donation-custom-amount.component';
 
 export interface DonationData {
   fundId: number;
@@ -15,7 +16,7 @@ export interface DonationData {
 @Component({
   selector: 'app-donation-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, DonationGoalProgressComponent],
+  imports: [CommonModule, FormsModule, DonationGoalProgressComponent, DonationCustomAmountComponent],
   templateUrl: './donation-form.component.html',
   styleUrl: './donation-form.component.scss'
 })
@@ -26,6 +27,7 @@ export class DonationFormComponent implements OnInit, OnChanges {
   @Input() fund!: ImpactFund;
   @Input() currentGoalAmount: number = 0;
   @Input() goalAmount: number = 10000;
+  @Input() isCustomAmountMode: boolean = false;
   @Output() submit = new EventEmitter<DonationData>();
 
   donationType: 'one-time' | 'monthly' | 'quarterly' | 'yearly' = 'one-time';
@@ -42,17 +44,26 @@ export class DonationFormComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if ((changes['selectedFundCategory'] && !changes['selectedFundCategory'].firstChange) ||
         (changes['totalAmountFromItems'] && !changes['totalAmountFromItems'].firstChange) ||
-        (changes['selectedItems'] && !changes['selectedItems'].firstChange)) {
+        (changes['selectedItems'] && !changes['selectedItems'].firstChange) ||
+        (changes['isCustomAmountMode'] && !changes['isCustomAmountMode'].firstChange)) {
       this.updateAmount();
     }
   }
 
   private updateAmount(): void {
+    if (this.isCustomAmountMode) {
+      // Don't override custom amount if in custom mode
+      return;
+    }
     if (this.totalAmountFromItems > 0) {
       this.amount = this.totalAmountFromItems;
     } else {
       this.amount = 0;
     }
+  }
+
+  onCustomAmountChange(amount: number): void {
+    this.amount = amount;
   }
 
   onDonationTypeChange(type: 'one-time' | 'monthly' | 'quarterly' | 'yearly'): void {
