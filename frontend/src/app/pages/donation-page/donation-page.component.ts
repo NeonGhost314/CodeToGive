@@ -5,7 +5,6 @@ import { DonationService, ImpactFund, DonationAmountOption, DonationItems } from
 import { Observable, catchError, of, switchMap } from 'rxjs';
 import { DonationAmountOptionsComponent } from '../../components/donation-amount-options/donation-amount-options.component';
 import { DonationFormComponent, DonationData } from '../../components/donation-form/donation-form.component';
-import { DonationItemsListComponent } from '../../components/donation-items-list/donation-items-list.component';
 import { OrganisationDonorComponent } from '../../components/organisation-donor/organisation-donor.component';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { FooterComponent } from '../../components/footer/footer.component';
@@ -17,7 +16,6 @@ import { FooterComponent } from '../../components/footer/footer.component';
     CommonModule,
     DonationAmountOptionsComponent,
     DonationFormComponent,
-    DonationItemsListComponent,
     OrganisationDonorComponent,
     NavbarComponent,
     FooterComponent
@@ -84,14 +82,19 @@ export class DonationPageComponent implements OnInit {
     // Clear selected items when switching funds
     this.selectedItems = [];
     this.totalAmountFromItems = 0;
+    // Si montant fixe, définir le montant
+    if (option.fixedAmount && option.amount) {
+      this.totalAmountFromItems = option.amount;
+    }
   }
 
   onCustomAmountSelected(): void {
     this.selectedFundCategory = { 
-      title: 'Custom Amount',
-      isCustom: true 
+      title: 'General',
+      isCustom: true,
+      imageUrl: "/assets/pictures/general.png"
     };
-    // Clear selected items when custom amount is selected
+    // Clear selected items when general amount is selected
     this.selectedItems = [];
     this.totalAmountFromItems = 0;
   }

@@ -32,7 +32,7 @@
   <!-- Montant -->
   <div class="form-section">
     <label class="form-label">Commitment Amount*</label>
-    @if (isCustomAmountMode) {
+    @if (isCustomAmountMode || (selectedFundCategory && !selectedFundCategory.fixedAmount)) {
       <app-donation-custom-amount
         [currentAmount]="amount"
         (amountChanged)="onCustomAmountChange($event)">
@@ -44,6 +44,9 @@
       </div>
       @if (selectedItems.length > 0) {
         <p class="info-text">Based on {{ selectedItems.length }} selected item(s)</p>
+      }
+      @if (selectedFundCategory?.fixedAmount) {
+        <p class="info-text">Fixed amount for this option</p>
       }
     }
   </div>

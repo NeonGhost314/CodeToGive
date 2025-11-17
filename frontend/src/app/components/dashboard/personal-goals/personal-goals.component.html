@@ -72,5 +72,12 @@
     (close)="closeForm()"
     (save)="onSaveGoal($event)">
   </app-goal-form>
+
+  @if (showJoinModal) {
+    <app-join-athena-modal
+      (accepted)="onJoinAccepted()"
+      (declined)="onJoinDeclined()">
+    </app-join-athena-modal>
+  }
 </div>
 

@@ -1,5 +1,4 @@
 <div class="fund-impact-description">
-  <h3 class="impact-title">Your support will help fund:</h3>
   <div class="impact-items-grid">
     @for (item of items; track item.id) {
       <div class="impact-item" [class.selected]="isSelected(item)" (click)="toggleItem(item)">

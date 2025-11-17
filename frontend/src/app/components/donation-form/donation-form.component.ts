@@ -50,22 +50,33 @@ export class DonationFormComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if ((changes['selectedFundCategory'] && !changes['selectedFundCategory'].firstChange) ||
-        (changes['totalAmountFromItems'] && !changes['totalAmountFromItems'].firstChange) ||
-        (changes['selectedItems'] && !changes['selectedItems'].firstChange) ||
-        (changes['isCustomAmountMode'] && !changes['isCustomAmountMode'].firstChange)) {
+    // Si on change d'option de don (Impact), réinitialiser le montant à 0
+    if (changes['selectedFundCategory'] && !changes['selectedFundCategory'].firstChange) {
+      this.amount = 0;
+    }
+    
+    if (changes['selectedFundCategory'] || 
+        changes['totalAmountFromItems'] || 
+        changes['selectedItems'] || 
+        changes['isCustomAmountMode']) {
       this.updateAmount();
     }
   }
 
   private updateAmount(): void {
+    // Si en mode custom, on garde le montant saisi par l'utilisateur (ne pas écraser)
     if (this.isCustomAmountMode) {
-      // Don't override custom amount if in custom mode
       return;
     }
-    if (this.totalAmountFromItems > 0) {
+    
+    // Si montant fixe dans selectedFundCategory, utiliser ce montant
+    if (this.selectedFundCategory?.fixedAmount && this.selectedFundCategory?.amount) {
+      this.amount = this.selectedFundCategory.amount;
+    } else if (this.totalAmountFromItems > 0) {
+      // Si des items sont sélectionnés, utiliser le total
       this.amount = this.totalAmountFromItems;
     } else {
+      // Sinon, mettre à 0 (surtout après un changement d'option)
       this.amount = 0;
     }
   }
@@ -141,24 +152,17 @@ export class DonationFormComponent implements OnInit, OnChanges {
       recurringPeriod: this.donationType !== 'one-time' ? this.recurringPeriod : undefined
     };
 
-    // Vérifier si l'utilisateur est connecté
-    if (!this.authService.isAuthenticated()) {
-      // Sauvegarder les données de don pour après la connexion
-      this.donationService.setPendingDonationData({
-        fundId: donationData.fundId,
-        amount: donationData.amount,
-        type: donationData.type,
-        message: donationData.message,
-        fundName: this.fund.name,
-        recurringPeriod: donationData.recurringPeriod
-      });
-      
-      // Rediriger vers la page d'authentification avec un paramètre de retour
-      this.router.navigate(['/auth'], { queryParams: { returnUrl: '/payment' } });
-      return;
-    }
+    // Sauvegarder les données de don pour la page de paiement
+    this.donationService.setPendingDonationData({
+      fundId: donationData.fundId,
+      amount: donationData.amount,
+      type: donationData.type,
+      message: donationData.message,
+      fundName: this.fund.name,
+      recurringPeriod: donationData.recurringPeriod
+    });
 
-    // Si connecté, émettre l'événement normalement
+    // Émettre l'événement pour naviguer vers la page de paiement
     this.submit.emit(donationData);
   }
 }
