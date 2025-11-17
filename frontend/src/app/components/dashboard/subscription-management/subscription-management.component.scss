@@ -19,7 +19,7 @@
 .empty-state {
   padding: 2rem;
   text-align: center;
-  color: #6E8B6F; // forest
+  color: #333; // black
   font-size: 14px;
 }
 
@@ -80,7 +80,7 @@
 
 .subscription-frequency {
   font-size: 14px;
-  color: #6E8B6F; // forest
+  color: #333; // black
   padding: 4px 10px;
   background: rgba(110, 139, 111, 0.1);
   border-radius: 6px;
@@ -88,7 +88,7 @@
 
 .subscription-next-payment {
   font-size: 13px;
-  color: #6E8B6F; // forest
+  color: #333; // black
 }
 
 .subscription-status {
@@ -101,7 +101,7 @@
 
   &.status-active {
     background: rgba(110, 139, 111, 0.2);
-    color: #6E8B6F; // forest
+    color: #333; // black
   }
 
   &.status-paused {
@@ -153,7 +153,7 @@
 
   &.resume-button {
     background: rgba(110, 139, 111, 0.2);
-    color: #6E8B6F; // forest
+    color: #333; // black
     border: 1px solid rgba(110, 139, 111, 0.4);
 
     &:hover:not(:disabled) {

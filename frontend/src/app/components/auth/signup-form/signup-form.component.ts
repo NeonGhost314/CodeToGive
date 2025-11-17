@@ -68,13 +68,9 @@ export class SignupFormComponent {
         this.isSubmitting = false;
         this.signupSuccess.emit();
         
-        // Vérifier s'il y a une URL de retour (pour rediriger vers la page de paiement)
-        const returnUrl = this.route.snapshot.queryParams['returnUrl'];
-        if (returnUrl) {
-          this.router.navigate([returnUrl]);
-        } else {
-          this.router.navigate(['/dashboard']);
-        }
+        // Toujours rediriger vers le dashboard après création de compte
+        // Le dashboard affichera les défis améliorés si l'utilisateur vient de faire un don
+        this.router.navigate(['/dashboard']);
       },
       error: (error) => {
         this.isSubmitting = false;
