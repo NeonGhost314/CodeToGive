@@ -92,6 +92,15 @@ if ($LASTEXITCODE -ne 0) {
 }
 Write-Host "Video.js installed successfully" -ForegroundColor Green
 
+# Install FontAwesome
+Write-Host "Installing FontAwesome..." -ForegroundColor Yellow
+npm install @fortawesome/fontawesome-free
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "ERROR: Failed to install FontAwesome" -ForegroundColor Red
+    exit 1
+}
+Write-Host "FontAwesome installed successfully" -ForegroundColor Green
+
 Set-Location ..
 
 Write-Host ""
