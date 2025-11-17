@@ -852,7 +852,12 @@ cite {
 // FINAL CTA SECTION
 .final-cta-section {
   padding: 6rem 2rem;
-  background: linear-gradient(135deg, #C8BEEA 0%, #EEC9D2 50%, #F4D292 100%);
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 250, 247, 1) 0%,
+    rgba(247, 238, 229, 0.95) 50%,
+    rgba(255, 250, 247, 1) 100%
+  );
   position: relative;
   overflow: hidden;
 
@@ -860,7 +865,21 @@ cite {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1), transparent 70%);
+    background: linear-gradient(
+      135deg,
+      rgba(200, 190, 234, 0.08) 0%,
+      rgba(238, 201, 210, 0.06) 50%,
+      rgba(244, 210, 146, 0.08) 100%
+    );
+    pointer-events: none;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.3), transparent 70%);
+    pointer-events: none;
   }
 
   @media (max-width: 768px) {
@@ -901,15 +920,14 @@ cite {
 .cta-title {
   font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: 600;
-  color: white;
+  color: var(--brand-dark, #644A73);
   font-family: Georgia, serif;
   margin: 0 0 1.5rem 0;
-  text-shadow: 0 4px 20px rgba(100, 74, 115, 0.3);
 }
 
 .cta-description {
   font-size: clamp(1.125rem, 2.5vw, 1.375rem);
-  color: rgba(255, 255, 255, 0.95);
+  color: rgba(100, 74, 115, 0.85);
   margin: 0 0 3rem 0;
   line-height: 1.6;
 }
@@ -990,8 +1008,8 @@ cite {
   gap: 10px;
   padding: 1.25rem 2.25rem;
   background: transparent;
-  color: white;
-  border: 2px solid white;
+  color: var(--brand-dark, #644A73);
+  border: 2px solid var(--brand-dark, #644A73);
   border-radius: 16px;
   font-size: 1.0625rem;
   font-weight: 700;
@@ -1000,30 +1018,85 @@ cite {
 
   &:hover {
     transform: translateY(-4px);
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 8px 32px rgba(255, 255, 255, 0.2);
+    background: rgba(100, 74, 115, 0.05);
+    box-shadow: 0 8px 32px rgba(100, 74, 115, 0.2);
   }
 }
 
 .cta-footer {
-  padding-top: 2rem;
-  border-top: 2px solid rgba(255, 255, 255, 0.3);
+  padding-top: 2.5rem;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .safety-note {
-  font-size: 1rem;
-  color: rgba(255, 255, 255, 0.95);
-  margin: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: rgba(255, 255, 255, 0.8);
+  border: 2px solid rgba(244, 210, 146, 0.4);
+  border-radius: 12px;
+  max-width: 700px;
+  margin: 0 auto;
+  box-shadow: 0 4px 16px rgba(200, 190, 234, 0.15);
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1.25rem;
+  }
+}
+
+.safety-icon {
+  font-size: 1.5rem;
+  color: var(--brand-dark, #644A73);
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  line-height: 1;
+
+  @media (max-width: 768px) {
+    font-size: 1.375rem;
+    margin-top: 0;
+  }
+}
+
+.safety-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
 
   strong {
+    font-size: 1rem;
     font-weight: 700;
+    color: var(--brand-dark, #644A73);
+    display: block;
+
+    @media (max-width: 768px) {
+      font-size: 0.9375rem;
+    }
+  }
+
+  span {
+    font-size: 0.9375rem;
+    color: rgba(100, 74, 115, 0.8);
+    line-height: 1.5;
+
+    @media (max-width: 768px) {
+      font-size: 0.875rem;
+    }
   }
 }
 
 .emergency-contacts-integrated {
   margin-top: 4rem;
-  padding-top: 3rem;
-  border-top: 2px solid rgba(255, 255, 255, 0.3);
+  padding-top: 0rem;
 
   @media (max-width: 768px) {
     margin-top: 3rem;

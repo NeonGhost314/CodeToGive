@@ -1,0 +1,319 @@
+/* Palette */
+$lavender: #C8BEEA;
+$rose: #EEC9D2;
+$bluemist: #A8C2D1;
+$sand: #F7EEE5;
+$peach: #F9D8C4;
+$plum: #644A73;
+$cream: #FFFAF7;
+$fog: #F6F0EB;
+
+/* VERTICAL PROGRESS SIDEBAR */
+:host {
+  width: 260px;
+  flex-shrink: 0;
+  display: flex;
+  align-self: stretch; // Match height with sibling elements
+}
+
+.progress-sidebar {
+  width: 100%;
+  background: white;
+  border-radius: 20px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 10px 30px rgba(100, 74, 115, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h3 {
+    color: $plum;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .chapters-track-vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+    flex: 1;
+    justify-content: space-evenly;
+  }
+
+  .chapter-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 2;
+    width: 100%;
+
+    .node-circle {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    span {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: $plum;
+      opacity: 0.7;
+      text-align: center;
+      flex: 1;
+    }
+
+    &.active {
+      .node-circle {
+        background: linear-gradient(135deg, $lavender, $rose);
+        color: white;
+        box-shadow: 0 0 0 3px white, 0 0 0 5px rgba(200, 190, 234, 0.6);
+      }
+
+      span {
+        opacity: 1;
+        font-weight: 600;
+      }
+    }
+
+    &.locked {
+      cursor: pointer;
+      
+      .node-circle {
+        background: $fog;
+        color: $plum;
+        opacity: 0.5;
+      }
+
+      span {
+        opacity: 0.5;
+      }
+
+      &:active .node-circle {
+        animation: shake-deny 0.5s ease-in-out;
+        background: #ff4d4d !important;
+        color: white !important;
+        opacity: 1 !important;
+      }
+    }
+  }
+
+  @keyframes shake-deny {
+    0%, 100% { 
+      transform: translateX(0);
+      background: $fog;
+    }
+    10% { 
+      transform: translateX(-8px) rotate(-5deg);
+      background: #ff4d4d;
+    }
+    20% { 
+      transform: translateX(8px) rotate(5deg);
+    }
+    30% { 
+      transform: translateX(-8px) rotate(-5deg);
+    }
+    40% { 
+      transform: translateX(8px) rotate(5deg);
+    }
+    50% { 
+      transform: translateX(-6px) rotate(-3deg);
+    }
+    60% { 
+      transform: translateX(6px) rotate(3deg);
+    }
+    70% { 
+      transform: translateX(-4px) rotate(-2deg);
+    }
+    80% { 
+      transform: translateX(4px) rotate(2deg);
+    }
+    90% { 
+      transform: translateX(-2px) rotate(-1deg);
+    }
+  }
+
+  .connector-vertical {
+    width: 3px;
+    height: 30px;
+    background: linear-gradient(to bottom, $fog, $fog);
+    margin: 0 auto;
+    opacity: 0.5;
+  }
+}
+
+/* Tablet Landscape & Small Desktop (900px - 1023px) */
+@media (max-width: 1023px) {
+  :host {
+    width: 160px;
+  }
+
+  .progress-sidebar {
+    padding: 1.5rem 1rem;
+
+    h3 {
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .chapter-node {
+      .node-circle {
+        width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
+      }
+
+      span {
+        font-size: 0.75rem;
+      }
+    }
+
+    .connector-vertical {
+      height: 25px;
+      margin-left: 20px;
+    }
+  }
+}
+
+@media (max-width: 899px) {
+  :host {
+    width: 100%;
+    align-self: auto; // Reset for mobile
+  }
+
+  .progress-sidebar {
+    flex-direction: row;
+    padding: 1.5rem;
+    order: 1;
+
+    h3 {
+      display: none;
+    }
+
+    .chapters-track-vertical {
+      flex-direction: row;
+      justify-content: space-around;
+      width: 100%;
+    }
+
+    .chapter-node {
+      flex-direction: column;
+      width: auto;
+      gap: 0.5rem;
+
+      .node-circle {
+        width: 45px;
+        height: 45px;
+      }
+
+      span {
+        text-align: center;
+        font-size: 0.75rem;
+        max-width: 80px;
+      }
+    }
+
+    .connector-vertical {
+      width: 40px;
+      height: 3px;
+      margin-left: 0;
+      margin-top: 22px;
+    }
+  }
+}
+
+/* Mobile Landscape & Small Tablet (600px - 767px) */
+@media (max-width: 767px) {
+  .progress-sidebar {
+    padding: 1.2rem;
+
+    .chapter-node {
+      .node-circle {
+        width: 40px;
+        height: 40px;
+        font-size: 0.85rem;
+      }
+
+      span {
+        font-size: 0.7rem;
+        max-width: 70px;
+      }
+    }
+
+    .connector-vertical {
+      width: 30px;
+      margin-top: 20px;
+    }
+  }
+}
+
+/* Mobile Portrait (400px - 599px) */
+@media (max-width: 599px) {
+  .progress-sidebar {
+    padding: 1rem 0.8rem;
+
+    .chapter-node {
+      .node-circle {
+        width: 35px;
+        height: 35px;
+        font-size: 0.8rem;
+
+        svg {
+          width: 12px;
+          height: 12px;
+        }
+      }
+
+      span {
+        font-size: 0.65rem;
+        max-width: 60px;
+      }
+    }
+
+    .connector-vertical {
+      width: 20px;
+      margin-top: 17px;
+    }
+  }
+}
+
+/* Small Mobile (< 400px) */
+@media (max-width: 399px) {
+  .progress-sidebar {
+    padding: 0.8rem 0.6rem;
+
+    .chapter-node {
+      .node-circle {
+        width: 32px;
+        height: 32px;
+        font-size: 0.75rem;
+
+        svg {
+          width: 10px;
+          height: 10px;
+        }
+      }
+
+      span {
+        font-size: 0.6rem;
+        max-width: 50px;
+      }
+    }
+
+    .connector-vertical {
+      width: 15px;
+      margin-top: 16px;
+    }
+  }
+}
