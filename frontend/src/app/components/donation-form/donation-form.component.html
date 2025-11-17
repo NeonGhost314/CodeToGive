@@ -113,6 +113,20 @@
     </span>
   </div>
 
+  <!-- Checkbox rester anonyme -->
+  <div class="form-section anonymous-section">
+    <label class="checkbox-label">
+      <input
+        type="checkbox"
+        id="isAnonymous"
+        [(ngModel)]="isAnonymous"
+        class="checkbox-input"
+        aria-label="Remain anonymous for this donation">
+      <span class="checkbox-text">Remain anonymous</span>
+    </label>
+    <p class="checkbox-hint">Your information will not be displayed publicly</p>
+  </div>
+
   <!-- Bouton soumettre -->
   <button
     type="button"

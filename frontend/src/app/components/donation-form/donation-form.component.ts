@@ -13,6 +13,7 @@ export interface DonationData {
   recurringPeriod?: 'monthly' | 'quarterly' | 'yearly';
   endDate?: string; // ISO date string
   hasEndDate?: boolean;
+  isAnonymous?: boolean;
 }
 
 @Component({
@@ -36,6 +37,7 @@ export class DonationFormComponent implements OnInit, OnChanges {
   message: string = '';
   showCustomAmount: boolean = false;
   customAmount: number = 0;
+  isAnonymous: boolean = false;
   
   // Recurring donation options
   recurringPeriod: 'monthly' | 'quarterly' | 'yearly' = 'monthly';
@@ -221,7 +223,8 @@ export class DonationFormComponent implements OnInit, OnChanges {
       message: this.message || undefined,
       recurringPeriod: this.donationType !== 'one-time' ? this.recurringPeriod : undefined,
       endDate: this.donationType !== 'one-time' && this.endDate ? this.endDate : undefined,
-      hasEndDate: this.donationType !== 'one-time' ? true : undefined
+      hasEndDate: this.donationType !== 'one-time' ? true : undefined,
+      isAnonymous: this.isAnonymous
     };
 
     this.submit.emit(donationData);

@@ -22,8 +22,8 @@ export class PaymentConfirmationComponent implements OnInit {
     const storedResult = sessionStorage.getItem('paymentResult');
     
     if (!storedResult) {
-      // Si pas de résultat, rediriger vers la page de don
-      this.router.navigate(['/donation']);
+      // Si pas de résultat, rediriger vers la page initiale
+      this.router.navigate(['/']);
       return;
     }
 
@@ -39,8 +39,8 @@ export class PaymentConfirmationComponent implements OnInit {
     // Nettoyer sessionStorage après confirmation
     sessionStorage.removeItem('paymentResult');
     
-    // Retourner à la page de don
-    this.router.navigate(['/donation']);
+    // Retourner à la page initiale
+    this.router.navigate(['/']);
   }
 }
 
