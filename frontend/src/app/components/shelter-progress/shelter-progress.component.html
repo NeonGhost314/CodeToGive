@@ -25,6 +25,16 @@
         </div>
     </div>
 
+    <!-- Debug Controls (only shown when debugMode is true) -->
+    <div class="debug-controls" *ngIf="debugMode">
+        <label class="debug-label">
+            <span class="material-symbols-outlined" style="vertical-align: middle; font-size: 1.2em; margin-right: 0.5em;">settings</span>
+            <span>Debug Progress: {{ debugProgress }}%</span>
+            <input type="range" min="0" max="100" [(ngModel)]="debugProgress" (input)="onDebugSliderChange()"
+                class="debug-slider" />
+        </label>
+    </div>
+
     <!-- Progress Badge -->
     <div class="progress-header">
         <div class="progress-badge" [class.complete]="progressPercentage >= 100">
@@ -181,15 +191,5 @@
                 <em>Thank you for being part of this life-changing mission.</em>
             </p>
         </div>
-    </div>
-
-    <!-- Debug Controls (only shown when debugMode is true) -->
-    <div class="debug-controls" *ngIf="debugMode">
-        <label class="debug-label">
-            <span class="material-symbols-outlined" style="vertical-align: middle; font-size: 1.2em; margin-right: 0.5em;">settings</span>
-            <span>Debug Progress: {{ debugProgress }}%</span>
-            <input type="range" min="0" max="100" [(ngModel)]="debugProgress" (input)="onDebugSliderChange()"
-                class="debug-slider" />
-        </label>
     </div>
 </div>
