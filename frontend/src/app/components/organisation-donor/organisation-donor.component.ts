@@ -9,7 +9,6 @@ import { CommonModule } from '@angular/common';
   styleUrl: './organisation-donor.component.scss'
 })
 export class OrganisationDonorComponent {
-  phoneNumber = '514-274-8117';
   email = 'EVENEMENT@BOUCLIERDATHENA.COM';
   sponsorshipFormPath = 'assets/Sponsorship_Forms_ENFR_2025.pdf';
 
@@ -20,13 +19,5 @@ export class OrganisationDonorComponent {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  }
-
-  onCallPhone(): void {
-    window.open(`tel:${this.phoneNumber}`);
-  }
-
-  onSendEmail(): void {
-    window.open(`mailto:${this.email}?subject=Corporate Sponsorship Inquiry`);
   }
 }

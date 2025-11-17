@@ -32,23 +32,12 @@
   <!-- Montant -->
   <div class="form-section">
     <label class="form-label">Commitment Amount*</label>
-    @if (showCustomAmount || donationType !== 'one-time') {
-      <app-donation-custom-amount
-        [currentAmount]="customAmount"
-        [minAmount]="1"
-        (amountChanged)="onCustomAmountChange($event)">
-      </app-donation-custom-amount>
-      @if (selectedFundCategory && !selectedFundCategory.isCustom && selectedItems.length > 0) {
-        <p class="info-text">Note: Selected items will be cleared when using custom amount.</p>
-      }
-    } @else {
-      <div class="amount-display">
-        <span class="currency">$</span>
-        <span class="amount-value">{{ amount }}</span>
-      </div>
-      @if (selectedItems.length > 0) {
-        <p class="info-text">Based on {{ selectedItems.length }} selected item(s)</p>
-      }
+    <div class="amount-display">
+      <span class="currency">$</span>
+      <span class="amount-value">{{ amount }}</span>
+    </div>
+    @if (selectedItems.length > 0) {
+      <p class="info-text">Based on {{ selectedItems.length }} selected item(s)</p>
     }
   </div>
 
@@ -111,20 +100,6 @@
     <span class="character-count" id="message-count" [class.warning]="(500 - message.length) < 50">
       {{ 500 - message.length }} characters remaining
     </span>
-  </div>
-
-  <!-- Checkbox rester anonyme -->
-  <div class="form-section anonymous-section">
-    <label class="checkbox-label">
-      <input
-        type="checkbox"
-        id="isAnonymous"
-        [(ngModel)]="isAnonymous"
-        class="checkbox-input"
-        aria-label="Remain anonymous for this donation">
-      <span class="checkbox-text">Remain anonymous</span>
-    </label>
-    <p class="checkbox-hint">Your information will not be displayed publicly</p>
   </div>
 
   <!-- Bouton soumettre -->

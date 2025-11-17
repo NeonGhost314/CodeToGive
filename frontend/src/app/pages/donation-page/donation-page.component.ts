@@ -8,6 +8,7 @@ import { DonationFormComponent, DonationData } from '../../components/donation-f
 import { NewsletterComponent } from '../../components/newsletter/newsletter.component';
 import { DonationItemsListComponent } from '../../components/donation-items-list/donation-items-list.component';
 import { OrganisationDonorComponent } from '../../components/organisation-donor/organisation-donor.component';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
 
 @Component({
   selector: 'app-donation-page',
@@ -18,7 +19,8 @@ import { OrganisationDonorComponent } from '../../components/organisation-donor/
     DonationFormComponent,
     NewsletterComponent,
     DonationItemsListComponent,
-    OrganisationDonorComponent
+    OrganisationDonorComponent,
+    NavbarComponent
   ],
   templateUrl: './donation-page.component.html',
   styleUrl: './donation-page.component.scss',

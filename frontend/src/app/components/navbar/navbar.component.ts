@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { COLORS } from '../../shared/constants/colors.constants';
@@ -11,5 +11,6 @@ import { COLORS } from '../../shared/constants/colors.constants';
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent {
+  @Input() showSupportButton: boolean = true;
   colors = COLORS;
 }
