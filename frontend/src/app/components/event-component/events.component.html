@@ -6,7 +6,7 @@
         <div class="news-item">
           <img src="assets/images/house.png" class="news-image" alt="Shelter Expansion Project">
           <div class="news-content">
-            <h4>Shelter Expansion Project</h4>
+            <h4 translate>Shelter Expansion Project</h4>
             <p>New facilities opening to support 50 more families in need.</p>
           </div>
         </div>
@@ -31,6 +31,8 @@
           <img src="assets/images/psychiatry.png" class="news-image" alt="Psychiatry Services Expansion">
           <div class="news-content">
             <h4>Psychiatry Services Expansion</h4>
+            <p>Texte traduit : {{ translatedText }}</p>
+            <button (click)="translateText()">Traduire</button>
             <p>New mental health programs launched to support survivors.</p>
           </div>
         </div>
