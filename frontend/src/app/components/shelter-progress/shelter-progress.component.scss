@@ -567,36 +567,6 @@ cite {
   line-height: 1.5;
 }
 
-// Progress Message
-.progress-message {
-  text-align: center;
-  padding: 1.25rem 1.5rem;
-  background: linear-gradient(135deg, rgba(244, 210, 146, 0.15), rgba(255, 229, 180, 0.15));
-  border-radius: 20px;
-  border: 2px solid rgba(244, 210, 146, 0.4);
-
-  p {
-    font-size: 1.0625rem;
-    font-weight: 600;
-    color: var(--brand-dark, #644A73);
-    margin: 0;
-    line-height: 1.6;
-
-    strong {
-      font-weight: 800;
-    }
-
-    em {
-      font-style: italic;
-      color: rgba(100, 74, 115, 0.75);
-    }
-
-    @media (max-width: 768px) {
-      font-size: 0.9375rem;
-    }
-  }
-}
-
 // Debug Controls
 .debug-controls {
   margin-top: 2rem;
