@@ -5,10 +5,10 @@ import { DonationService, ImpactFund, DonationAmountOption, DonationItems } from
 import { Observable, catchError, of, switchMap } from 'rxjs';
 import { DonationAmountOptionsComponent } from '../../components/donation-amount-options/donation-amount-options.component';
 import { DonationFormComponent, DonationData } from '../../components/donation-form/donation-form.component';
-import { NewsletterComponent } from '../../components/newsletter/newsletter.component';
 import { DonationItemsListComponent } from '../../components/donation-items-list/donation-items-list.component';
 import { OrganisationDonorComponent } from '../../components/organisation-donor/organisation-donor.component';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { FooterComponent } from '../../components/footer/footer.component';
 
 @Component({
   selector: 'app-donation-page',
@@ -17,10 +17,10 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
     CommonModule,
     DonationAmountOptionsComponent,
     DonationFormComponent,
-    NewsletterComponent,
     DonationItemsListComponent,
     OrganisationDonorComponent,
-    NavbarComponent
+    NavbarComponent,
+    FooterComponent
   ],
   templateUrl: './donation-page.component.html',
   styleUrl: './donation-page.component.scss',
@@ -148,9 +148,7 @@ export class DonationPageComponent implements OnInit {
         type: donationData.type,
         message: donationData.message,
         fundName: this.selectedFund.name,
-        recurringPeriod: donationData.recurringPeriod,
-        endDate: donationData.endDate,
-        hasEndDate: donationData.hasEndDate
+        recurringPeriod: donationData.recurringPeriod
       });
       
       // Naviguer vers la page de paiement

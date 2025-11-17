@@ -39,8 +39,6 @@ export interface DonationFormData {
   message?: string;
   fundName?: string;
   recurringPeriod?: 'monthly' | 'quarterly' | 'yearly';
-  endDate?: string; // ISO date string
-  hasEndDate?: boolean;
 }
 
 

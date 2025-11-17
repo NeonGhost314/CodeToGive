@@ -54,8 +54,6 @@
     <!-- Newsletter -->
     <div class="footer-section newsletter-section">
       <h4 class="section-title">Newsletter</h4>
-      <p class="newsletter-description">Stay updated with our latest news and events</p>
-      
       @if (isSubscribed) {
         <div class="success-message">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -65,27 +63,32 @@
         </div>
       } @else {
         <form class="newsletter-form" (ngSubmit)="onSubscribe()">
-          <div class="newsletter-input-group">
-            <input 
-              type="email" 
-              [(ngModel)]="email" 
-              (input)="onEmailChange()"
-              placeholder="Enter your email"
-              [class.error]="emailError"
-              name="newsletterEmail"
-              required>
-            <button 
-              type="submit" 
-              class="subscribe-btn"
-              [disabled]="!isFormValid || isSubmitting"
-              aria-label="Subscribe to newsletter">
-              @if (isSubmitting) {
-                <span class="loading-spinner"></span>
-              } @else {
-                Subscribe
-              }
-            </button>
-          </div>
+          <input 
+            type="email" 
+            [(ngModel)]="email" 
+            (input)="onEmailChange()"
+            placeholder="Your email address"
+            [class.error]="emailError"
+            name="newsletterEmail"
+            required>
+          <select 
+            [(ngModel)]="selectedLanguage"
+            name="newsletterLanguage"
+            class="language-select">
+            <option value="en">English</option>
+            <option value="fr">Français</option>
+          </select>
+          <button 
+            type="submit" 
+            class="subscribe-btn"
+            [disabled]="!isFormValid || isSubmitting"
+            aria-label="Subscribe to newsletter">
+            @if (isSubmitting) {
+              <span class="loading-spinner"></span>
+            } @else {
+              Subscribe
+            }
+          </button>
           @if (emailError) {
             <p class="error-message">{{ emailError }}</p>
           }

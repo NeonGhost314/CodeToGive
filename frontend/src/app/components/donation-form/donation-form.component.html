@@ -46,27 +46,42 @@
     <div class="recurring-options">
       <!-- Period selection -->
       <div class="form-section">
-        <label class="form-label" for="recurring-period">Frequency*</label>
-        <select
-          id="recurring-period"
-          class="form-select"
-          [(ngModel)]="recurringPeriod"
-          (change)="onRecurringPeriodChange(recurringPeriod)">
-          <option value="monthly">Monthly</option>
-          <option value="quarterly">Quarterly</option>
-          <option value="yearly">Yearly</option>
-        </select>
-      </div>
-
-      <!-- End date option -->
-      <div class="form-section">
-        <label class="form-label" for="end-date">End Date*</label>
-        <input
-          type="date"
-          id="end-date"
-          class="form-date-input"
-          [(ngModel)]="endDate"
-          [min]="minDate">
+        <label class="form-label">Frequency*</label>
+        <div class="frequency-tabs" role="tablist" aria-label="Frequency">
+          <button
+            type="button"
+            class="frequency-tab-button"
+            role="tab"
+            [class.active]="recurringPeriod === 'monthly'"
+            [attr.aria-selected]="recurringPeriod === 'monthly'"
+            (click)="onRecurringPeriodChange('monthly')"
+            (keydown.enter)="onRecurringPeriodChange('monthly')"
+            (keydown.space)="onRecurringPeriodChange('monthly'); $event.preventDefault()">
+            Monthly
+          </button>
+          <button
+            type="button"
+            class="frequency-tab-button"
+            role="tab"
+            [class.active]="recurringPeriod === 'quarterly'"
+            [attr.aria-selected]="recurringPeriod === 'quarterly'"
+            (click)="onRecurringPeriodChange('quarterly')"
+            (keydown.enter)="onRecurringPeriodChange('quarterly')"
+            (keydown.space)="onRecurringPeriodChange('quarterly'); $event.preventDefault()">
+            Quarterly
+          </button>
+          <button
+            type="button"
+            class="frequency-tab-button"
+            role="tab"
+            [class.active]="recurringPeriod === 'yearly'"
+            [attr.aria-selected]="recurringPeriod === 'yearly'"
+            (click)="onRecurringPeriodChange('yearly')"
+            (keydown.enter)="onRecurringPeriodChange('yearly')"
+            (keydown.space)="onRecurringPeriodChange('yearly'); $event.preventDefault()">
+            Yearly
+          </button>
+        </div>
       </div>
 
       <!-- Summary -->
