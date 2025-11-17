@@ -21,6 +21,34 @@
                 <a href="#impact-stats" class="nav-link">Impact</a>
             </nav>
 
+            <!-- Language Dropdown -->
+            <div class="language-selector" (clickOutside)="closeDropdown()">
+                <button class="language-btn" (click)="toggleDropdown()">
+                    <img [src]="'https://flagcdn.com/24x18/' + selectedLanguage.flagCode + '.png'" 
+                         [alt]="selectedLanguage.name" 
+                         class="flag-img" />
+                    <span class="language-name">{{ selectedLanguage.name }}</span>
+                    <svg class="dropdown-icon" [class.open]="isDropdownOpen" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+
+                <div class="language-dropdown" [class.open]="isDropdownOpen">
+                    <div class="language-grid">
+                        <button 
+                            *ngFor="let lang of languages" 
+                            class="language-option"
+                            [class.selected]="lang.code === selectedLanguage.code"
+                            (click)="selectLanguage(lang)">
+                            <img [src]="'https://flagcdn.com/24x18/' + lang.flagCode + '.png'" 
+                                 [alt]="lang.name" 
+                                 class="flag-img" />
+                            <span class="language-name">{{ lang.name }}</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <a href="https://www.canadahelps.org/en/dn/27709" target="_blank" class="btn-donate">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                     <path
