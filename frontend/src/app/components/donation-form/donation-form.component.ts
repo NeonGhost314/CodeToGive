@@ -1,9 +1,11 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ImpactFund, DonationAmountOption, DonationItems } from '../../services/donation_service';
-import { DonationCustomAmountComponent } from '../donation-custom-amount/donation-custom-amount.component';
+import { Router } from '@angular/router';
+import { ImpactFund, DonationAmountOption, DonationItems, DonationService } from '../../services/donation_service';
+import { AuthService } from '../../services/auth.service';
 import { DonationGoalProgressComponent } from '../donation-goal-progress/donation-goal-progress.component';
+import { DonationCustomAmountComponent } from '../donation-custom-amount/donation-custom-amount.component';
 
 export interface DonationData {
   fundId: number;
@@ -11,14 +13,12 @@ export interface DonationData {
   type: 'one-time' | 'monthly' | 'quarterly' | 'yearly';
   message?: string;
   recurringPeriod?: 'monthly' | 'quarterly' | 'yearly';
-  endDate?: string; // ISO date string
-  hasEndDate?: boolean;
 }
 
 @Component({
   selector: 'app-donation-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, DonationCustomAmountComponent, DonationGoalProgressComponent],
+  imports: [CommonModule, FormsModule, DonationGoalProgressComponent, DonationCustomAmountComponent],
   templateUrl: './donation-form.component.html',
   styleUrl: './donation-form.component.scss'
 })
@@ -28,114 +28,75 @@ export class DonationFormComponent implements OnInit, OnChanges {
   @Input() totalAmountFromItems: number = 0;
   @Input() fund!: ImpactFund;
   @Input() currentGoalAmount: number = 0;
-  @Input() goalAmount: number = 10000;
+  @Input() goalAmount: number = 100000;
+  @Input() isCustomAmountMode: boolean = false;
   @Output() submit = new EventEmitter<DonationData>();
 
   donationType: 'one-time' | 'monthly' | 'quarterly' | 'yearly' = 'one-time';
   amount: number = 0;
   message: string = '';
-  showCustomAmount: boolean = false;
-  customAmount: number = 0;
   
   // Recurring donation options
   recurringPeriod: 'monthly' | 'quarterly' | 'yearly' = 'monthly';
-  hasEndDate: boolean = false;
-  endDate: string = '';
-  
-  // Computed min date (today)
-  minDate: string = '';
+
+  constructor(
+    private authService: AuthService,
+    private donationService: DonationService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.updateAmount();
-    // Set minimum date to today
-    const today = new Date();
-    this.minDate = today.toISOString().split('T')[0];
-    // Set default end date based on recurring period
-    if (this.donationType !== 'one-time') {
-      this.updateEndDateForPeriod();
-      this.hasEndDate = true;
-    }
-  }
-
-  private updateEndDateForPeriod(): void {
-    const today = new Date();
-    const endDate = new Date(today);
-    
-    switch (this.recurringPeriod) {
-      case 'monthly':
-        // Next month
-        endDate.setMonth(today.getMonth() + 1);
-        break;
-      case 'quarterly':
-        // Next quarter (3 months from now)
-        endDate.setMonth(today.getMonth() + 3);
-        break;
-      case 'yearly':
-        // Next year
-        endDate.setFullYear(today.getFullYear() + 1);
-        break;
-    }
-    
-    this.endDate = endDate.toISOString().split('T')[0];
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if ((changes['selectedFundCategory'] && !changes['selectedFundCategory'].firstChange) ||
-        (changes['totalAmountFromItems'] && !changes['totalAmountFromItems'].firstChange) ||
-        (changes['selectedItems'] && !changes['selectedItems'].firstChange)) {
+    // Si on change d'option de don (Impact), réinitialiser le montant à 0
+    if (changes['selectedFundCategory'] && !changes['selectedFundCategory'].firstChange) {
+      this.amount = 0;
+    }
+    
+    if (changes['selectedFundCategory'] || 
+        changes['totalAmountFromItems'] || 
+        changes['selectedItems'] || 
+        changes['isCustomAmountMode']) {
       this.updateAmount();
     }
   }
 
   private updateAmount(): void {
-    if (this.selectedFundCategory?.isCustom) {
-      this.showCustomAmount = true;
-
-      if (this.customAmount === 0 && this.amount > 0) {
-        this.customAmount = this.amount;
-      } else {
-        this.amount = this.customAmount;
-      }
+    // Si en mode custom, on garde le montant saisi par l'utilisateur (ne pas écraser)
+    if (this.isCustomAmountMode) {
+      return;
+    }
+    
+    // Si montant fixe dans selectedFundCategory, utiliser ce montant
+    if (this.selectedFundCategory?.fixedAmount && this.selectedFundCategory?.amount) {
+      this.amount = this.selectedFundCategory.amount;
     } else if (this.totalAmountFromItems > 0) {
-      this.showCustomAmount = false;
+      // Si des items sont sélectionnés, utiliser le total
       this.amount = this.totalAmountFromItems;
     } else {
-      this.showCustomAmount = false;
+      // Sinon, mettre à 0 (surtout après un changement d'option)
       this.amount = 0;
     }
   }
 
   onCustomAmountChange(amount: number): void {
-    this.customAmount = amount;
     this.amount = amount;
   }
 
   onDonationTypeChange(type: 'one-time' | 'monthly' | 'quarterly' | 'yearly'): void {
-    const wasOneTime = this.donationType === 'one-time';
     this.donationType = type;
     
-    if (type === 'one-time') {
-      this.hasEndDate = false;
-    } else {
+    if (type !== 'one-time') {
       // When switching to recurring, set the period to match the type
       this.recurringPeriod = type;
-      // Always set hasEndDate to true for recurring donations
-      this.hasEndDate = true;
-      // Update end date based on the new period
-      this.updateEndDateForPeriod();
-      // If switching from one-time and we have an amount, preserve it in customAmount
-      if (wasOneTime && this.amount > 0 && !this.showCustomAmount) {
-        this.customAmount = this.amount;
-        this.showCustomAmount = true;
-      }
     }
   }
   
   onRecurringPeriodChange(period: 'monthly' | 'quarterly' | 'yearly'): void {
     this.recurringPeriod = period;
     this.donationType = period;
-    // Update end date when period changes
-    this.updateEndDateForPeriod();
   }
   
   getRecurringSummary(): string {
@@ -146,18 +107,7 @@ export class DonationFormComponent implements OnInit, OnChanges {
     const periodText = this.recurringPeriod === 'monthly' ? 'month' : 
                       this.recurringPeriod === 'quarterly' ? 'quarter' : 'year';
     
-    let summary = `$${this.amount} per ${periodText}`;
-    
-    if (this.endDate) {
-      const endDateObj = new Date(this.endDate);
-      const formattedDate = endDateObj.toLocaleDateString('en-US', { 
-        month: 'long', 
-        year: 'numeric' 
-      });
-      summary += ` until ${formattedDate}`;
-    }
-    
-    return summary;
+    return `$${this.amount} per ${periodText}`;
   }
   
   getTotalCommitment(): number {
@@ -165,30 +115,10 @@ export class DonationFormComponent implements OnInit, OnChanges {
       return this.amount;
     }
     
-    if (!this.endDate) {
-      // If no end date is set, show first year estimate
-      const periodsPerYear = this.recurringPeriod === 'monthly' ? 12 : 
-                            this.recurringPeriod === 'quarterly' ? 4 : 1;
-      return this.amount * periodsPerYear;
-    }
-    
-    // Calculate total based on end date
-    const startDate = new Date();
-    const endDate = new Date(this.endDate);
-    const monthsDiff = (endDate.getFullYear() - startDate.getFullYear()) * 12 + 
-                       (endDate.getMonth() - startDate.getMonth());
-    
-    let periods = 0;
-    if (this.recurringPeriod === 'monthly') {
-      periods = Math.max(1, monthsDiff);
-    } else if (this.recurringPeriod === 'quarterly') {
-      periods = Math.max(1, Math.ceil(monthsDiff / 3));
-    } else { // yearly
-      const yearsDiff = endDate.getFullYear() - startDate.getFullYear();
-      periods = Math.max(1, yearsDiff);
-    }
-    
-    return this.amount * periods;
+    // Calculate total for one year (recurring donations are open-ended)
+    const periodsPerYear = this.recurringPeriod === 'monthly' ? 12 : 
+                          this.recurringPeriod === 'quarterly' ? 4 : 1;
+    return this.amount * periodsPerYear;
   }
 
   canProceed(): boolean {
@@ -219,11 +149,20 @@ export class DonationFormComponent implements OnInit, OnChanges {
       amount: this.amount,
       type: this.donationType,
       message: this.message || undefined,
-      recurringPeriod: this.donationType !== 'one-time' ? this.recurringPeriod : undefined,
-      endDate: this.donationType !== 'one-time' && this.endDate ? this.endDate : undefined,
-      hasEndDate: this.donationType !== 'one-time' ? true : undefined
+      recurringPeriod: this.donationType !== 'one-time' ? this.recurringPeriod : undefined
     };
 
+    // Sauvegarder les données de don pour la page de paiement
+    this.donationService.setPendingDonationData({
+      fundId: donationData.fundId,
+      amount: donationData.amount,
+      type: donationData.type,
+      message: donationData.message,
+      fundName: this.fund.name,
+      recurringPeriod: donationData.recurringPeriod
+    });
+
+    // Émettre l'événement pour naviguer vers la page de paiement
     this.submit.emit(donationData);
   }
 }

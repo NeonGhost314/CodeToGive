@@ -17,16 +17,30 @@ export class DonationAmountOptionsComponent implements OnInit {
   @Output() customAmountSelected = new EventEmitter<void>();
 
   options: DonationAmountOption[] = [];
+  allOptions: DonationAmountOption[] = [];
   customOption: DonationAmountOption = {
-    title: 'Custom Amount',
-    isCustom: true
+    title: 'General',
+    isCustom: true,
+    imageUrl: "/assets/pictures/general.png"
   };
   selectedOption?: DonationAmountOption;
 
   constructor(private donationService: DonationService) {}
 
   ngOnInit(): void {
-    this.options = this.donationService.getDonationAmountOptions();
+    const serviceOptions = this.donationService.getDonationAmountOptions();
+    // Mettre "General" en première position
+    this.allOptions = [
+      this.customOption, // General (première position)
+      serviceOptions[0], // Annual Art Auction
+      serviceOptions[1], // Second Step Shelter
+      serviceOptions[2]  // Accès au Gala 2025 Annual Lilac Gala
+    ];
+    this.options = this.allOptions;
+    
+    // Sélectionner "General" par défaut
+    this.selectedOption = this.customOption;
+    this.customAmountSelected.emit();
   }
 
   onOptionSelected(option: DonationAmountOption): void {

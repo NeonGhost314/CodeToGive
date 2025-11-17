@@ -1,4 +1,6 @@
 <div class="donation-page">
+  <app-navbar [showSupportButton]="false" [showOurMission]="true"></app-navbar>
+
   @if (error) {
     <p class="error">{{ error }}</p>
   }
@@ -21,32 +23,42 @@
         
         <!-- 4. Grande photo représentative -->
         <div class="impact-photo-section">
-          @if (selectedFund.photoUrl) {
-            <img [src]="selectedFund.photoUrl" [alt]="'Representative photo - ' + selectedFund.name" class="impact-photo">
+          @if (selectedFundCategory && selectedFundCategory.imageUrl) {
+            <img [src]="selectedFundCategory.imageUrl" [alt]="(selectedFundCategory.isCustom ? 'General' : selectedFundCategory.title) || 'Donation option'" class="impact-photo">
           } @else {
             <div class="impact-photo-placeholder">
-              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M21 19V5C21 3.9 20.1 3 19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19ZM8.5 13.5L11 16.51L14.5 12L19 18H5L8.5 13.5Z" fill="#999"/>
-              </svg>
-              <p class="placeholder-text">Add a representative photo</p>
+              <i class="fas fa-image"></i>
+              <p class="placeholder-text">Select an option to see the image</p>
             </div>
           }
         </div>
         
         <!-- 5. Items list with checkboxes and prices -->
-        @if (selectedFundCategory && !isCustomAmountMode() && selectedFundCategory.fundId) {
-          <app-donation-items-list
-            [fundId]="selectedFundCategory.fundId"
-            (itemsSelected)="onItemsSelected($event)">
-          </app-donation-items-list>
+        <!-- TODO: Future component for purchasable items can be added here -->
+        <!-- Example: <app-purchasable-items [fundId]="selectedFund?.id"></app-purchasable-items> -->
+        
+        @if (selectedFundCategory) {
+          <div class="impact-description-section">
+            <h3 class="impact-title">Your support will help fund:</h3>
+            <div class="impact-content">
+              @if (selectedFundCategory.description) {
+                <p class="impact-text">{{ selectedFundCategory.description }}</p>
+              } @else {
+                <p class="impact-text">Your generous contribution will directly support our mission and help make a meaningful difference in the lives of those we serve.</p>
+              }
+            </div>
+          </div>
         }
         
-        <!-- 6. Organisation donor section -->
+        <!-- 7. Organisation donor section -->
         <app-organisation-donor></app-organisation-donor>
       </div>
       
       <!-- Colonne droite (40%) -->
       <div class="donation-right">
+        <!-- TODO: Future summary component can be added here -->
+        <!-- Example: <app-donation-summary [items]="selectedItems"></app-donation-summary> -->
+        
         <!-- Formulaire donation -->
         <app-donation-form
           [selectedFundCategory]="selectedFundCategory"
@@ -55,12 +67,13 @@
           [fund]="selectedFund"
           [currentGoalAmount]="currentGoalAmount"
           [goalAmount]="goalAmount"
+          [isCustomAmountMode]="isCustomAmountMode()"
           (submit)="onDonationSubmit($event)">
         </app-donation-form>
       </div>
     </div>
-    <app-newsletter></app-newsletter>
   } @else {
     <p>Loading funds…</p>
   }
+  <app-footer></app-footer>
 </div>

@@ -25,6 +25,16 @@
         </div>
     </div>
 
+    <!-- Debug Controls (only shown when debugMode is true) -->
+    <div class="debug-controls" *ngIf="debugMode">
+        <label class="debug-label">
+            <span class="material-symbols-outlined" style="vertical-align: middle; font-size: 1.2em; margin-right: 0.5em;">settings</span>
+            <span>Debug Progress: {{ debugProgress }}%</span>
+            <input type="range" min="0" max="100" [(ngModel)]="debugProgress" (input)="onDebugSliderChange()"
+                class="debug-slider" />
+        </label>
+    </div>
+
     <!-- Progress Badge -->
     <div class="progress-header">
         <div class="progress-badge" [class.complete]="progressPercentage >= 100">
@@ -111,16 +121,6 @@
             </div>
         </div>
 
-        <!-- Personal Testimonial -->
-        <div class="testimonial-box">
-            <div class="quote-icon">"</div>
-            <blockquote>
-                When I arrived at Shield of Athena with my children, I had nothing but fear.
-                This shelter gave us more than a roof—it gave us safety, dignity, and a chance
-                to rebuild our lives. <strong>Every woman deserves this chance.</strong>
-            </blockquote>
-            <cite>— Former Resident, Now Independent & Thriving</cite>
-        </div>
 
         <!-- Donation Impact Examples -->
         <div class="donation-impact-grid">
@@ -147,49 +147,5 @@
                 </div>
             </div>
         </div>
-
-        <!-- Urgency Message -->
-        <div class="progress-message">
-            <p *ngIf="progressPercentage < 25">
-                <span class="material-symbols-outlined" style="vertical-align: middle; font-size: 1.2em; margin-right: 0.5em;">trending_up</span>
-                <strong>Right now, women are waiting.</strong>
-                Every contribution lays the foundation for someone's fresh start.
-                <em>Be the reason someone finds safety tonight.</em>
-            </p>
-            <p *ngIf="progressPercentage >= 25 && progressPercentage < 50">
-                <span class="material-symbols-outlined" style="vertical-align: middle; font-size: 1.2em; margin-right: 0.5em;">construction</span>
-                <strong>The walls are rising!</strong>
-                We're building more than a shelter—we're building hope.
-                <em>Your support is changing lives right now.</em>
-            </p>
-            <p *ngIf="progressPercentage >= 50 && progressPercentage < 75">
-                <span class="material-symbols-outlined" style="vertical-align: middle; font-size: 1.2em; margin-right: 0.5em;">trending_up</span>
-                <strong>We're over halfway there!</strong>
-                Can you imagine the families who will find safety here?
-                <em>Help us finish what we started together.</em>
-            </p>
-            <p *ngIf="progressPercentage >= 75 && progressPercentage < 100">
-                <span class="material-symbols-outlined" style="vertical-align: middle; font-size: 1.2em; margin-right: 0.5em;">flag</span>
-                <strong>We're SO close!</strong>
-                Women and children are counting on us.
-                <em>Be part of the final push to open these doors.</em>
-            </p>
-            <p *ngIf="progressPercentage >= 100">
-                <span class="material-symbols-outlined" style="vertical-align: middle; font-size: 1.2em; margin-right: 0.5em;">check_circle</span>
-                <strong>Together, we did it!</strong>
-                This shelter will provide safety and new beginnings for countless families.
-                <em>Thank you for being part of this life-changing mission.</em>
-            </p>
-        </div>
-    </div>
-
-    <!-- Debug Controls (only shown when debugMode is true) -->
-    <div class="debug-controls" *ngIf="debugMode">
-        <label class="debug-label">
-            <span class="material-symbols-outlined" style="vertical-align: middle; font-size: 1.2em; margin-right: 0.5em;">settings</span>
-            <span>Debug Progress: {{ debugProgress }}%</span>
-            <input type="range" min="0" max="100" [(ngModel)]="debugProgress" (input)="onDebugSliderChange()"
-                class="debug-slider" />
-        </label>
     </div>
 </div>

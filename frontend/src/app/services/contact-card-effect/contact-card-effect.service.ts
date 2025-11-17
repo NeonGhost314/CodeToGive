@@ -149,7 +149,7 @@ export class ContactCardEffectService {
 
     // Animate particles
     const particles = this.scene.children.find(
-      (child) => child instanceof THREE.Points
+      (child: THREE.Object3D) => child instanceof THREE.Points
     ) as THREE.Points | undefined;
 
     if (particles) {

@@ -1,0 +1,38 @@
+<div class="auth-page">
+  <app-navbar [showSupportButton]="true" [showOurMission]="true" [showLoginButton]="false"></app-navbar>
+  
+  <div class="auth-container">
+    <div class="auth-form-wrapper">
+      <div class="auth-header">
+        <h1 class="auth-title">Welcome</h1>
+        <p class="auth-subtitle">Sign in to your account or create a new one</p>
+      </div>
+
+      <div class="auth-tabs">
+        <button
+          type="button"
+          class="auth-tab-button"
+          [class.active]="!isSignupMode"
+          (click)="switchToLogin()">
+          Log In
+        </button>
+        <button
+          type="button"
+          class="auth-tab-button"
+          [class.active]="isSignupMode"
+          (click)="switchToSignup()">
+          Sign Up
+        </button>
+      </div>
+
+      <div class="auth-form-container">
+        @if (isSignupMode) {
+          <app-signup-form (signupSuccess)="onSignupSuccess()"></app-signup-form>
+        } @else {
+          <app-login-form (loginSuccess)="onLoginSuccess()"></app-login-form>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+

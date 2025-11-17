@@ -5,6 +5,9 @@ import { PaymentPageComponent } from './pages/payment-page/payment-page.componen
 import { PaymentConfirmationComponent } from './pages/payment-confirmation/payment-confirmation.component';
 import { LandingComponent } from './pages/landing/landing.component';
 import { VideoComponent } from './pages/video-page/video.component';
+import { AuthComponent } from './pages/auth/auth.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -30,6 +33,19 @@ export const routes: Routes = [
   {
     path: 'video',
     component: VideoComponent
+  },
+  {
+    path: 'auth',
+    component: AuthComponent
+  },
+  {
+    path: 'auth/signup',
+    component: AuthComponent
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [authGuard]
   },
   // Story detail page will be added by Yann's team I guess
   // {

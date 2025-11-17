@@ -16,8 +16,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-template',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './template.component.html',
-  styleUrl: './template.component.scss'
+  templateUrl: './_template.component.html',
+  styleUrl: './_template.component.scss'
 })
 export class TemplateComponent implements OnInit {
   // Input properties - data passed from parent component

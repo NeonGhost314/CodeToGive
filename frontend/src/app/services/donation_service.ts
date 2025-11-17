@@ -17,11 +17,13 @@ export interface DonationImpactItem {
 
 export interface DonationAmountOption {
   title?: string;
-  amount?: number;
+  amount?: number;                 // Montant fixe (si défini, l'utilisateur ne peut pas le modifier)
   description?: string;            // Description courte (optionnelle)
   impactItems?: DonationImpactItem[];
   isCustom?: boolean;              // true pour option personnalisée
   fundId?: number;
+  fixedAmount?: boolean;           // true si le montant est fixe (non modifiable)
+  imageUrl?: string;               // URL de l'image pour la carte
 }
 
 export interface DonationItems {
@@ -39,8 +41,6 @@ export interface DonationFormData {
   message?: string;
   fundName?: string;
   recurringPeriod?: 'monthly' | 'quarterly' | 'yearly';
-  endDate?: string; // ISO date string
-  hasEndDate?: boolean;
 }
 
 
@@ -102,33 +102,45 @@ export class DonationService {
 
   
   getDonationItems(fundId: number): Observable<DonationItems[]> {
-    return this.http.get<DonationItemsBackend[]>(`/api/donation-items/${fundId}`).pipe(
-      map(items => items.map(item => ({
-        id: item.id,
-        fundId: item.fund_id,
-        description: item.description,
-        suggestedAmount: item.suggested_amount,
-        optionType: item.option_type
-      })))
-    );
+    // Mock data pour développement frontend
+    // TODO: Remplacer par l'appel HTTP réel quand le backend sera disponible
+    return of([]);
+    
+    // Décommenter quand le backend sera prêt:
+    // return this.http.get<DonationItemsBackend[]>(`/api/donation-items/${fundId}`).pipe(
+    //   map(items => items.map(item => ({
+    //     id: item.id,
+    //     fundId: item.fund_id,
+    //     description: item.description,
+    //     suggestedAmount: item.suggested_amount,
+    //     optionType: item.option_type
+    //   })))
+    // );
   }
 
   getDonationAmountOptions(): DonationAmountOption[] {
     return [
       {
-        title: "Emergency Fund",
+        title: "Annual Art Auction",
         fundId: 1,
-        description: "Provide immediate safety and emergency support"
+        imageUrl: "/assets/pictures/auction.png",
+        description: "Your contribution directly supports our mission by funding critical programs and services. This event brings together artists, supporters, and community members to raise essential funds that enable us to provide emergency shelter, counseling services, legal assistance, and long-term support for survivors of domestic violence. Every dollar helps us maintain our 24/7 crisis hotline, offer safe housing options, and deliver comprehensive support services.",
+        fixedAmount: false
       },
       {
-        title: "Support Fund",
+        title: "Second Step Shelter",
         fundId: 2,
-        description: "Support healing and recovery in the medium term"
+        imageUrl: "/assets/pictures/shelter.jpg",
+        description: "Your donation provides immediate and long-term housing solutions for survivors of domestic violence. This program offers safe, confidential emergency shelter, transitional housing, and support services including case management, counseling, job training, and assistance with finding permanent housing. Your support ensures individuals and families have a safe place to stay while working towards independence and recovery.",
+        fixedAmount: false
       },
       {
-        title: "Accommodation Fund",
+        title: "2025 Annual Lilac Gala Access",
         fundId: 3,
-        description: "Build long-term autonomy and stability"
+        amount: 425,
+        imageUrl: "/assets/pictures/lilac_gala.png",
+        description: "Join us for an unforgettable evening at the 2025 Annual Lilac Gala. Your $425 ticket includes access to an elegant dinner, live entertainment, silent and live auctions featuring unique items and experiences, and the opportunity to connect with fellow supporters. This exclusive event celebrates our community's commitment to ending domestic violence while raising critical funds that directly support our programs and services.",
+        fixedAmount: true
       }
     ];
   }

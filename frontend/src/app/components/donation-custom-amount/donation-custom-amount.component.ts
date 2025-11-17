@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './donation-custom-amount.component.html',
   styleUrl: './donation-custom-amount.component.scss'
 })
-export class DonationCustomAmountComponent implements OnInit {
+export class DonationCustomAmountComponent implements OnInit, OnChanges {
   @Input() minAmount?: number = 1;
   @Input() maxAmount?: number = 10000;
   @Input() currentAmount?: number;
@@ -19,8 +19,19 @@ export class DonationCustomAmountComponent implements OnInit {
   quickAmounts: number[] = [25, 50, 100, 250, 500];
 
   ngOnInit(): void {
-    if (this.currentAmount) {
+    if (this.currentAmount !== undefined) {
       this.customAmount = this.currentAmount;
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // Mettre à jour customAmount quand currentAmount change (y compris si c'est 0)
+    if (changes['currentAmount']) {
+      const newValue = changes['currentAmount'].currentValue;
+      // Mettre à jour même si c'est 0 (0 est une valeur valide, donc on vérifie explicitement)
+      if (newValue === 0 || (newValue !== undefined && newValue !== null)) {
+        this.customAmount = newValue;
+      }
     }
   }
 

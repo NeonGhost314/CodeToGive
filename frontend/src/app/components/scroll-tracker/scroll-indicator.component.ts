@@ -23,6 +23,7 @@ export class ScrollIndicatorComponent {
     { id: 'how-we-help', icon: 'support', label: 'Our Services' },
     { id: 'impact-stats', icon: 'insights', label: 'Our Impact' },
     { id: 'featured-story', icon: 'auto_stories', label: 'Real Stories' },
+    { id: 'shelter-progress', icon: 'volunteer_activism', label: 'Donation Builds' },
     { id: 'final-cta', icon: 'phone', label: 'Get Help' },
   ];
 

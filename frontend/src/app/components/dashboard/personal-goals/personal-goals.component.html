@@ -1,0 +1,77 @@
+<div class="personal-goals">
+  <div class="goals-header">
+    <h2 class="section-title">Personal Goals</h2>
+    <button class="create-goal-button" (click)="openCreateForm()">
+      <i class="fas fa-plus"></i>
+      Create Goal
+    </button>
+  </div>
+
+  @if (isLoading) {
+    <div class="loading-state">
+      <p>Loading goals...</p>
+    </div>
+  } @else if (error) {
+    <div class="error-state">
+      <p>{{ error }}</p>
+    </div>
+  } @else if (goals.length === 0) {
+    <div class="empty-state">
+      <p>No goals yet. Create your first donation goal to track your impact!</p>
+    </div>
+  } @else {
+    <div class="goals-list">
+      @for (goal of goals; track goal.id) {
+        <div class="goal-card">
+          <div class="goal-header">
+            <h3 class="goal-name">{{ goal.name }}</h3>
+            <div class="goal-actions">
+              <button class="edit-button" (click)="openEditForm(goal)" aria-label="Edit goal">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="delete-button" (click)="deleteGoal(goal.id)" aria-label="Delete goal">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="goal-progress">
+            <div class="progress-info">
+              <span class="progress-amount">{{ formatAmount(goal.current_amount) }}</span>
+              <span class="progress-separator">/</span>
+              <span class="progress-target">{{ formatAmount(goal.target_amount) }}</span>
+              <span class="progress-percentage">{{ getProgressPercentage(goal) }}%</span>
+            </div>
+            <div class="progress-bar">
+              <div 
+                class="progress-fill" 
+                [style.width.%]="getProgressPercentage(goal)">
+              </div>
+            </div>
+          </div>
+
+          @if (goal.deadline) {
+            <div class="goal-deadline">
+              Deadline: {{ formatDate(goal.deadline) }}
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+
+  <app-goal-form
+    [goal]="editingGoal"
+    [isOpen]="isFormOpen"
+    (close)="closeForm()"
+    (save)="onSaveGoal($event)">
+  </app-goal-form>
+
+  @if (showJoinModal) {
+    <app-join-athena-modal
+      (accepted)="onJoinAccepted()"
+      (declined)="onJoinDeclined()">
+    </app-join-athena-modal>
+  }
+</div>
+

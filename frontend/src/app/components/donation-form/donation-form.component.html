@@ -32,15 +32,11 @@
   <!-- Montant -->
   <div class="form-section">
     <label class="form-label">Commitment Amount*</label>
-    @if (showCustomAmount || donationType !== 'one-time') {
+    @if (isCustomAmountMode || (selectedFundCategory && !selectedFundCategory.fixedAmount)) {
       <app-donation-custom-amount
-        [currentAmount]="customAmount"
-        [minAmount]="1"
+        [currentAmount]="amount"
         (amountChanged)="onCustomAmountChange($event)">
       </app-donation-custom-amount>
-      @if (selectedFundCategory && !selectedFundCategory.isCustom && selectedItems.length > 0) {
-        <p class="info-text">Note: Selected items will be cleared when using custom amount.</p>
-      }
     } @else {
       <div class="amount-display">
         <span class="currency">$</span>
@@ -48,6 +44,9 @@
       </div>
       @if (selectedItems.length > 0) {
         <p class="info-text">Based on {{ selectedItems.length }} selected item(s)</p>
+      }
+      @if (selectedFundCategory?.fixedAmount) {
+        <p class="info-text">Fixed amount for this option</p>
       }
     }
   </div>
@@ -57,27 +56,42 @@
     <div class="recurring-options">
       <!-- Period selection -->
       <div class="form-section">
-        <label class="form-label" for="recurring-period">Frequency*</label>
-        <select
-          id="recurring-period"
-          class="form-select"
-          [(ngModel)]="recurringPeriod"
-          (change)="onRecurringPeriodChange(recurringPeriod)">
-          <option value="monthly">Monthly</option>
-          <option value="quarterly">Quarterly</option>
-          <option value="yearly">Yearly</option>
-        </select>
-      </div>
-
-      <!-- End date option -->
-      <div class="form-section">
-        <label class="form-label" for="end-date">End Date*</label>
-        <input
-          type="date"
-          id="end-date"
-          class="form-date-input"
-          [(ngModel)]="endDate"
-          [min]="minDate">
+        <label class="form-label">Frequency*</label>
+        <div class="frequency-tabs" role="tablist" aria-label="Frequency">
+          <button
+            type="button"
+            class="frequency-tab-button"
+            role="tab"
+            [class.active]="recurringPeriod === 'monthly'"
+            [attr.aria-selected]="recurringPeriod === 'monthly'"
+            (click)="onRecurringPeriodChange('monthly')"
+            (keydown.enter)="onRecurringPeriodChange('monthly')"
+            (keydown.space)="onRecurringPeriodChange('monthly'); $event.preventDefault()">
+            Monthly
+          </button>
+          <button
+            type="button"
+            class="frequency-tab-button"
+            role="tab"
+            [class.active]="recurringPeriod === 'quarterly'"
+            [attr.aria-selected]="recurringPeriod === 'quarterly'"
+            (click)="onRecurringPeriodChange('quarterly')"
+            (keydown.enter)="onRecurringPeriodChange('quarterly')"
+            (keydown.space)="onRecurringPeriodChange('quarterly'); $event.preventDefault()">
+            Quarterly
+          </button>
+          <button
+            type="button"
+            class="frequency-tab-button"
+            role="tab"
+            [class.active]="recurringPeriod === 'yearly'"
+            [attr.aria-selected]="recurringPeriod === 'yearly'"
+            (click)="onRecurringPeriodChange('yearly')"
+            (keydown.enter)="onRecurringPeriodChange('yearly')"
+            (keydown.space)="onRecurringPeriodChange('yearly'); $event.preventDefault()">
+            Yearly
+          </button>
+        </div>
       </div>
 
       <!-- Summary -->
@@ -88,7 +102,7 @@
             <span class="summary-value">{{ getRecurringSummary() }}</span>
           </div>
           <div class="summary-row total">
-            <span class="summary-label">Estimated total:</span>
+            <span class="summary-label">Yearly Total:</span>
             <span class="summary-value">${{ getTotalCommitment().toLocaleString() }}</span>
           </div>
         </div>

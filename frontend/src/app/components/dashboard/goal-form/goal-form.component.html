@@ -1,0 +1,64 @@
+@if (isOpen) {
+  <div class="modal-backdrop" (click)="onBackdropClick($event)">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <button class="close-button" (click)="onClose()" aria-label="Close">×</button>
+      
+      <h2 class="modal-title">{{ goal ? 'Edit Goal' : 'Create New Goal' }}</h2>
+
+      <form class="goal-form" (ngSubmit)="onSubmit()">
+        <div class="form-section">
+          <label class="form-label" for="goal-name">Goal Name*</label>
+          <input
+            type="text"
+            id="goal-name"
+            class="form-input"
+            [(ngModel)]="name"
+            name="name"
+            placeholder="e.g., Annual Giving Goal"
+            required>
+        </div>
+
+        <div class="form-section">
+          <label class="form-label" for="goal-amount">Target Amount ($)*</label>
+          <input
+            type="number"
+            id="goal-amount"
+            class="form-input"
+            [(ngModel)]="targetAmount"
+            name="targetAmount"
+            min="1"
+            step="1"
+            placeholder="1000"
+            required>
+        </div>
+
+        <div class="form-section">
+          <label class="form-label" for="goal-deadline">Deadline (Optional)</label>
+          <input
+            type="date"
+            id="goal-deadline"
+            class="form-input"
+            [(ngModel)]="deadline"
+            name="deadline"
+            [min]="minDate">
+        </div>
+
+        @if (error) {
+          <div class="error-message">
+            {{ error }}
+          </div>
+        }
+
+        <div class="form-actions">
+          <button type="button" class="cancel-button" (click)="onClose()">
+            Cancel
+          </button>
+          <button type="submit" class="save-button">
+            {{ goal ? 'Update Goal' : 'Create Goal' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+}
+

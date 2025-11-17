@@ -8,27 +8,39 @@
 
         <div class="navbar-center">
             <p class="campaign-slogan">
-                <span class="slogan-highlight">The Shield of Athena</span> — a leader in community outreach and
-                prevention of conjugal violence, launching their new campaign during the designated days of
-                action regarding violence against women.
+                <span class="slogan-highlight">The Shield of Athena</span> — a leader in preventing conjugal violence, launching their new campaign during the days of action against violence towards women.
             </p>
         </div>
 
         <div class="navbar-right">
-            <nav class="nav-links">
-                <a routerLink="/" class="nav-link">Our Mission</a>
-                <a href="#how-we-help" class="nav-link">Services</a>
-                <a href="#impact-stats" class="nav-link">Impact</a>
-            </nav>
+            @if (showSupportButton) {
+                <a routerLink="/donation" class="btn-donate" title="Support Us">
+                    <i class="fas fa-heart"></i>
+                    <span>Support Us</span>
+                </a>
+            }
 
-            <a href="https://www.canadahelps.org/en/dn/27709" target="_blank" class="btn-donate">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                    <path
-                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-                        fill="currentColor" />
-                </svg>
-                <span>Support Us</span>
-            </a>
+            @if (isAuthenticated) {
+                <div class="user-menu-container">
+                    <button class="user-menu-button" (click)="toggleUserMenu($event)" type="button" title="Account Settings">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                    @if (showUserMenu) {
+                        <div class="user-menu-dropdown">
+                            <button class="menu-item" (click)="goToDashboard()" title="Dashboard">
+                                <i class="fas fa-th-large"></i>
+                            </button>
+                            <button class="menu-item" (click)="logout()" title="Logout">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </button>
+                        </div>
+                    }
+                </div>
+            } @else if (showLoginButton) {
+                <button class="btn-login" (click)="goToLogin()" type="button" title="Login">
+                    <i class="fas fa-user"></i>
+                </button>
+            }
         </div>
     </div>
 </nav>
