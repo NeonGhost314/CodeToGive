@@ -139,7 +139,7 @@ export class WarmthService {
     if (this.animationId) cancelAnimationFrame(this.animationId);
 
     this.glows.forEach((glow) => {
-      glow.light.children.forEach((child) => {
+      glow.light.children.forEach((child: THREE.Object3D) => {
         if (child instanceof THREE.Mesh) {
           child.geometry.dispose();
           if (child.material instanceof THREE.Material) {
