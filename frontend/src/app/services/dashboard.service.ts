@@ -90,6 +90,51 @@ export class DashboardService {
 
   constructor(private authService: AuthService) {}
 
+  // Méthodes pour gérer la persistance de l'état utilisateur
+  private getUserPersistedState(userId: number): { 
+    donations: Donation[]; 
+    totalAmount: number;
+    subscriptions: Subscription[];
+    goals: PersonalGoal[];
+    isPostDonationUser: boolean;
+    hasPersistedData: boolean;
+  } {
+    const key = `userState_${userId}`;
+    const stored = localStorage.getItem(key);
+    if (stored) {
+      return JSON.parse(stored);
+    }
+    return { 
+      donations: [],
+      totalAmount: 0,
+      subscriptions: [],
+      goals: [],
+      isPostDonationUser: false,
+      hasPersistedData: false
+    };
+  }
+
+  private setUserPersistedState(userId: number, state: {
+    donations: Donation[];
+    totalAmount: number;
+    subscriptions: Subscription[];
+    goals: PersonalGoal[];
+    isPostDonationUser: boolean;
+  }): void {
+    const key = `userState_${userId}`;
+    const persistedState = {
+      ...state,
+      hasPersistedData: true,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(key, JSON.stringify(persistedState));
+  }
+
+  private clearUserPersistedState(userId: number): void {
+    const key = `userState_${userId}`;
+    localStorage.removeItem(key);
+  }
+
   getDashboardData(userId: number): Observable<DashboardData> {
     const userData = this.authService.getUserData();
     const user: User = userData ? {
@@ -104,42 +149,88 @@ export class DashboardService {
       email: 'john.doe@example.com'
     };
 
-    // Vérifier si on doit éviter les données par défaut (inscription post-donation)
+    // Vérifier s'il y a des informations de donateur (inscription ou connexion post-donation)
     const skipDefaultData = sessionStorage.getItem('skipDefaultData') === 'true';
+    const donorInfo = this.authService.getDonorInfo();
+    const persistedState = this.getUserPersistedState(userId);
+    console.log('Dashboard loading - skipDefaultData:', skipDefaultData, 'donorInfo:', donorInfo, 'persistedState:', persistedState); // Debug log
     let recentDonations: Donation[] = [];
     let totalDonations = 0;
+    let subscriptions: Subscription[] = [];
+    let goals: PersonalGoal[] = [];
     
-    if (skipDefaultData) {
-      // Pour une inscription post-donation, créer seulement la donation récente
-      const donorInfo = this.authService.getDonorInfo();
-      console.log('Post-donation signup detected. Donor info:', donorInfo); // Debug log
-      if (donorInfo) {
-        const recentDonation = {
-          id: Date.now(), // ID unique basé sur le timestamp
-          amount: donorInfo.donationAmount,
-          date: new Date().toISOString(),
-          fund_name: donorInfo.fundName,
-          status: 'completed' as const
-        };
-        recentDonations = [recentDonation];
+    if (donorInfo) {
+      // Créer la nouvelle donation à partir des informations du donateur
+      const newDonation = {
+        id: Date.now(), // ID unique basé sur le timestamp
+        amount: donorInfo.donationAmount,
+        date: new Date().toISOString(),
+        fund_name: donorInfo.fundName,
+        status: 'completed' as const
+      };
+      console.log('Created new donation:', newDonation); // Debug log
+      
+      if (skipDefaultData) {
+        // Pour une inscription post-donation, créer seulement la donation récente
+        recentDonations = [newDonation];
         totalDonations = donorInfo.donationAmount;
-        console.log('Created recent donation:', recentDonation); // Debug log
+        subscriptions = [];
+        goals = [];
+        console.log('Signup mode: only new donation'); // Debug log
+        
+        // Sauvegarder l'état d'inscription post-donation
+        this.setUserPersistedState(userId, {
+          donations: [newDonation],
+          totalAmount: donorInfo.donationAmount,
+          subscriptions: [],
+          goals: [],
+          isPostDonationUser: true
+        });
       } else {
-        recentDonations = [];
-        totalDonations = 0;
-        console.log('No donor info found, empty donations'); // Debug log
+        // Pour une connexion post-donation, ajouter la nouvelle donation en haut de la liste existante
+        const existingDonations = persistedState.hasPersistedData ? persistedState.donations : this.mockDonations;
+        const existingSubscriptions = persistedState.hasPersistedData ? persistedState.subscriptions : this.mockSubscriptions;
+        const existingGoals = persistedState.hasPersistedData ? persistedState.goals : this.mockGoals;
+        const existingTotal = persistedState.hasPersistedData ? persistedState.totalAmount : this.mockDonations.reduce((sum, d) => sum + d.amount, 0);
+        
+        const allDonations = [newDonation, ...existingDonations];
+        recentDonations = allDonations.slice(0, 5);
+        totalDonations = existingTotal + donorInfo.donationAmount;
+        subscriptions = existingSubscriptions;
+        goals = existingGoals;
+        console.log('Login mode: added new donation to existing state'); // Debug log
+        
+        // Sauvegarder l'état complet mis à jour
+        this.setUserPersistedState(userId, {
+          donations: allDonations,
+          totalAmount: totalDonations,
+          subscriptions: subscriptions,
+          goals: goals,
+          isPostDonationUser: false // Plus considéré comme post-donation après connexion
+        });
       }
+    } else if (persistedState.hasPersistedData) {
+      // L'utilisateur revient - restaurer l'état sauvegardé
+      recentDonations = persistedState.donations.slice(0, 5);
+      totalDonations = persistedState.totalAmount;
+      subscriptions = persistedState.subscriptions;
+      goals = persistedState.goals;
+      console.log('Restored persisted user state'); // Debug log
     } else {
+      // Nouvel utilisateur ou pas d'état sauvegardé, utiliser les données normales
       recentDonations = this.mockDonations.slice(0, 5);
       totalDonations = this.mockDonations.reduce((sum, d) => sum + d.amount, 0);
+      subscriptions = this.mockSubscriptions;
+      goals = this.mockGoals;
+      console.log('Normal mode: using mock data'); // Debug log
     }
     
     const data: DashboardData = {
       user: user,
       total_donations: totalDonations,
       recent_donations: recentDonations,
-      subscriptions: skipDefaultData ? [] : this.mockSubscriptions,
-      goals: skipDefaultData ? [] : this.mockGoals
+      subscriptions: subscriptions,
+      goals: goals
     };
 
     // Ne pas nettoyer le flag ici car d'autres méthodes peuvent en avoir besoin
@@ -150,44 +241,52 @@ export class DashboardService {
   getDonationHistory(userId: number): Observable<Donation[]> {
     // Mock: Return array of sample donations
     // In Phase 2, this will make an HTTP call to /api/dashboard/{userId}/donations
-    const skipDefaultData = sessionStorage.getItem('skipDefaultData') === 'true';
+    const persistedState = this.getUserPersistedState(userId);
+    console.log('getDonationHistory - persistedState:', persistedState); // Debug log
     
-    if (skipDefaultData) {
-      // Pour une inscription post-donation, créer seulement la donation récente
-      const donorInfo = this.authService.getDonorInfo();
-      console.log('getDonationHistory - Post-donation signup detected. Donor info:', donorInfo); // Debug log
-      if (donorInfo) {
-        const recentDonation = {
-          id: Date.now(), // ID unique basé sur le timestamp
-          amount: donorInfo.donationAmount,
-          date: new Date().toISOString(),
-          fund_name: donorInfo.fundName,
-          status: 'completed' as const
-        };
-        console.log('getDonationHistory - Created recent donation:', recentDonation); // Debug log
-        return of([recentDonation]).pipe(delay(200));
-      }
-      console.log('getDonationHistory - No donor info found, empty donations'); // Debug log
-      return of([]).pipe(delay(200));
+    if (persistedState.hasPersistedData) {
+      // L'utilisateur a un état sauvegardé - retourner ses donations
+      return of([...persistedState.donations]).pipe(delay(200));
     }
     
+    // Utilisateur normal - retourner les donations mock
     return of([...this.mockDonations]).pipe(delay(200));
   }
 
   getSubscriptions(userId: number): Observable<Subscription[]> {
     // Mock: Return array of sample subscriptions
     // In Phase 2, this will make an HTTP call to /api/dashboard/{userId}/subscriptions
-    const skipDefaultData = sessionStorage.getItem('skipDefaultData') === 'true';
-    return of(skipDefaultData ? [] : [...this.mockSubscriptions]).pipe(delay(200));
+    const persistedState = this.getUserPersistedState(userId);
+    
+    if (persistedState.hasPersistedData) {
+      // L'utilisateur a un état sauvegardé - retourner ses abonnements
+      return of([...persistedState.subscriptions]).pipe(delay(200));
+    }
+    
+    // Utilisateur normal - retourner les abonnements mock
+    return of([...this.mockSubscriptions]).pipe(delay(200));
   }
 
   updateSubscription(userId: number, subscriptionId: number, data: Partial<Subscription>): Observable<Subscription> {
-    // Mock: Update subscription in local array
+    // Mock: Update subscription in local array and persisted state
     // In Phase 2, this will make an HTTP PUT call to /api/dashboard/{userId}/subscriptions/{subscriptionId}
-    const index = this.mockSubscriptions.findIndex(s => s.id === subscriptionId);
-    if (index !== -1) {
-      this.mockSubscriptions[index] = { ...this.mockSubscriptions[index], ...data };
-      return of({ ...this.mockSubscriptions[index] }).pipe(delay(300));
+    const persistedState = this.getUserPersistedState(userId);
+    
+    if (persistedState.hasPersistedData) {
+      // Mettre à jour dans l'état persistant
+      const index = persistedState.subscriptions.findIndex(s => s.id === subscriptionId);
+      if (index !== -1) {
+        persistedState.subscriptions[index] = { ...persistedState.subscriptions[index], ...data };
+        this.setUserPersistedState(userId, persistedState);
+        return of({ ...persistedState.subscriptions[index] }).pipe(delay(300));
+      }
+    } else {
+      // Mettre à jour dans les données mock
+      const index = this.mockSubscriptions.findIndex(s => s.id === subscriptionId);
+      if (index !== -1) {
+        this.mockSubscriptions[index] = { ...this.mockSubscriptions[index], ...data };
+        return of({ ...this.mockSubscriptions[index] }).pipe(delay(300));
+      }
     }
     throw new Error('Subscription not found');
   }
@@ -195,12 +294,19 @@ export class DashboardService {
   getPersonalGoals(userId: number): Observable<PersonalGoal[]> {
     // Mock: Return array of sample goals
     // In Phase 2, this will make an HTTP call to /api/dashboard/{userId}/goals
-    const skipDefaultData = sessionStorage.getItem('skipDefaultData') === 'true';
-    return of(skipDefaultData ? [] : [...this.mockGoals]).pipe(delay(200));
+    const persistedState = this.getUserPersistedState(userId);
+    
+    if (persistedState.hasPersistedData) {
+      // L'utilisateur a un état sauvegardé - retourner ses objectifs
+      return of([...persistedState.goals]).pipe(delay(200));
+    }
+    
+    // Utilisateur normal - retourner les objectifs mock
+    return of([...this.mockGoals]).pipe(delay(200));
   }
 
   createPersonalGoal(userId: number, goal: CreateGoalData): Observable<PersonalGoal> {
-    // Mock: Create new goal and add to local array
+    // Mock: Create new goal and add to local array or persisted state
     // In Phase 2, this will make an HTTP POST call to /api/dashboard/{userId}/goals
     const newGoal: PersonalGoal = {
       id: this.nextGoalId++,
@@ -210,28 +316,64 @@ export class DashboardService {
       deadline: goal.deadline,
       created_at: new Date().toISOString()
     };
-    this.mockGoals.push(newGoal);
+    
+    const persistedState = this.getUserPersistedState(userId);
+    if (persistedState.hasPersistedData) {
+      // Ajouter à l'état persistant
+      persistedState.goals.push(newGoal);
+      this.setUserPersistedState(userId, persistedState);
+    } else {
+      // Ajouter aux données mock
+      this.mockGoals.push(newGoal);
+    }
+    
     return of({ ...newGoal }).pipe(delay(300));
   }
 
   updatePersonalGoal(userId: number, goalId: number, goal: Partial<PersonalGoal>): Observable<PersonalGoal> {
-    // Mock: Update goal in local array
+    // Mock: Update goal in local array or persisted state
     // In Phase 2, this will make an HTTP PUT call to /api/dashboard/{userId}/goals/{goalId}
-    const index = this.mockGoals.findIndex(g => g.id === goalId);
-    if (index !== -1) {
-      this.mockGoals[index] = { ...this.mockGoals[index], ...goal };
-      return of({ ...this.mockGoals[index] }).pipe(delay(300));
+    const persistedState = this.getUserPersistedState(userId);
+    
+    if (persistedState.hasPersistedData) {
+      // Mettre à jour dans l'état persistant
+      const index = persistedState.goals.findIndex(g => g.id === goalId);
+      if (index !== -1) {
+        persistedState.goals[index] = { ...persistedState.goals[index], ...goal };
+        this.setUserPersistedState(userId, persistedState);
+        return of({ ...persistedState.goals[index] }).pipe(delay(300));
+      }
+    } else {
+      // Mettre à jour dans les données mock
+      const index = this.mockGoals.findIndex(g => g.id === goalId);
+      if (index !== -1) {
+        this.mockGoals[index] = { ...this.mockGoals[index], ...goal };
+        return of({ ...this.mockGoals[index] }).pipe(delay(300));
+      }
     }
     throw new Error('Goal not found');
   }
 
   deletePersonalGoal(userId: number, goalId: number): Observable<void> {
-    // Mock: Remove goal from local array
+    // Mock: Remove goal from local array or persisted state
     // In Phase 2, this will make an HTTP DELETE call to /api/dashboard/{userId}/goals/{goalId}
-    const index = this.mockGoals.findIndex(g => g.id === goalId);
-    if (index !== -1) {
-      this.mockGoals.splice(index, 1);
-      return of(void 0).pipe(delay(300));
+    const persistedState = this.getUserPersistedState(userId);
+    
+    if (persistedState.hasPersistedData) {
+      // Supprimer de l'état persistant
+      const index = persistedState.goals.findIndex(g => g.id === goalId);
+      if (index !== -1) {
+        persistedState.goals.splice(index, 1);
+        this.setUserPersistedState(userId, persistedState);
+        return of(void 0).pipe(delay(300));
+      }
+    } else {
+      // Supprimer des données mock
+      const index = this.mockGoals.findIndex(g => g.id === goalId);
+      if (index !== -1) {
+        this.mockGoals.splice(index, 1);
+        return of(void 0).pipe(delay(300));
+      }
     }
     throw new Error('Goal not found');
   }
