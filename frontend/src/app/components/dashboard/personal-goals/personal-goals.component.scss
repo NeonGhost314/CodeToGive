@@ -53,6 +53,16 @@
   text-align: center;
   color: #333; // black
   font-size: 14px;
+
+  p {
+    margin: 0.5rem 0;
+  }
+  
+  .empty-state-subtitle {
+    font-size: 0.9rem;
+    color: #888;
+    font-style: italic;
+  }
 }
 
 .error-state {

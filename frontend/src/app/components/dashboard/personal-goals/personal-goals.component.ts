@@ -112,10 +112,6 @@ export class PersonalGoalsComponent implements OnInit {
   }
 
   deleteGoal(goalId: number): void {
-    if (!confirm('Are you sure you want to delete this goal?')) {
-      return;
-    }
-
     const userId = this.authService.getCurrentUserId();
     if (!userId) return;
 

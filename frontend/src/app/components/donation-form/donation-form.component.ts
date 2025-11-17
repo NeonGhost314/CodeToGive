@@ -122,7 +122,11 @@ export class DonationFormComponent implements OnInit, OnChanges {
   }
 
   canProceed(): boolean {
-    return this.amount > 0 && this.amount >= 1;
+    // For demo: allow proceeding even with invalid amount
+    return true;
+    
+    // Original validation (commented for demo):
+    // return this.amount > 0 && this.amount >= 1;
   }
 
   getPotentialDonationAmount(): number {
@@ -140,9 +144,16 @@ export class DonationFormComponent implements OnInit, OnChanges {
   }
 
   onSubmit(): void {
-    if (!this.canProceed()) {
-      return;
+    // For demo: allow proceeding even without strict validation
+    // If amount is 0 or invalid, use a default value for demo
+    if (this.amount <= 0 || !this.amount) {
+      this.amount = 1; // Default value for demo
     }
+    
+    // Original validation check (commented for demo):
+    // if (!this.canProceed()) {
+    //   return;
+    // }
 
     const donationData: DonationData = {
       fundId: this.fund.id,
