@@ -1,0 +1,51 @@
+<div class="dashboard-page">
+  <app-navbar [showSupportButton]="true" [showOurMission]="true"></app-navbar>
+
+  <div class="dashboard-container">
+    @if (isLoading) {
+      <div class="loading-state">
+        <p>Loading dashboard...</p>
+      </div>
+    } @else if (error) {
+      <div class="error-state">
+        <p>{{ error }}</p>
+      </div>
+    } @else if (dashboardData) {
+      <!-- User Profile Summary -->
+      <div class="dashboard-header">
+        <div class="user-profile-card">
+          <div class="user-info">
+            <h1 class="user-name">Welcome, {{ getUserFullName() }}!</h1>
+            <p class="user-email">{{ dashboardData.user.email }}</p>
+          </div>
+          <div class="user-stats">
+            <div class="stat-item">
+              <div class="stat-label">Total Donated</div>
+              <div class="stat-value">${{ getTotalDonations().toLocaleString() }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard Sections -->
+      <div class="dashboard-sections">
+        <div class="dashboard-row">
+          <div class="dashboard-section dashboard-section-half">
+            <app-donation-history></app-donation-history>
+          </div>
+
+          <div class="dashboard-section dashboard-section-half">
+            <app-subscription-management></app-subscription-management>
+          </div>
+        </div>
+
+        <div class="dashboard-section dashboard-section-full">
+          <app-personal-goals></app-personal-goals>
+        </div>
+      </div>
+    }
+  </div>
+
+  <app-footer></app-footer>
+</div>
+

@@ -1,7 +1,9 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ImpactFund, DonationAmountOption, DonationItems } from '../../services/donation_service';
+import { Router } from '@angular/router';
+import { ImpactFund, DonationAmountOption, DonationItems, DonationService } from '../../services/donation_service';
+import { AuthService } from '../../services/auth.service';
 import { DonationGoalProgressComponent } from '../donation-goal-progress/donation-goal-progress.component';
 import { DonationCustomAmountComponent } from '../donation-custom-amount/donation-custom-amount.component';
 
@@ -36,6 +38,12 @@ export class DonationFormComponent implements OnInit, OnChanges {
   
   // Recurring donation options
   recurringPeriod: 'monthly' | 'quarterly' | 'yearly' = 'monthly';
+
+  constructor(
+    private authService: AuthService,
+    private donationService: DonationService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.updateAmount();
@@ -133,6 +141,24 @@ export class DonationFormComponent implements OnInit, OnChanges {
       recurringPeriod: this.donationType !== 'one-time' ? this.recurringPeriod : undefined
     };
 
+    // Vérifier si l'utilisateur est connecté
+    if (!this.authService.isAuthenticated()) {
+      // Sauvegarder les données de don pour après la connexion
+      this.donationService.setPendingDonationData({
+        fundId: donationData.fundId,
+        amount: donationData.amount,
+        type: donationData.type,
+        message: donationData.message,
+        fundName: this.fund.name,
+        recurringPeriod: donationData.recurringPeriod
+      });
+      
+      // Rediriger vers la page d'authentification avec un paramètre de retour
+      this.router.navigate(['/auth'], { queryParams: { returnUrl: '/payment' } });
+      return;
+    }
+
+    // Si connecté, émettre l'événement normalement
     this.submit.emit(donationData);
   }
 }

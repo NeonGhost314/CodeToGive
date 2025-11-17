@@ -1,0 +1,76 @@
+<div class="personal-goals">
+  <div class="goals-header">
+    <h2 class="section-title">Personal Goals</h2>
+    <button class="create-goal-button" (click)="openCreateForm()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19 13H13V19H11V13H5V11H11V5H13V11H19V13Z" fill="currentColor"/>
+      </svg>
+      Create Goal
+    </button>
+  </div>
+
+  @if (isLoading) {
+    <div class="loading-state">
+      <p>Loading goals...</p>
+    </div>
+  } @else if (error) {
+    <div class="error-state">
+      <p>{{ error }}</p>
+    </div>
+  } @else if (goals.length === 0) {
+    <div class="empty-state">
+      <p>No goals yet. Create your first donation goal to track your impact!</p>
+    </div>
+  } @else {
+    <div class="goals-list">
+      @for (goal of goals; track goal.id) {
+        <div class="goal-card">
+          <div class="goal-header">
+            <h3 class="goal-name">{{ goal.name }}</h3>
+            <div class="goal-actions">
+              <button class="edit-button" (click)="openEditForm(goal)" aria-label="Edit goal">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25ZM20.71 7.04C21.1 6.65 21.1 6.02 20.71 5.63L18.37 3.29C17.98 2.9 17.35 2.9 16.96 3.29L15.12 5.13L18.87 8.88L20.71 7.04Z" fill="currentColor"/>
+                </svg>
+              </button>
+              <button class="delete-button" (click)="deleteGoal(goal.id)" aria-label="Delete goal">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM19 4H15.5L14.5 3H9.5L8.5 4H5V6H19V4Z" fill="currentColor"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="goal-progress">
+            <div class="progress-info">
+              <span class="progress-amount">{{ formatAmount(goal.current_amount) }}</span>
+              <span class="progress-separator">/</span>
+              <span class="progress-target">{{ formatAmount(goal.target_amount) }}</span>
+              <span class="progress-percentage">{{ getProgressPercentage(goal) }}%</span>
+            </div>
+            <div class="progress-bar">
+              <div 
+                class="progress-fill" 
+                [style.width.%]="getProgressPercentage(goal)">
+              </div>
+            </div>
+          </div>
+
+          @if (goal.deadline) {
+            <div class="goal-deadline">
+              Deadline: {{ formatDate(goal.deadline) }}
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+
+  <app-goal-form
+    [goal]="editingGoal"
+    [isOpen]="isFormOpen"
+    (close)="closeForm()"
+    (save)="onSaveGoal($event)">
+  </app-goal-form>
+</div>
+

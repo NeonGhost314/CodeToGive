@@ -1,0 +1,33 @@
+<div class="donation-history">
+  <h2 class="section-title">Donation History</h2>
+
+  @if (isLoading) {
+    <div class="loading-state">
+      <p>Loading donations...</p>
+    </div>
+  } @else if (error) {
+    <div class="error-state">
+      <p>{{ error }}</p>
+    </div>
+  } @else if (donations.length === 0) {
+    <div class="empty-state">
+      <p>No donations yet. Start making a difference today!</p>
+    </div>
+  } @else {
+    <div class="donations-list">
+      @for (donation of donations; track donation.id) {
+        <div class="donation-card">
+          <div class="donation-info">
+            <div class="donation-fund">{{ donation.fund_name }}</div>
+            <div class="donation-date">{{ formatDate(donation.date) }}</div>
+          </div>
+          <div class="donation-amount">{{ formatAmount(donation.amount) }}</div>
+          <div class="donation-status" [class]="'status-' + donation.status">
+            {{ donation.status }}
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
+
