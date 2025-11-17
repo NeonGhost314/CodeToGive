@@ -59,6 +59,12 @@ export class FooterComponent {
         this.isSubmitting = false;
         this.isSubscribed = true;
         this.email = '';
+        
+        // Set flag for badge unlock
+        localStorage.setItem('newsletterSubscribed', 'true');
+        
+        // Broadcast the event globally for badge update
+        window.dispatchEvent(new CustomEvent('newsletterSubscribed'));
       },
       error: (error) => {
         this.isSubmitting = false;

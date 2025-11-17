@@ -40,7 +40,11 @@
         </div>
 
         <div class="dashboard-section dashboard-section-full">
-          <app-personal-goals></app-personal-goals>
+          <app-personal-goals (goalCreated)="onGoalCreated()"></app-personal-goals>
+        </div>
+
+        <div class="dashboard-section dashboard-section-full">
+          <app-accomplishments [dashboardData]="dashboardData"></app-accomplishments>
         </div>
       </div>
     }

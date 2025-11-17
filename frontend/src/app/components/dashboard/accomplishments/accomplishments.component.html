@@ -1,0 +1,64 @@
+<div class="accomplishments">
+  <div class="accomplishments-header">
+    <h2 class="section-title">Accomplishments</h2>
+    <div class="progress-summary">
+      <span class="unlocked-count">{{ getUnlockedCount() }}/{{ badges.length }}</span>
+      <span class="unlocked-label">badges earned</span>
+    </div>
+  </div>
+
+  <div class="badges-grid">
+    @for (badge of badges; track badge.id) {
+      <div class="badge-card" [class.unlocked]="badge.unlocked" [class.locked]="!badge.unlocked">
+        <div class="badge-icon">
+          <span class="material-icons icon">{{ badge.icon }}</span>
+          @if (!badge.unlocked) {
+            <div class="lock-overlay">
+              <span class="material-icons">lock</span>
+            </div>
+          }
+        </div>
+        
+        <div class="badge-content">
+          <h3 class="badge-title">{{ badge.title }}</h3>
+          <p class="badge-description">{{ badge.description }}</p>
+          
+          @if (!badge.unlocked) {
+            <div class="progress-container">
+              <div class="progress-bar">
+                <div class="progress-fill" [style.width.%]="getProgressPercentage(badge)"></div>
+              </div>
+              <span class="progress-text">{{ getProgressPercentage(badge) | number:'1.0-0' }}%</span>
+            </div>
+          }
+        </div>
+
+        @if (badge.unlocked) {
+          <div class="social-share">
+            <span class="share-label">Share:</span>
+            <div class="social-buttons">
+              <button 
+                class="social-btn facebook" 
+                (click)="shareOnSocial(badge, 'facebook')"
+                title="Share on Facebook">
+                <i class="fab fa-facebook-f"></i>
+              </button>
+              <button 
+                class="social-btn linkedin" 
+                (click)="shareOnSocial(badge, 'linkedin')"
+                title="Share on LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+              </button>
+              <button 
+                class="social-btn twitter" 
+                (click)="shareOnSocial(badge, 'twitter')"
+                title="Share on X">
+                <i class="fab fa-x-twitter"></i>
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

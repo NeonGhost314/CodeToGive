@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { DashboardService } from '../../../services/dashboard.service';
@@ -15,6 +15,8 @@ import { JoinAthenaModalComponent } from '../../../components/join-athena-modal/
   styleUrl: './personal-goals.component.scss'
 })
 export class PersonalGoalsComponent implements OnInit {
+  @Output() goalCreated = new EventEmitter<void>();
+  
   goals: PersonalGoal[] = [];
   isLoading: boolean = true;
   error?: string;
@@ -103,6 +105,8 @@ export class PersonalGoalsComponent implements OnInit {
         next: () => {
           this.closeForm();
           this.loadGoals(userId);
+          // Emit event to notify parent dashboard of new goal creation
+          this.goalCreated.emit();
         },
         error: (error) => {
           this.error = 'Failed to create goal';

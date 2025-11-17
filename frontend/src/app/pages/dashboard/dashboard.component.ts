@@ -7,6 +7,7 @@ import { DashboardData, User } from '../../models/dashboard.model';
 import { DonationHistoryComponent } from '../../components/dashboard/donation-history/donation-history.component';
 import { SubscriptionManagementComponent } from '../../components/dashboard/subscription-management/subscription-management.component';
 import { PersonalGoalsComponent } from '../../components/dashboard/personal-goals/personal-goals.component';
+import { AccomplishmentsComponent } from '../../components/dashboard/accomplishments/accomplishments.component';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 
@@ -18,6 +19,7 @@ import { FooterComponent } from '../../components/footer/footer.component';
     DonationHistoryComponent,
     SubscriptionManagementComponent,
     PersonalGoalsComponent,
+    AccomplishmentsComponent,
     NavbarComponent,
     FooterComponent
   ],
@@ -75,6 +77,15 @@ export class DashboardComponent implements OnInit {
 
   getTotalDonations(): number {
     return this.dashboardData?.total_donations || 0;
+  }
+
+  onGoalCreated(): void {
+    // Refresh dashboard data when a new goal is created
+    const userId = this.authService.getCurrentUserId();
+    if (userId) {
+      console.log('Goal created, refreshing dashboard data for badge update');
+      this.loadDashboardData(userId);
+    }
   }
 }
 

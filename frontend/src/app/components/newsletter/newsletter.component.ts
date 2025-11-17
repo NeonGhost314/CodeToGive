@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NewsletterService, NewsletterSubscription } from '../../services/newsletter.service';
 import { NotificationComponent, NotificationType } from '../notification/notification.component';
@@ -16,6 +16,8 @@ interface Notification {
   styleUrl: './newsletter.component.scss'
 })
 export class NewsletterComponent {
+  @Output() newsletterSubscribed = new EventEmitter<void>();
+  
   email: string = '';
   selectedLanguage: string = 'en';
   emailError: string = '';
@@ -58,6 +60,15 @@ export class NewsletterComponent {
       next: (response) => {
         this.isSubmitting = false;
         this.showNotification('success', response.message);
+        
+        // Set flag for badge unlock
+        localStorage.setItem('newsletterSubscribed', 'true');
+        
+        // Emit event to notify about newsletter subscription
+        this.newsletterSubscribed.emit();
+        
+        // Broadcast the event globally for badge update
+        window.dispatchEvent(new CustomEvent('newsletterSubscribed'));
         
         // Reset form after successful submission
         this.email = '';
