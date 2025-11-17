@@ -28,7 +28,7 @@ export class DonationFormComponent implements OnInit, OnChanges {
   @Input() totalAmountFromItems: number = 0;
   @Input() fund!: ImpactFund;
   @Input() currentGoalAmount: number = 0;
-  @Input() goalAmount: number = 10000;
+  @Input() goalAmount: number = 100000;
   @Input() isCustomAmountMode: boolean = false;
   @Output() submit = new EventEmitter<DonationData>();
 

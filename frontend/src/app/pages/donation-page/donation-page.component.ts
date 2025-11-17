@@ -30,8 +30,8 @@ export class DonationPageComponent implements OnInit {
   selectedItems: DonationItems[] = [];
   totalAmountFromItems: number = 0;
   error?: string;
-  currentGoalAmount: number = 2500; // Montant actuel collecté (mock data)
-  goalAmount: number = 10000; // Objectif à atteindre (mock data)
+  currentGoalAmount: number = 52000; // Montant actuel collecté (mock data)
+  goalAmount: number = 100000; // Objectif à atteindre (mock data)
 
   constructor(
     private route: ActivatedRoute,
