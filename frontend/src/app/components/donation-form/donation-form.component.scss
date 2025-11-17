@@ -9,6 +9,18 @@
   border: 1px solid rgba(168, 194, 209, 0.3); // bluemist with transparency
   backdrop-filter: blur(10px);
   max-width: 100%;
+  
+  @media (max-width: 768px) {
+    padding: 20px 18px;
+    gap: 16px;
+    border-radius: 16px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 16px 14px;
+    gap: 14px;
+    border-radius: 12px;
+  }
 }
 
 .form-title {
@@ -18,6 +30,15 @@
   color: #644A73; // plum
   letter-spacing: -0.3px;
   text-shadow: 0 1px 2px rgba(100, 74, 115, 0.1);
+  
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 18px;
+    margin-bottom: 6px;
+  }
 }
 
 .donation-type-tabs {
@@ -35,7 +56,7 @@
   border: none;
   border-radius: 12px;
   background: transparent;
-  color: #6E8B6F; // forest
+  color: #333; // black
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
@@ -70,6 +91,10 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  
+  &:has(.amount-display) {
+    min-height: 80px;
+  }
 }
 
 .form-label {
@@ -95,7 +120,7 @@
   border: none;
   border-radius: 12px;
   background: transparent;
-  color: #6E8B6F; // forest
+  color: #333; // black
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
@@ -166,7 +191,7 @@
 
 .character-count {
   font-size: 11px;
-  color: #6E8B6F; // forest
+  color: #333; // black
   text-align: right;
   transition: color 0.2s ease;
   font-weight: 500;
@@ -180,10 +205,10 @@
 .amount-display {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 16px 20px;
+  gap: 6px;
+  padding: 10px 16px;
   border: 1.5px solid rgba(168, 194, 209, 0.3); // bluemist with transparency
-  border-radius: 14px;
+  border-radius: 12px;
   background: linear-gradient(135deg, #FFFAF7 0%, #F7EEE5 100%); // cream to sand
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   width: 100%;
@@ -191,21 +216,30 @@
   box-sizing: border-box;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(100, 74, 115, 0.1);
-  min-height: 56px; // Better touch target
+  min-height: 44px;
 }
 
 .currency {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
-  color: #6E8B6F; // forest
+  color: #333; // black
 }
 
 .amount-value {
-  font-size: 28px;
+  font-size: 22px;
   font-weight: 700;
   color: #644A73; // plum
-  letter-spacing: -0.4px;
+  letter-spacing: -0.3px;
   text-shadow: 0 1px 2px rgba(100, 74, 115, 0.1);
+}
+
+.info-text {
+  font-size: 15px;
+  color: #333; // black
+  font-weight: 400;
+  margin-top: auto;
+  padding-top: 4px;
+  opacity: 0.7;
 }
 
 
@@ -256,7 +290,7 @@
 
 .checkbox-hint {
   font-size: 12px;
-  color: #6E8B6F; // forest
+  color: #333; // black
   margin: 4px 0 0 32px;
   font-weight: 400;
   line-height: 1.4;
@@ -319,7 +353,7 @@
 .summary-label {
   font-size: 13px;
   font-weight: 600;
-  color: #6E8B6F; // forest
+  color: #333; // black
   letter-spacing: 0.05px;
 }
 

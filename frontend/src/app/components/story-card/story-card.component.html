@@ -1,5 +1,5 @@
 <div class="story-card-wrapper">
-    <div class="card" [ngStyle]="cardStyle" [class.hovered]="isHovered">
+    <div class="card" [class.hovered]="isHovered">
 
         <!-- Background glow -->
         <div class="card-glow"></div>
@@ -50,7 +50,7 @@
             </div>
 
             <!-- CTA Button -->
-            <a [routerLink]="['/story', story.id]" class="cta-button">
+            <a routerLink="/video" class="cta-button">
                 <span>Follow Her Journey</span>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"

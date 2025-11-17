@@ -70,18 +70,18 @@ export class LandingComponent implements OnInit, OnDestroy, AfterViewInit {
   visualStats = [
     {
       icon: 'home',
-      value: 150,
+      value: 100,
       suffix: '',
-      label: 'Annual Shelter',
-      sublabel: 'Women and children sheltered yearly',
+      label: "Athena's House",
+      sublabel: 'Women and children found refuge',
       color: '#C8BEEA',
     },
     {
-      icon: 'language',
-      value: 10,
-      suffix: '+',
-      label: 'Languages',
-      sublabel: 'Multilingual support available',
+      icon: 'people',
+      value: 1229,
+      suffix: '',
+      label: 'Clients Helped',
+      sublabel: 'Last year at Montreal & Laval centers',
       color: '#EEC9D2',
     },
     {
