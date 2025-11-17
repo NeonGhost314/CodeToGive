@@ -1,9 +1,10 @@
 <div class="video-page">
 
+  <!-- NAVBAR -->
+  <app-navbar></app-navbar>
+
   <!-- HERO TEXT -->
   <section class="hero">
-    <p class="breadcrumb">Athena Center — Healing Stories</p>
-
     <h1>Follow a Journey of Hope</h1>
 
     <p class="subtitle">
@@ -12,24 +13,18 @@
     </p>
   </section>
 
-  <!-- VIDEO PLAYER -->
-  <section class="video-container">
-    <div class="video-wrapper">
-      <div class="chapter-badge">Chapter 1</div>
-      <app-video-player [videoSrc]="'assets/videos/athena-arrival.mp4'"></app-video-player>
-    </div>
-  </section>
-
-  <!-- PROGRESS TRACKER -->
-  <section class="progress-section">
-    <div class="progress-container">
-      <h3>Your Healing Journey</h3>
-      <div class="chapters-track">
+  <!-- MAIN CONTENT -->
+  <section class="main-content">
+    
+    <!-- VERTICAL PROGRESS TRACKER -->
+    <aside class="progress-sidebar">
+      <h3>Your Journey</h3>
+      <div class="chapters-track-vertical">
         <div class="chapter-node active">
           <div class="node-circle">1</div>
           <span>The Beginning</span>
         </div>
-        <div class="connector"></div>
+        <div class="connector-vertical"></div>
         <div class="chapter-node locked">
           <div class="node-circle">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -39,7 +34,7 @@
           </div>
           <span>The Awakening</span>
         </div>
-        <div class="connector"></div>
+        <div class="connector-vertical"></div>
         <div class="chapter-node locked">
           <div class="node-circle">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -49,7 +44,7 @@
           </div>
           <span>The Strength</span>
         </div>
-        <div class="connector"></div>
+        <div class="connector-vertical"></div>
         <div class="chapter-node locked">
           <div class="node-circle">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -59,7 +54,7 @@
           </div>
           <span>The Hope</span>
         </div>
-        <div class="connector"></div>
+        <div class="connector-vertical"></div>
         <div class="chapter-node locked">
           <div class="node-circle">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -70,38 +65,56 @@
           <span>Rebirth</span>
         </div>
       </div>
-    </div>
-  </section>
+    </aside>
 
-  <!-- NEXT CHAPTER TEASER -->
-  <section class="teaser-section">
-    <div class="teaser-card">
-      <div class="teaser-blur"></div>
-      <div class="teaser-content">
-        <h3>Chapter 2: The Awakening</h3>
-        <p class="teaser-text">
-          "I didn't know that asking for help could be an act of courage..."
-        </p>
-        <div class="unlock-prompt">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-          </svg>
-          <span>Unlock the next chapter by supporting this story</span>
-        </div>
+    <!-- VIDEO PLAYER -->
+    <div class="video-container">
+      <div class="video-wrapper">
+        <div class="chapter-badge">Chapter 1</div>
+        <app-video-player [videoSrc]="'assets/videos/athena-arrival.mp4'"></app-video-player>
       </div>
     </div>
-  </section>
 
-  <!-- CTA BUTTON -->
-  <section class="cta-section">
-    <button class="cta-button">
-      <span>Choose My Impact</span>
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M5 12h14M12 5l7 7-7 7"/>
-      </svg>
-    </button>
-    <p class="cta-subtext">Support this story and unlock the next chapter</p>
+    <!-- NEWS SIDEBAR -->
+    <aside class="news-sidebar">
+      <h3>Latest Updates</h3>
+      <div class="news-list">
+        
+        <div class="news-item">
+          <img src="assets/images/house.png" class="news-image" alt="Shelter Expansion Project">
+          <div class="news-content">
+            <h4>Shelter Expansion Project</h4>
+            <p>New facilities opening to support 50 more families in need.</p>
+          </div>
+        </div>
+
+        <div class="news-item">
+          <img src="assets/images/community.png" class="news-image" alt="Community Success Story">
+          <div class="news-content">
+            <h4>Community Success Story</h4>
+            <p>Maria shares her journey from survivor to advocate.</p>
+          </div>
+        </div>
+
+        <a href="https://www.zeffy.com/en-CA/ticketing/lilac-gala" target="_blank" rel="noopener noreferrer" class="news-item">
+          <img src="assets/images/gala.png" class="news-image" alt="Annual Fundraising Gala">
+          <div class="news-content">
+            <h4>Annual Fundraising Gala</h4>
+            <p>Join us for an evening of hope and celebration this fall.</p>
+          </div>
+        </a>
+
+        <div class="news-item">
+          <img src="assets/images/psychiatry.png" class="news-image" alt="Psychiatry Services Expansion">
+          <div class="news-content">
+            <h4>Psychiatry Services Expansion</h4>
+            <p>New mental health programs launched to support survivors.</p>
+          </div>
+        </div>
+
+      </div>
+    </aside>
+
   </section>
 
 </div>
