@@ -8,7 +8,9 @@
           (change)="toggleItem(item)"
           class="item-checkbox"
           [attr.aria-label]="'Select ' + item.description">
-        <div class="impact-icon" [innerHTML]="getIconSvg(getIconForItem(item.description))"></div>
+        <div class="impact-icon">
+          <i [class]="'fas fa-' + getIconClass(getIconForItem(item.description))"></i>
+        </div>
         <div class="item-content">
           <span class="impact-text">{{ item.description }}</span>
           <span class="item-price">${{ item.suggestedAmount }}</span>

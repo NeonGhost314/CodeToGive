@@ -51,7 +51,7 @@
 .empty-state {
   padding: 2rem;
   text-align: center;
-  color: #6E8B6F; // forest
+  color: #333; // black
   font-size: 14px;
 }
 
@@ -153,7 +153,7 @@
 .progress-amount {
   font-size: 20px;
   font-weight: 700;
-  color: #6E8B6F; // forest
+  color: #333; // black
 }
 
 .progress-separator {
@@ -170,7 +170,7 @@
 .progress-percentage {
   font-size: 14px;
   font-weight: 600;
-  color: #6E8B6F; // forest
+  color: #333; // black
   margin-left: auto;
   padding: 4px 10px;
   background: rgba(110, 139, 111, 0.1);
@@ -194,7 +194,7 @@
 
 .goal-deadline {
   font-size: 13px;
-  color: #6E8B6F; // forest
+  color: #333; // black
   font-weight: 500;
 }
 

@@ -102,15 +102,20 @@ export class DonationService {
 
   
   getDonationItems(fundId: number): Observable<DonationItems[]> {
-    return this.http.get<DonationItemsBackend[]>(`/api/donation-items/${fundId}`).pipe(
-      map(items => items.map(item => ({
-        id: item.id,
-        fundId: item.fund_id,
-        description: item.description,
-        suggestedAmount: item.suggested_amount,
-        optionType: item.option_type
-      })))
-    );
+    // Mock data pour développement frontend
+    // TODO: Remplacer par l'appel HTTP réel quand le backend sera disponible
+    return of([]);
+    
+    // Décommenter quand le backend sera prêt:
+    // return this.http.get<DonationItemsBackend[]>(`/api/donation-items/${fundId}`).pipe(
+    //   map(items => items.map(item => ({
+    //     id: item.id,
+    //     fundId: item.fund_id,
+    //     description: item.description,
+    //     suggestedAmount: item.suggested_amount,
+    //     optionType: item.option_type
+    //   })))
+    // );
   }
 
   getDonationAmountOptions(): DonationAmountOption[] {

@@ -75,9 +75,8 @@
   color: #644A73; // plum
   margin-top: 2px;
   
-  svg {
-    width: 100%;
-    height: 100%;
+  i {
+    font-size: 18px;
   }
 }
 
@@ -91,7 +90,7 @@
 .impact-text {
   font-size: 12px;
   line-height: 1.5;
-  color: #6E8B6F; // forest
+  color: #333; // black
   font-weight: 500;
 }
 

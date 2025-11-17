@@ -48,6 +48,18 @@
   @media (max-width: 1024px) {
     padding: 20px 24px;
     gap: 16px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 16px 16px;
+    gap: 16px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 12px 12px;
+    gap: 12px;
   }
 }
 
@@ -63,11 +75,32 @@
   max-width: 100%;
   min-height: fit-content;
   
+  // Espace pour composants futurs (ex: items à acheter)
+  .future-components-section {
+    margin: 16px 0;
+    padding: 16px;
+    background: rgba(255, 250, 247, 0.5);
+    border-radius: 12px;
+    border: 1px dashed rgba(168, 194, 209, 0.3);
+  }
+  
   @media (max-width: 1024px) {
     flex: 0 0 100%;
     padding: 20px 18px;
     gap: 16px;
     border-radius: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 16px 16px;
+    gap: 14px;
+    border-radius: 16px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 14px 12px;
+    gap: 12px;
+    border-radius: 12px;
   }
 }
 
@@ -124,8 +157,18 @@
   margin: 0 0 0 0;
   font-size: 14px;
   line-height: 1.5;
-  color: #6E8B6F; // forest
+  color: #333; // black
   font-weight: 400;
+  
+  @media (max-width: 768px) {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 12px;
+    line-height: 1.4;
+  }
 }
 
 .impact-photo-section {
@@ -142,8 +185,22 @@
   box-shadow: 0 4px 12px rgba(100, 74, 115, 0.12);
   transition: transform 0.3s ease;
   
+  @media (max-width: 768px) {
+    height: 200px;
+    border-radius: 12px;
+  }
+  
+  @media (max-width: 480px) {
+    height: 160px;
+    border-radius: 10px;
+  }
+  
   &:hover {
     transform: scale(1.02);
+    
+    @media (max-width: 768px) {
+      transform: none; // Désactiver hover sur mobile
+    }
   }
 }
 
@@ -161,6 +218,18 @@
   gap: 10px;
   position: relative;
   overflow: hidden;
+  
+  @media (max-width: 768px) {
+    height: 200px;
+    border-radius: 12px;
+    gap: 8px;
+  }
+  
+  @media (max-width: 480px) {
+    height: 160px;
+    border-radius: 10px;
+    gap: 6px;
+  }
   
   &::before {
     content: '';
@@ -188,24 +257,36 @@
     }
   }
   
-  svg {
-    width: 40px;
-    height: 40px;
+  i {
+    font-size: 48px;
     opacity: 0.6;
     color: #A8C2D1; // bluemist
     position: relative;
     z-index: 1;
     filter: drop-shadow(0 2px 4px rgba(100, 74, 115, 0.1));
+    
+    @media (max-width: 768px) {
+      font-size: 40px;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 32px;
+    }
   }
   
   .placeholder-text {
     font-size: 12px;
-    color: #6E8B6F; // forest
+    color: #333; // black
     font-weight: 500;
     position: relative;
     z-index: 1;
     text-align: center;
     padding: 0 16px;
+    
+    @media (max-width: 480px) {
+      font-size: 11px;
+      padding: 0 12px;
+    }
   }
 }
 
@@ -270,7 +351,7 @@
 .impact-text {
   font-size: 12px;
   line-height: 1.5;
-  color: #6E8B6F; // forest
+  color: #333; // black
   flex: 1;
   font-weight: 500;
 }
@@ -299,7 +380,7 @@
   margin: 0 0 10px 0;
   font-size: 13px;
   font-weight: 500;
-  color: #6E8B6F; // forest
+  color: #333; // black
   line-height: 1.5;
 }
 
@@ -324,20 +405,40 @@
       margin: 0;
       font-size: 15px;
       line-height: 1.7;
-      color: #6E8B6F; // forest
+      color: #333; // black
       font-weight: 400;
     }
   }
   
   @media (max-width: 768px) {
+    margin: 12px 0;
     padding: 16px 18px;
+    border-radius: 12px;
     
     .impact-title {
       font-size: 15px;
+      margin-bottom: 10px;
     }
     
     .impact-content .impact-text {
       font-size: 14px;
+      line-height: 1.6;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    margin: 10px 0;
+    padding: 14px 16px;
+    border-radius: 10px;
+    
+    .impact-title {
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    
+    .impact-content .impact-text {
+      font-size: 13px;
+      line-height: 1.5;
     }
   }
 }
@@ -359,6 +460,15 @@
   max-height: calc(100vh - 48px);
   overflow-y: auto;
   
+  // Espace pour composants futurs (ex: résumé d'achat)
+  .future-summary-section {
+    margin: 16px 0;
+    padding: 16px;
+    background: rgba(255, 250, 247, 0.5);
+    border-radius: 12px;
+    border: 1px dashed rgba(168, 194, 209, 0.3);
+  }
+  
   @media (max-width: 1024px) {
     flex: 0 0 100%;
     padding: 20px 18px;
@@ -370,64 +480,30 @@
     max-height: none;
     overflow-y: visible;
   }
-}
-
-@media (max-width: 1024px) {
-  .donation-layout {
-    flex-direction: column;
-    align-items: stretch;
+  
+  @media (max-width: 768px) {
+    padding: 16px 16px;
+    gap: 14px;
+    border-radius: 16px;
   }
   
-  .donation-left,
-  .donation-right {
-    min-height: auto;
+  @media (max-width: 480px) {
+    padding: 14px 12px;
+    gap: 12px;
+    border-radius: 12px;
   }
 }
 
 // Responsive pour très petits écrans
-@media (max-width: 768px) {
-  .donation-layout {
-    padding: 20px 16px;
-    gap: 16px;
-  }
-  
-  .donation-left,
-  .donation-right {
-    padding: 20px 16px;
-    gap: 16px;
-  }
-}
-
 @media (max-width: 480px) {
-  .donation-layout {
-    padding: 16px 12px;
-    gap: 12px;
+  .donation-page {
+    padding: 0;
   }
   
-  .donation-left,
-  .donation-right {
-    padding: 16px 12px;
-    gap: 12px;
-  }
-
-  .org-subtitle {
-    font-size: 12px;
-  }
-
-  .impact-photo,
-  .impact-photo-placeholder {
-    height: 140px;
+  .error {
+    margin: 16px 12px;
+    padding: 16px;
     border-radius: 12px;
-  }
-
-  .impact-photo-placeholder {
-    svg {
-      width: 32px;
-      height: 32px;
-    }
-
-    .placeholder-text {
-      font-size: 11px;
-    }
+    font-size: 14px;
   }
 }

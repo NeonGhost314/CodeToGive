@@ -6,6 +6,18 @@
   border: 1px solid #C8BEEA;
   box-shadow: 0 2px 8px rgba(100, 74, 115, 0.1);
   
+  @media (max-width: 768px) {
+    margin-top: 1.5rem;
+    padding: 1.25rem;
+    border-radius: 10px;
+  }
+  
+  @media (max-width: 480px) {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+  }
+  
   .section-title {
     margin: 0 0 12px 0;
     font-size: 36px;
@@ -65,11 +77,24 @@
       margin-bottom: 1.5rem;
       text-align: center;
       
+      @media (max-width: 768px) {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin-bottom: 1.25rem;
+      }
+      
+      @media (max-width: 480px) {
+        font-size: 0.85rem;
+        line-height: 1.4;
+        margin-bottom: 1rem;
+      }
+      
       .email-link {
         color: #644A73;
         font-weight: 600;
         text-decoration: underline;
         transition: color 0.3s ease;
+        word-break: break-word;
         
         &:hover {
           color: #8B6F9E;
@@ -96,16 +121,32 @@
       font-weight: 500;
       cursor: pointer;
       transition: all 0.3s ease;
+      min-height: 44px; // Better touch target
+      
+      @media (max-width: 480px) {
+        padding: 0.65rem 1rem;
+        font-size: 0.85rem;
+        width: 100%;
+        justify-content: center;
+      }
       
       &:hover {
         background: #644A73;
         color: #FFFAF7;
         transform: translateY(-1px);
         box-shadow: 0 4px 8px rgba(100, 74, 115, 0.3);
+        
+        @media (max-width: 768px) {
+          transform: none;
+        }
       }
       
       &:active {
         transform: translateY(0);
+        
+        @media (max-width: 768px) {
+          transform: scale(0.98);
+        }
       }
       
       svg {
@@ -115,17 +156,7 @@
   }
 }
 
-// Responsive design
-@media (max-width: 768px) {
-  .organisation-donor-section {
-    margin-top: 1.5rem;
-    padding: 1rem;
-    
-    .section-title {
-      font-size: 1.25rem;
-    }
-  }
-}
+// Responsive design déjà géré dans les sections ci-dessus
 
 // Additional accent variations for visual interest
 .organisation-donor-section {

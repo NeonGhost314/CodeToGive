@@ -29,14 +29,18 @@ export class DonationAmountOptionsComponent implements OnInit {
 
   ngOnInit(): void {
     const serviceOptions = this.donationService.getDonationAmountOptions();
-    // Insérer "General" en 3ème position
+    // Mettre "General" en première position
     this.allOptions = [
+      this.customOption, // General (première position)
       serviceOptions[0], // Annual Art Auction
       serviceOptions[1], // Second Step Shelter
-      this.customOption, // General (3ème position)
       serviceOptions[2]  // Accès au Gala 2025 Annual Lilac Gala
     ];
     this.options = this.allOptions;
+    
+    // Sélectionner "General" par défaut
+    this.selectedOption = this.customOption;
+    this.customAmountSelected.emit();
   }
 
   onOptionSelected(option: DonationAmountOption): void {

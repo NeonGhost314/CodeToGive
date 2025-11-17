@@ -200,8 +200,9 @@
     transform: translateY(0);
   }
 
-  svg {
+  i {
     flex-shrink: 0;
+    font-size: 16px;
     animation: heartbeat 2s ease-in-out infinite;
   }
 
@@ -251,8 +252,9 @@
     transform: translateY(0);
   }
 
-  svg {
+  i {
     flex-shrink: 0;
+    font-size: 18px;
   }
 }
 
@@ -287,9 +289,8 @@
     transform: translateY(0);
   }
 
-  svg {
-    width: 20px;
-    height: 20px;
+  i {
+    font-size: 20px;
   }
 }
 
@@ -344,10 +345,9 @@
     background: linear-gradient(135deg, rgba(200, 190, 234, 0.2), rgba(238, 201, 210, 0.2));
   }
 
-  svg {
+  i {
     flex-shrink: 0;
-    width: 18px;
-    height: 18px;
+    font-size: 18px;
   }
 
   &:not(:last-child) {
