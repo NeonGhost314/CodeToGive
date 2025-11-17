@@ -51,6 +51,14 @@ export class DashboardComponent implements OnInit {
       next: (data) => {
         this.dashboardData = data;
         this.isLoading = false;
+        
+        // Nettoyer le flag skipDefaultData après le chargement complet du dashboard
+        // pour éviter qu'il interfère avec les prochaines sessions
+        setTimeout(() => {
+          console.log('Cleaning up post-donation signup flags'); // Debug log
+          sessionStorage.removeItem('skipDefaultData');
+          this.authService.clearDonorInfo();
+        }, 3000); // Délai augmenté pour s'assurer que tous les composants enfants ont fini de charger
       },
       error: (error) => {
         this.error = 'Failed to load dashboard data';

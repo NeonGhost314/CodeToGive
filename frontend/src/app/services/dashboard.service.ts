@@ -104,13 +104,45 @@ export class DashboardService {
       email: 'john.doe@example.com'
     };
 
+    // Vérifier si on doit éviter les données par défaut (inscription post-donation)
+    const skipDefaultData = sessionStorage.getItem('skipDefaultData') === 'true';
+    let recentDonations: Donation[] = [];
+    let totalDonations = 0;
+    
+    if (skipDefaultData) {
+      // Pour une inscription post-donation, créer seulement la donation récente
+      const donorInfo = this.authService.getDonorInfo();
+      console.log('Post-donation signup detected. Donor info:', donorInfo); // Debug log
+      if (donorInfo) {
+        const recentDonation = {
+          id: Date.now(), // ID unique basé sur le timestamp
+          amount: donorInfo.donationAmount,
+          date: new Date().toISOString(),
+          fund_name: donorInfo.fundName,
+          status: 'completed' as const
+        };
+        recentDonations = [recentDonation];
+        totalDonations = donorInfo.donationAmount;
+        console.log('Created recent donation:', recentDonation); // Debug log
+      } else {
+        recentDonations = [];
+        totalDonations = 0;
+        console.log('No donor info found, empty donations'); // Debug log
+      }
+    } else {
+      recentDonations = this.mockDonations.slice(0, 5);
+      totalDonations = this.mockDonations.reduce((sum, d) => sum + d.amount, 0);
+    }
+    
     const data: DashboardData = {
       user: user,
-      total_donations: this.mockDonations.reduce((sum, d) => sum + d.amount, 0),
-      recent_donations: this.mockDonations.slice(0, 5),
-      subscriptions: this.mockSubscriptions,
-      goals: this.mockGoals
+      total_donations: totalDonations,
+      recent_donations: recentDonations,
+      subscriptions: skipDefaultData ? [] : this.mockSubscriptions,
+      goals: skipDefaultData ? [] : this.mockGoals
     };
+
+    // Ne pas nettoyer le flag ici car d'autres méthodes peuvent en avoir besoin
 
     return of(data).pipe(delay(300));
   }
@@ -118,13 +150,35 @@ export class DashboardService {
   getDonationHistory(userId: number): Observable<Donation[]> {
     // Mock: Return array of sample donations
     // In Phase 2, this will make an HTTP call to /api/dashboard/{userId}/donations
+    const skipDefaultData = sessionStorage.getItem('skipDefaultData') === 'true';
+    
+    if (skipDefaultData) {
+      // Pour une inscription post-donation, créer seulement la donation récente
+      const donorInfo = this.authService.getDonorInfo();
+      console.log('getDonationHistory - Post-donation signup detected. Donor info:', donorInfo); // Debug log
+      if (donorInfo) {
+        const recentDonation = {
+          id: Date.now(), // ID unique basé sur le timestamp
+          amount: donorInfo.donationAmount,
+          date: new Date().toISOString(),
+          fund_name: donorInfo.fundName,
+          status: 'completed' as const
+        };
+        console.log('getDonationHistory - Created recent donation:', recentDonation); // Debug log
+        return of([recentDonation]).pipe(delay(200));
+      }
+      console.log('getDonationHistory - No donor info found, empty donations'); // Debug log
+      return of([]).pipe(delay(200));
+    }
+    
     return of([...this.mockDonations]).pipe(delay(200));
   }
 
   getSubscriptions(userId: number): Observable<Subscription[]> {
     // Mock: Return array of sample subscriptions
     // In Phase 2, this will make an HTTP call to /api/dashboard/{userId}/subscriptions
-    return of([...this.mockSubscriptions]).pipe(delay(200));
+    const skipDefaultData = sessionStorage.getItem('skipDefaultData') === 'true';
+    return of(skipDefaultData ? [] : [...this.mockSubscriptions]).pipe(delay(200));
   }
 
   updateSubscription(userId: number, subscriptionId: number, data: Partial<Subscription>): Observable<Subscription> {
@@ -141,7 +195,8 @@ export class DashboardService {
   getPersonalGoals(userId: number): Observable<PersonalGoal[]> {
     // Mock: Return array of sample goals
     // In Phase 2, this will make an HTTP call to /api/dashboard/{userId}/goals
-    return of([...this.mockGoals]).pipe(delay(200));
+    const skipDefaultData = sessionStorage.getItem('skipDefaultData') === 'true';
+    return of(skipDefaultData ? [] : [...this.mockGoals]).pipe(delay(200));
   }
 
   createPersonalGoal(userId: number, goal: CreateGoalData): Observable<PersonalGoal> {

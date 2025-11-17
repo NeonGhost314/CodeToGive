@@ -24,7 +24,7 @@ export class AuthService {
       throw new Error('Invalid email format');
     }
 
-    // Stocker les infos utilisateur
+    // Stocker les infos utilisateur avec les vrais prénom et nom
     sessionStorage.setItem(this.USER_DATA_KEY, JSON.stringify({
       first_name: firstName,
       last_name: lastName,
@@ -42,6 +42,8 @@ export class AuthService {
   logout(): void {
     sessionStorage.removeItem(this.USER_ID_KEY);
     sessionStorage.removeItem(this.USER_DATA_KEY);
+    this.clearDonorInfo();
+    sessionStorage.removeItem('skipDefaultData');
   }
 
   isAuthenticated(): boolean {
@@ -60,6 +62,36 @@ export class AuthService {
 
   setUserId(userId: number): void {
     sessionStorage.setItem(this.USER_ID_KEY, userId.toString());
+  }
+
+  // Méthodes pour gérer les informations du donateur
+  getDonorInfo(): { email: string; cardName: string; donationAmount: number; fundName: string; isPostDonationSignup: boolean } | null {
+    const data = sessionStorage.getItem('donorInfo');
+    return data ? JSON.parse(data) : null;
+  }
+
+  clearDonorInfo(): void {
+    sessionStorage.removeItem('donorInfo');
+  }
+
+  isPostDonationSignup(): boolean {
+    const donorInfo = this.getDonorInfo();
+    return donorInfo?.isPostDonationSignup || false;
+  }
+
+  // Extrait prénom et nom du nom sur la carte
+  extractNamesFromCardName(cardName: string): { firstName: string; lastName: string } {
+    const parts = cardName.trim().split(' ');
+    if (parts.length >= 2) {
+      return {
+        firstName: parts[0],
+        lastName: parts.slice(1).join(' ')
+      };
+    }
+    return {
+      firstName: parts[0] || '',
+      lastName: ''
+    };
   }
 }
 

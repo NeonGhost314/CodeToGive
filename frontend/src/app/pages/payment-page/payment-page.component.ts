@@ -207,6 +207,18 @@ export class PaymentPageComponent implements OnInit {
       next: (result) => {
         // Stocker le résultat pour la page de confirmation
         sessionStorage.setItem('paymentResult', JSON.stringify(result));
+        
+        // Stocker les informations du donateur pour une éventuelle inscription
+        const fundName = this.donationData?.fundName || this.getFundNameById(this.donationData?.fundId) || 'Shield of Athena';
+        const donorInfo = {
+          email: this.email,
+          cardName: this.cardName,
+          donationAmount: this.amount,
+          fundName: fundName,
+          isPostDonationSignup: true
+        };
+        sessionStorage.setItem('donorInfo', JSON.stringify(donorInfo));
+        
         this.router.navigate(['/payment/confirmation']);
       },
       error: (error) => {
@@ -222,6 +234,15 @@ export class PaymentPageComponent implements OnInit {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
     }).format(value);
+  }
+
+  getFundNameById(fundId?: number): string {
+    const fundNames: { [key: number]: string } = {
+      1: 'Annual Art Auction',
+      2: 'Second Step Shelter', 
+      3: '2025 Annual Lilac Gala Access'
+    };
+    return fundId ? fundNames[fundId] || 'Shield of Athena' : 'Shield of Athena';
   }
 }
 
