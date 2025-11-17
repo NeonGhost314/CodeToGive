@@ -13,6 +13,7 @@ import { ScrollIndicatorComponent } from '../../components/scroll-tracker/scroll
 import { StoryCardComponent } from '../../components/story-card/story-card.component';
 import { VisualStatComponent } from '../../components/visual-stat/visual-stat.component';
 import { EmergencyContactsComponent } from '../../components/EmergencyContacts/EmergencyContacts.component';
+import { FooterComponent } from '../../components/footer/footer.component';
 import {
   HealingStory,
   ImpactStats,
@@ -43,6 +44,7 @@ interface HelpService {
     VisualStatComponent,
     EmergencyContactsComponent,
     ShelterProgressComponent,
+    FooterComponent,
   ],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
