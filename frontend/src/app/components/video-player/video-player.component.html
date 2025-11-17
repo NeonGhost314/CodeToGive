@@ -1,7 +1,11 @@
 <video
   class="video-player"
   controls
-  preload="metadata">>
-  <source [src]="safeVideoSrc" type="video/mp4">
+  preload="metadata">
+  <source [attr.src]="videoSrc" type="video/mp4" *ngIf="hasSource">
+  @if (!hasSource) {
+    <p>Video unavailable.</p>
+  }
+
   Your browser does not support the video tag.
 </video>
